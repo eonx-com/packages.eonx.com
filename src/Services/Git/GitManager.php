@@ -6,13 +6,10 @@ namespace App\Services\Git;
 use Nette\Utils\Strings;
 use Symfony\Component\Process\Process;
 use Symplify\SmartFileSystem\SmartFileInfo;
-use function explode;
-use function sprintf;
-use function trim;
 
 final class GitManager implements GitManagerInterface
 {
-    public function cloneRemoteToPath(string $remote, string $path, ?string $name = null): void
+    public function cloneRemoteToPath(string $remote, string $path, ?string $name = null): string
     {
         $command = ['git', 'clone', $remote];
 
@@ -20,7 +17,7 @@ final class GitManager implements GitManagerInterface
             $command[] = $name;
         }
 
-        $this->exec($command, $path);
+        return $this->exec($command, $path);
     }
 
     public function getCurrentBranchFromFileInfo(SmartFileInfo $fileInfo): string
@@ -41,7 +38,7 @@ final class GitManager implements GitManagerInterface
             $path = Strings::substring($path, 1);
         }
 
-        return sprintf('/tree/%s/%s', $branch, $path);
+        return \sprintf('/tree/%s/%s', $branch, $path);
     }
 
     public function getOriginUrlFromFileInfo(SmartFileInfo $fileInfo): string
@@ -49,12 +46,12 @@ final class GitManager implements GitManagerInterface
         $command = ['git', 'config', '--get', 'remote.origin.url'];
         $output = $this->exec($command, $fileInfo->getPath());
 
-        [, $partAfterAt] = explode('@', $output, 2);
+        [, $partAfterAt] = \explode('@', $output, 2);
 
         $partAfterAt = Strings::replace($partAfterAt, '#:#', '/');
         $partAfterAt = Strings::replace($partAfterAt, '#.git#', '');
 
-        return sprintf('https://%s', $partAfterAt);
+        return \sprintf('https://%s', $partAfterAt);
     }
 
     /**
@@ -65,6 +62,6 @@ final class GitManager implements GitManagerInterface
         $process = new Process($command, $cwd);
         $process->run();
 
-        return trim($process->getOutput());
+        return \trim($process->getOutput());
     }
 }

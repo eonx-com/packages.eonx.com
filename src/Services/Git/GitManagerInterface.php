@@ -7,7 +7,7 @@ use Symplify\SmartFileSystem\SmartFileInfo;
 
 interface GitManagerInterface
 {
-    public function cloneRemoteToPath(string $remote, string $path, ?string $name = null): void;
+    public function cloneRemoteToPath(string $remote, string $path, ?string $name = null): string;
 
     public function getCurrentBranchFromFileInfo(SmartFileInfo $fileInfo): string;
 
