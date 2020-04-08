@@ -1,0 +1,6 @@
+{
+    "namespaces": [
+        { "path": "source" },
+        { "path": "docs/templates" }
+    ]
+}
