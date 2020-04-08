@@ -19,6 +19,7 @@ jobs:
             -   run: composer install --no-progress
             -   run: mkdir projects
             -   run: bin/console projects:fetch -vvv
+            -   run: cd projects && ls -la
             -   run: bin/console dump-static-site
 
             -   name: Publish
