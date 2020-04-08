@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>EonX Docs</title>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700&display=swap" rel="stylesheet">
+    <script defer src="https://kit.fontawesome.com/955de18180.js" crossorigin="anonymous"></script>
+
+                <link id="theme-style" rel="stylesheet" href="/assets/css/theme.css">
+    
+
+    <link id="theme-style" rel="stylesheet" href="/assets/css/prism.css">
+</head>
+<body>
+
+
+
+<div class="page-header theme-bg-dark py-5 text-center position-relative">
+    <div class="theme-bg-shapes-right"></div>
+    <div class="theme-bg-shapes-left"></div>
+    <div class="container">
+        <h1 class="page-heading single-col-max mx-auto"><img class="logo-icon mr-2"
+                                                             src="https://39cszd96rb9jntgd3r2cirij-wpengine.netdna-ssl.com/wp-content/uploads/2019/09/eonx-logo@1x.png"
+                                                             alt="logo"></h1>
+        <h1 class="page-heading single-col-max mx-auto">Documentation</h1>
+                <div class="page-intro single-col-max mx-auto">Everything you need to get your software documentation online.</div>
+                <div class="main-search-box pt-3 d-block mx-auto">
+                    <form class="search-form w-100">
+                        <input type="text" placeholder="Search the docs..." name="search" class="form-control search-input">
+                        <button type="submit" class="btn search-btn" value="Search"><i class="fas fa-search"></i></button>
+                    </form>
+                </div>
+    </div>
+</div><!--//page-header-->
+<div class="page-content">
+    <div class="container">
+        <div class="docs-overview py-5">
+            <div class="row">
+                    <div class="col-12">
+        <div align="center">
+    <h1>EonX - EasyPipeline</h1>
+    <p>Provides an easy and powerful way to implement pipelines for anything.</p>
+</div>
+<hr />
+<p>This document describes the concept of middleware providers and how to use them.</p>
+<h1>What's a pipeline?</h1>
+<p>If you're not familiar with the Pipeline Design Pattern we recommend you to have a look at this <a href="https://www.cise.ufl.edu/research/ParallelPatterns/PatternLanguage/AlgorithmStructure/Pipeline.htm">documentation</a>.
+In this package the &quot;tasks or stages&quot; are represented by the <code>EonX\EasyPipeline\Interfaces\MiddlewareInterface</code>.
+So the pipelines created using this package will allow you to process input data through a collection of middleware.
+The only way to define the middleware each pipeline will use is via <code>EonX\EasyPipeline\Interfaces\MiddlewareProviderInterface</code>.</p>
+<h1>How MiddlewareProviders work?</h1>
+<p>Each middleware provider must be an instance of the <code>EonX\EasyPipeline\Interfaces\MiddlewareProviderInterface</code>,
+this interface defines one simple method <code>getMiddlewareList(): array</code>. The objective of this method is to return a list
+of middleware to use within a pipeline instance.</p>
+<h2>What values can my MiddlewareProviders return?</h2>
+<p>The middleware providers must return an array of <code>MiddlewareInterface</code>.</p>
+<p>That's it!? That's all!? Not really handy, I'm sure we can do better!</p>
+<p>Yes you're right, this package comes with an implementation for any application using a PSR Service Container!
+That means you can also register your middleware inside the service container and return its service locator from your
+MiddlewareProvider and this package will know how to instantiate it! We recommend you to register your middleware using
+its <a href="https://en.wikipedia.org/wiki/Fully_qualified_name">FQCN</a>.</p>
+<h3>Illuminate Pipeline implementation</h3>
+<p>The <a href="https://packagist.org/packages/illuminate/pipeline">Illuminate Pipeline</a> knows how to resolve middleware using the PSR Service Container as well, and on the top of
+that it also allows you to define your middleware using <code>callable</code>. So if you're a using the <code>IlluminatePipeline</code>
+implementation of this package your MiddlewareProviders can return closures and any kind of <code>callable</code> as well.</p>
+<h4>Accessing the Pipeline name</h4>
+<p>If you're using the IlluminatePipelineFactory, a MiddlewareProvider can access the name it was registered under by implementing the <code>EonX\EasyPipeline\Interfaces\PipelineNameAwareInterface</code>.
+The factory will call <code>setPipelineName()</code> on any MiddlewareProviders implementing this.</p>
+<p>To save time, the <code>EonX\EasyPipeline\Traits\PipelineNameAwareTrait</code> is available, providing an implementation of this function and the private property <code>$pipelineName</code>.</p>
+<h1>Dependency Injection</h1>
+<p>This package is using the PSR Service Container to instantiate your MiddlewareProviders which means you can use
+dependency injection on them, how convenient!</p>
+<h1>Example</h1>
+<pre><code class="language-php">use App\Validator\MyValidatorInterface;
+use EonX\EasyPipeline\Interfaces\MiddlewareProviderInterface;
+
+final class MyPipeline1MiddlewareProvider implements MiddlewareProviderInterface
+{
+    /**
+     * @var App\Validator\MyValidatorInterface
+     */
+    private $validator;
+
+    public function __construct(MyValidatorInterface $validator)
+    {
+        $this-&gt;validator = $validator; // You can use dependency injection
+    }
+
+    /**
+     * Get middleware list, middleware could be anything your container can resolve.
+     *
+     * @return mixed[]
+     */
+     public function getMiddlewareList(): array
+     {
+         return [
+            new ChangeNameMiddleware(), // Instance of the middleware
+            ChangeAddressMiddleware::class, // FQCN of the middleware to be resolve by the service container
+            new MyValidatorMiddleware($this-&gt;validator), // Instance of the middleware with dependency injection
+
+            // If you're using the IlluminatePipeline implementation
+            function ($input, $next) {
+                // Do stuff here...
+
+                return $next($input);
+            },
+
+            // Or even
+            [$this, 'actAsMiddleware']
+         ];
+     }
+
+     /**
+      * This method will act as a middleware.
+      * 
+      * @param mixed $input
+      * @param \Closure $next
+      *
+      * @return mixed
+      */
+     public function actAsMiddleware($input, \Closure $next)
+     {
+        // Do stuff here...
+
+        return $next($input);
+     }
+}</code></pre>
+    </div>
+            </div><!--//row-->
+        </div><!--//container-->
+    </div><!--//container-->
+</div><!--//page-content-->
+
+<section class="cta-section text-center py-5 theme-bg-dark position-relative">
+    <div class="theme-bg-shapes-right"></div>
+    <div class="theme-bg-shapes-left"></div>
+    <div class="container">
+        <h3 class="mb-2 text-white mb-3">Launch Your Software Project Like A Pro</h3>
+        <div class="section-intro text-white mb-3 single-col-max mx-auto">Want to launch your software project and start
+            getting traction from your target users? Check out our premium <a class="text-white"
+                                                                              href="https://themes.3rdwavemedia.com/bootstrap-templates/startup/coderpro-bootstrap-4-startup-template-for-software-projects/">Bootstrap
+                4 startup template CoderPro</a>! It has everything you need to promote your product.
+        </div>
+        <div class="pt-3 text-center">
+            <a class="btn btn-light"
+               href="https://themes.3rdwavemedia.com/bootstrap-templates/startup/coderpro-bootstrap-4-startup-template-for-software-projects/">Get
+                CoderPro<i class="fas fa-arrow-alt-circle-right ml-2"></i></a>
+        </div>
+    </div>
+</section><!--//cta-section-->
+
+
+<footer class="footer">
+
+    <div class="footer-bottom text-center py-5">
+
+        <ul class="social-list list-unstyled pb-4 mb-0">
+            <li class="list-inline-item"><a href="#"><i class="fab fa-github fa-fw"></i></a></li>
+            <li class="list-inline-item"><a href="#"><i class="fab fa-twitter fa-fw"></i></a></li>
+            <li class="list-inline-item"><a href="#"><i class="fab fa-slack fa-fw"></i></a></li>
+            <li class="list-inline-item"><a href="#"><i class="fab fa-product-hunt fa-fw"></i></a></li>
+            <li class="list-inline-item"><a href="#"><i class="fab fa-facebook-f fa-fw"></i></a></li>
+            <li class="list-inline-item"><a href="#"><i class="fab fa-instagram fa-fw"></i></a></li>
+        </ul><!--//social-list-->
+
+        <!--/* This template is released under the Creative Commons Attribution 3.0 License. Please keep the attribution link below when using for your own project. Thank you for your support. :) If you'd like to use the template without the attribution, you can buy the commercial license via our website: themes.3rdwavemedia.com */-->
+        <small class="copyright">Designed with <i class="fas fa-heart" style="color: #fb866a;"></i> by <a
+                    class="theme-link" href="http://themes.3rdwavemedia.com" target="_blank">Xiaoying Riley</a> for
+            developers</small>
+    </div>
+
+</footer>
+
+</body>
+        <script src="/assets/js/jquery-3.4.1.min.js"></script>
+    <script src="/assets/js/jquery.scrollTo.min.js"></script>
+    <script src="/assets/js/popper.min.js"></script>
+    <script src="/assets/js/bootstrap.min.js"></script>
+
+
+    <script>
+        $('pre').addClass('line-numbers');
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+    <script src="/assets/js/prism.js"></script>
+</html>

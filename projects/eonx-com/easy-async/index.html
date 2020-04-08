@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>EonX Docs</title>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700&display=swap" rel="stylesheet">
+    <script defer src="https://kit.fontawesome.com/955de18180.js" crossorigin="anonymous"></script>
+
+            <link id="theme-style" rel="stylesheet" href="/assets/css/theme.css">
+        <link id="theme-style" rel="stylesheet" href="/assets/css/prism.css">
+    </head>
+<body class="docs-page">
+<header class="header fixed-top">
+    <div class="branding docs-branding">
+        <div class="container-fluid position-relative py-2">
+            <div class="docs-logo-wrapper">
+                <button id="docs-sidebar-toggler" class="docs-sidebar-toggler docs-sidebar-visible mr-2 d-xl-none" type="button">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <div class="site-logo"><a class="navbar-brand" href="/"><img class="logo-icon mr-2" src="https://39cszd96rb9jntgd3r2cirij-wpengine.netdna-ssl.com/wp-content/uploads/2019/09/eonx-logo@1x.png" alt="logo"></a></div>
+            </div><!--//docs-logo-wrapper-->
+            <div class="docs-top-utilities d-flex justify-content-end align-items-center">
+                <div class="top-search-box d-none d-lg-flex">
+                    <form class="search-form">
+                        <input type="text" placeholder="Search the docs..." name="search" class="form-control search-input">
+                        <button type="submit" class="btn search-btn" value="Search"><i class="fas fa-search"></i></button>
+                    </form>
+                </div>
+
+            </div><!--//docs-top-utilities-->
+        </div><!--//container-->
+    </div><!--//branding-->
+</header><!--//header-->
+
+    <div class="docs-wrapper">
+        <div id="docs-sidebar" class="docs-sidebar">
+            <nav id="docs-nav" class="docs-nav navbar">
+                <ul class="section-items list-unstyled nav flex-column pb-3">
+                    <li class="nav-item section-title">
+                        <a class="nav-link scrollto active" href="#intro">
+                        <span class="theme-icon-holder mr-2">
+                            <i class="fas fa-cubes"></i>
+                        </span>
+                            eonx-com/easy-async
+                        </a>
+                    </li>
+
+                                            <li class="nav-item"><a class="nav-link scrollto" href="#eonx-com_easy-async_readme">readme.md</a></li>
+                                            <li class="nav-item"><a class="nav-link scrollto" href="#eonx-com_easy-async_src_Implementations_Doctrine_resources_migrations">migrations.md</a></li>
+                                    </ul>
+            </nav>
+        </div>
+        <div class="docs-content">
+            <div class="container">
+                <article class="docs-article" id="intro">
+                    <header class="docs-header">
+                        <h1 class="docs-heading">
+                            eonx-com/easy-async
+                            <a href="https://github.com/eonx-com/easy-monorepo"><i class="fa fa-github"></i></a>
+                        </h1>
+                        <section class="docs-intro">
+                            <p>Makes dealing with async processes easier</p>
+                        </section>
+                    </header>
+
+                                            <section class="docs-section" id="eonx-com_easy-async_readme">
+                            <h2 class="section-heading">
+                                readme.md
+                                <div class="docs-time">
+                                    <a href="https://github.com/eonx-com/easy-monorepo/edit/master/packages/EasyAsync/readme.md" target="_blank" title="Edit on Github">
+                                        Edit on github <i class="fa fa-github"></i>
+                                    </a>
+                                </div>
+                            </h2>
+
+                            <div align="center">
+    <h1>EonX - EasyAsync</h1>
+    <p>Makes dealing with async processes easier.</p>
+</div>
+<hr />
+<h2>Documentation</h2>
+<p>Coming soon...</p>
+<h2>Roadmap</h2>
+<ul>
+<li>[X] Add indexes on tables</li>
+<li>[X] Fetching job features (per target type, for specific target, per type, ...paginated)</li>
+<li>[X] Fetching job logs features (per job)</li>
+<li>[X] Delete job feature</li>
+<li>[X] Create doctrine migrations</li>
+<li>[X] Laravel bridge</li>
+<li>[X] Event for Job completed</li>
+<li>[X] Write tests</li>
+</ul>
+                        </section>
+                                            <section class="docs-section" id="eonx-com_easy-async_src_Implementations_Doctrine_resources_migrations">
+                            <h2 class="section-heading">
+                                migrations.md
+                                <div class="docs-time">
+                                    <a href="https://github.com/eonx-com/easy-monorepo/edit/master/packages/EasyAsync/src/Implementations/Doctrine/resources/migrations.md" target="_blank" title="Edit on Github">
+                                        Edit on github <i class="fa fa-github"></i>
+                                    </a>
+                                </div>
+                            </h2>
+
+                            <h1>MySQL Migrations</h1>
+<h2>Job</h2>
+<pre><code class="language-php">final class JobsMigration
+{
+    public function up(): void 
+    {
+        $this-&gt;addSql(
+            'CREATE TABLE `easy_async_jobs` (
+                `id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT "(DC2Type:guid)",
+                `finished_at` datetime DEFAULT NULL,
+                `started_at` datetime DEFAULT NULL,
+                `status` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+                `target_id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+                `target_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+                `type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+                `failed` int(11) DEFAULT 0,
+                `processed` int(11) DEFAULT 0,
+                `succeeded` int(11) DEFAULT 0,
+                `total` int(11) DEFAULT 1,
+                `created_at` datetime DEFAULT NULL,
+                `updated_at` datetime DEFAULT NULL,
+                PRIMARY KEY (`id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;'
+        );
+        $this-&gt;addSql('CREATE INDEX `type` ON `easy_async_jobs` (`type`);');
+        $this-&gt;addSql('CREATE INDEX `target_type` ON `easy_async_jobs` (`target_type`);');
+        $this-&gt;addSql('CREATE INDEX `target` ON `easy_async_jobs` (`target_type`, `target_id`);');
+    }
+
+    public function down(): void 
+    {
+        $this-&gt;addSql('DROP INDEX `target` ON `easy_async_jobs`;');
+        $this-&gt;addSql('DROP INDEX `target_type` ON `easy_async_jobs`;');
+        $this-&gt;addSql('DROP INDEX `type` ON `easy_async_jobs`;');
+        $this-&gt;addSql('DROP TABLE `easy_async_jobs`;');
+    }   
+}</code></pre>
+<h2>JobLog</h2>
+<pre><code class="language-php">final class JobLogsMigration
+{
+    public function up(): void 
+    {
+        $this-&gt;addSql(
+            'CREATE TABLE `easy_async_job_logs` (
+                `id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT "(DC2Type:guid)",
+                `finished_at` datetime DEFAULT NULL,
+                `started_at` datetime DEFAULT NULL,
+                `status` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+                `target_id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+                `target_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+                `type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+                `debug_info` longtext COLLATE utf8mb4_unicode_ci COMMENT "(DC2Type:json)",
+                `failure_params` longtext COLLATE utf8mb4_unicode_ci COMMENT "(DC2Type:json)",
+                `failure_reason` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+                `job_id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT "(DC2Type:guid)",
+                `validation_errors` longtext COLLATE utf8mb4_unicode_ci COMMENT "(DC2Type:json)",
+                `created_at` datetime DEFAULT NULL,
+                `updated_at` datetime DEFAULT NULL,
+                PRIMARY KEY (`id`)
+             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;'
+        );
+        $this-&gt;addSql('CREATE INDEX `job` ON `easy_async_job_logs` (`job_id`);');       
+        $this-&gt;addSql('CREATE INDEX `status_per_job` ON `easy_async_job_logs` (`job_id`, `status`);');       
+    }
+
+    public function down(): void
+    {
+        $this-&gt;addSql('DROP INDEX `status_per_job` ON `easy_async_job_logs`;');
+        $this-&gt;addSql('DROP INDEX `job` ON `easy_async_job_logs`;');
+        $this-&gt;addSql('DROP TABLE `easy_async_job_logs`;');
+    }   
+}</code></pre>
+                        </section>
+                                    </article>
+            </div>
+        </div>
+    </div>
+
+</body>
+    <script src="/assets/js/jquery-3.4.1.min.js"></script>
+    <script src="/assets/js/jquery.scrollTo.min.js"></script>
+    <script src="/assets/js/popper.min.js"></script>
+    <script src="/assets/js/bootstrap.min.js"></script>
+    <script src="/assets/js/docs.js"></script>
+
+    <script>
+        $('pre').addClass('line-numbers');
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+    <script src="/assets/js/prism.js"></script>
+</html>

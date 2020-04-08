@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>EonX Docs</title>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700&display=swap" rel="stylesheet">
+    <script defer src="https://kit.fontawesome.com/955de18180.js" crossorigin="anonymous"></script>
+
+            <link id="theme-style" rel="stylesheet" href="/assets/css/theme.css">
+        <link id="theme-style" rel="stylesheet" href="/assets/css/prism.css">
+    </head>
+<body class="docs-page">
+<header class="header fixed-top">
+    <div class="branding docs-branding">
+        <div class="container-fluid position-relative py-2">
+            <div class="docs-logo-wrapper">
+                <button id="docs-sidebar-toggler" class="docs-sidebar-toggler docs-sidebar-visible mr-2 d-xl-none" type="button">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <div class="site-logo"><a class="navbar-brand" href="/"><img class="logo-icon mr-2" src="https://39cszd96rb9jntgd3r2cirij-wpengine.netdna-ssl.com/wp-content/uploads/2019/09/eonx-logo@1x.png" alt="logo"></a></div>
+            </div><!--//docs-logo-wrapper-->
+            <div class="docs-top-utilities d-flex justify-content-end align-items-center">
+                <div class="top-search-box d-none d-lg-flex">
+                    <form class="search-form">
+                        <input type="text" placeholder="Search the docs..." name="search" class="form-control search-input">
+                        <button type="submit" class="btn search-btn" value="Search"><i class="fas fa-search"></i></button>
+                    </form>
+                </div>
+
+            </div><!--//docs-top-utilities-->
+        </div><!--//container-->
+    </div><!--//branding-->
+</header><!--//header-->
+
+    <div class="docs-wrapper">
+        <div id="docs-sidebar" class="docs-sidebar">
+            <nav id="docs-nav" class="docs-nav navbar">
+                <ul class="section-items list-unstyled nav flex-column pb-3">
+                    <li class="nav-item section-title">
+                        <a class="nav-link scrollto active" href="#intro">
+                        <span class="theme-icon-holder mr-2">
+                            <i class="fas fa-cubes"></i>
+                        </span>
+                            eonx-com/easy-decision
+                        </a>
+                    </li>
+
+                                            <li class="nav-item"><a class="nav-link scrollto" href="#eonx-com_easy-decision_docs_laravel_install">laravel_install.md</a></li>
+                                            <li class="nav-item"><a class="nav-link scrollto" href="#eonx-com_easy-decision_readme">readme.md</a></li>
+                                    </ul>
+            </nav>
+        </div>
+        <div class="docs-content">
+            <div class="container">
+                <article class="docs-article" id="intro">
+                    <header class="docs-header">
+                        <h1 class="docs-heading">
+                            eonx-com/easy-decision
+                            <a href="https://github.com/eonx-com/easy-monorepo"><i class="fa fa-github"></i></a>
+                        </h1>
+                        <section class="docs-intro">
+                            <p>Your most complex decisions taken the easiest way</p>
+                        </section>
+                    </header>
+
+                                            <section class="docs-section" id="eonx-com_easy-decision_docs_laravel_install">
+                            <h2 class="section-heading">
+                                laravel_install.md
+                                <div class="docs-time">
+                                    <a href="https://github.com/eonx-com/easy-monorepo/edit/master/packages/EasyDecision/docs/laravel_install.md" target="_blank" title="Edit on Github">
+                                        Edit on github <i class="fa fa-github"></i>
+                                    </a>
+                                </div>
+                            </h2>
+
+                            <div align="center">
+    <h1>EonX - EasyDecision</h1>
+    <p>Your most complex decisions taken the easiest way.</p>
+</div>
+<hr />
+<p>This document describes the steps to install this package into a <a href="https://laravel.com/">Laravel</a> and/or <a href="https://lumen.laravel.com/">Lumen</a> application.</p>
+<h1>Require package (Composer)</h1>
+<p>Laravel uses <a href="https://getcomposer.org/">Composer</a> to manage its dependencies. You can require this package as following:</p>
+<pre><code class="language-bash">$ composer require eonx/easy-decision</code></pre>
+<h1>Service Provider</h1>
+<p>Once the package required, you must tell your application to use it. Laravel uses service providers to do so, if you are
+not familiar with this concept make sure to have a look at the <a href="https://laravel.com/docs/5.7/providers">documentation</a>.</p>
+<pre><code class="language-php">// config/app.php
+
+'providers' =&gt; [
+    // Other Service Providers...
+
+    \EonX\EasyDecision\Bridge\Laravel\EasyDecisionServiceProvider::class
+],</code></pre>
+<h1>Config</h1>
+<h1>Lumen Actions Required</h1>
+<p>To install this package in a Lumen application the procedures are a bit different.</p>
+<h2>Register Service Provider</h2>
+<p>In a Lumen application you must explicitly tell the application to register the package's service provider as following:</p>
+<pre><code class="language-php">// bootstrap/app.php
+
+$app = new Laravel\Lumen\Application(\dirname(__DIR__));
+
+// Other actions...
+
+$app-&gt;register(\EonX\EasyDecision\Bridge\Laravel\EasyDecisionServiceProvider::class);</code></pre>
+<h2>Add Config</h2>
+<p>In a Lumen application you must explicitly tell the application to add the package's config as following:</p>
+<pre><code class="language-php">// bootstrap/app.php
+
+$app = new Laravel\Lumen\Application(\dirname(__DIR__));
+
+// Other actions...
+
+$app-&gt;configure('easy-decision');</code></pre>
+                        </section>
+                                            <section class="docs-section" id="eonx-com_easy-decision_readme">
+                            <h2 class="section-heading">
+                                readme.md
+                                <div class="docs-time">
+                                    <a href="https://github.com/eonx-com/easy-monorepo/edit/master/packages/EasyDecision/readme.md" target="_blank" title="Edit on Github">
+                                        Edit on github <i class="fa fa-github"></i>
+                                    </a>
+                                </div>
+                            </h2>
+
+                            <div align="center">
+    <h1>EonX - EasyDecision</h1>
+    <p>Your most complex decisions made the easiest way.</p>
+</div>
+<hr />
+<h2>Roadmap</h2>
+<ul>
+<li>[x] Yes/No Decision: Give input -&gt; Rules -&gt; True/False</li>
+<li>[x] Value Decision: Give input -&gt; Rules -&gt; Get output</li>
+<li>[x] Specific functions per decision type</li>
+<li>[x] Common functions to all decision types</li>
+<li>[x] Yes/No decision have different strategies:</li>
+<li>[x] affirmative: Yes as soon as first rule says yes</li>
+<li>[x] consensus: Yes if more yes than no</li>
+<li>[x] unanimous: Yes if everybody says yes</li>
+<li>[x] Priority on rules: Run first the rules with smallest priority</li>
+<li>[x] Rules can say if they support the given input</li>
+<li>[x] After run users can get which rules ran, their body and output</li>
+<li>[x] Test the Laravel Decision Factory</li>
+<li>[x] Improve config file with some examples</li>
+<li>[x] Create a PHP methods expression functions provider as helper</li>
+<li>[ ] Create documentation</li>
+</ul>
+<h2>Documentation</h2>
+<h2>Laravel / Lumen</h2>
+<ul>
+<li><a href="docs/laravel_install.md">Installation</a></li>
+</ul>
+                        </section>
+                                    </article>
+            </div>
+        </div>
+    </div>
+
+</body>
+    <script src="/assets/js/jquery-3.4.1.min.js"></script>
+    <script src="/assets/js/jquery.scrollTo.min.js"></script>
+    <script src="/assets/js/popper.min.js"></script>
+    <script src="/assets/js/bootstrap.min.js"></script>
+    <script src="/assets/js/docs.js"></script>
+
+    <script>
+        $('pre').addClass('line-numbers');
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+    <script src="/assets/js/prism.js"></script>
+</html>

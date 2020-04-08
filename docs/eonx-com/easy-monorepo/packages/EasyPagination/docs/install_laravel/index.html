@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>EonX Docs</title>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700&display=swap" rel="stylesheet">
+    <script defer src="https://kit.fontawesome.com/955de18180.js" crossorigin="anonymous"></script>
+
+                <link id="theme-style" rel="stylesheet" href="/assets/css/theme.css">
+    
+
+    <link id="theme-style" rel="stylesheet" href="/assets/css/prism.css">
+</head>
+<body>
+
+
+
+<div class="page-header theme-bg-dark py-5 text-center position-relative">
+    <div class="theme-bg-shapes-right"></div>
+    <div class="theme-bg-shapes-left"></div>
+    <div class="container">
+        <h1 class="page-heading single-col-max mx-auto"><img class="logo-icon mr-2"
+                                                             src="https://39cszd96rb9jntgd3r2cirij-wpengine.netdna-ssl.com/wp-content/uploads/2019/09/eonx-logo@1x.png"
+                                                             alt="logo"></h1>
+        <h1 class="page-heading single-col-max mx-auto">Documentation</h1>
+                <div class="page-intro single-col-max mx-auto">Everything you need to get your software documentation online.</div>
+                <div class="main-search-box pt-3 d-block mx-auto">
+                    <form class="search-form w-100">
+                        <input type="text" placeholder="Search the docs..." name="search" class="form-control search-input">
+                        <button type="submit" class="btn search-btn" value="Search"><i class="fas fa-search"></i></button>
+                    </form>
+                </div>
+    </div>
+</div><!--//page-header-->
+<div class="page-content">
+    <div class="container">
+        <div class="docs-overview py-5">
+            <div class="row">
+                    <div class="col-12">
+        <div align="center">
+    <h1>EonX - EasyPagination</h1>
+    <p>Provides a generic way to handle pagination data from clients.</p>
+</div>
+<hr />
+<p>This document describes the steps to install this package into a <a href="https://laravel.com/">Laravel</a> and/or <a href="https://lumen.laravel.com/">Lumen</a> application.</p>
+<h1>Require package (Composer)</h1>
+<p>Laravel uses <a href="https://getcomposer.org/">Composer</a> to manage its dependencies. You can require this package as following:</p>
+<pre><code class="language-bash">$ composer require eonx/easy-pagination</code></pre>
+<h1>Service Providers</h1>
+<p>Based on your application and the way you want to handle pagination data from your clients, you will need to use a
+specific resolver. To make your life easier, for each built-in resolver comes a ready to go Laravel service provider!
+You just have to register the one you want:</p>
+<pre><code class="language-php">// config/app.php
+
+'providers' =&gt; [
+    // Other Service Providers...
+
+    // If you want to handle pagination data as an array in the request query
+    \EonX\EasyPagination\Bridge\Laravel\Providers\StartSizeAsArrayInQueryEasyPaginationProvider::class,
+
+    // If you want to handle pagination data directly in the request query
+    \EonX\EasyPagination\Bridge\Laravel\Providers\StartSizeInQueryEasyPaginationProvider::class,
+],</code></pre>
+<h1>Usage</h1>
+<h2>StartSize EasyPagination</h2>
+<p>The &quot;StartSize&quot; service providers will register 2 services as:</p>
+<ul>
+<li><code>EonX\EasyPagination\Interfaces\StartSizeDataResolverInterface</code>: Used to resolve the pagination data</li>
+<li><code>EonX\EasyPagination\Interfaces\StartSizeDataInterface</code>: Resolved pagination data</li>
+</ul>
+<p>That's it you're all setup! You're now able to resolve pagination data or automatically inject it anywhere you want,
+using dependency injection or service locator (we strongly recommend to use the first one haha).</p>
+<pre><code class="language-php">// Dependency Injection
+public function __construct(\EonX\EasyPagination\Interfaces\StartSizeDataInterface $data) {
+    $this-&gt;data = $data;
+
+    $data-&gt;getStart();
+    $data-&gt;getSize();
+}
+
+// Service Locator
+$app-&gt;make(\EonX\EasyPagination\Interfaces\StartSizeDataInterface::class);</code></pre>
+<h1>Config</h1>
+<p>To make sure to fit your needs this package comes with a configuration file you can customize as you which.</p>
+<pre><code class="language-php">return [
+    /*
+    |--------------------------------------------------------------------------
+    | Array in query attribute name
+    |--------------------------------------------------------------------------
+    |
+    | This config is used to resolve the pagination data when it is expected
+    | in the query parameters of the request as an array. This config is the
+    | name of the query parameter containing the pagination data array.
+    |
+    | Example:
+    | For this config as "page", the resolver will look in the query for:
+    | "&lt;your-url&gt;?page[&lt;number_attr&gt;]=1&amp;page[&lt;size_attr&gt;]=15"
+    |
+    */
+    'array_in_query_attr' =&gt; \env('PAGINATION_ARRAY_IN_QUERY_ATTR', 'page'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | StartSize EasyPagination
+    |--------------------------------------------------------------------------
+    |
+    | This config contains the names of the attributes to use to resolve the
+    | start_size pagination data, and also their default values if not set
+    | on the given request.
+    |
+    */
+    'start_size' =&gt; [
+        'start_attribute' =&gt; \env('PAGINATION_PAGE_START_ATTRIBUTE', 'page'),
+        'start_default' =&gt; \env('PAGINATION_PAGE_START_DEFAULT', 1),
+        'size_attribute' =&gt; \env('PAGINATION_PAGE_SIZE_ATTRIBUTE', 'perPage'),
+        'size_default' =&gt; \env('PAGINATION_PAGE_SIZE_DEFAULT', 15)
+    ]
+];</code></pre>
+    </div>
+            </div><!--//row-->
+        </div><!--//container-->
+    </div><!--//container-->
+</div><!--//page-content-->
+
+<section class="cta-section text-center py-5 theme-bg-dark position-relative">
+    <div class="theme-bg-shapes-right"></div>
+    <div class="theme-bg-shapes-left"></div>
+    <div class="container">
+        <h3 class="mb-2 text-white mb-3">Launch Your Software Project Like A Pro</h3>
+        <div class="section-intro text-white mb-3 single-col-max mx-auto">Want to launch your software project and start
+            getting traction from your target users? Check out our premium <a class="text-white"
+                                                                              href="https://themes.3rdwavemedia.com/bootstrap-templates/startup/coderpro-bootstrap-4-startup-template-for-software-projects/">Bootstrap
+                4 startup template CoderPro</a>! It has everything you need to promote your product.
+        </div>
+        <div class="pt-3 text-center">
+            <a class="btn btn-light"
+               href="https://themes.3rdwavemedia.com/bootstrap-templates/startup/coderpro-bootstrap-4-startup-template-for-software-projects/">Get
+                CoderPro<i class="fas fa-arrow-alt-circle-right ml-2"></i></a>
+        </div>
+    </div>
+</section><!--//cta-section-->
+
+
+<footer class="footer">
+
+    <div class="footer-bottom text-center py-5">
+
+        <ul class="social-list list-unstyled pb-4 mb-0">
+            <li class="list-inline-item"><a href="#"><i class="fab fa-github fa-fw"></i></a></li>
+            <li class="list-inline-item"><a href="#"><i class="fab fa-twitter fa-fw"></i></a></li>
+            <li class="list-inline-item"><a href="#"><i class="fab fa-slack fa-fw"></i></a></li>
+            <li class="list-inline-item"><a href="#"><i class="fab fa-product-hunt fa-fw"></i></a></li>
+            <li class="list-inline-item"><a href="#"><i class="fab fa-facebook-f fa-fw"></i></a></li>
+            <li class="list-inline-item"><a href="#"><i class="fab fa-instagram fa-fw"></i></a></li>
+        </ul><!--//social-list-->
+
+        <!--/* This template is released under the Creative Commons Attribution 3.0 License. Please keep the attribution link below when using for your own project. Thank you for your support. :) If you'd like to use the template without the attribution, you can buy the commercial license via our website: themes.3rdwavemedia.com */-->
+        <small class="copyright">Designed with <i class="fas fa-heart" style="color: #fb866a;"></i> by <a
+                    class="theme-link" href="http://themes.3rdwavemedia.com" target="_blank">Xiaoying Riley</a> for
+            developers</small>
+    </div>
+
+</footer>
+
+</body>
+        <script src="/assets/js/jquery-3.4.1.min.js"></script>
+    <script src="/assets/js/jquery.scrollTo.min.js"></script>
+    <script src="/assets/js/popper.min.js"></script>
+    <script src="/assets/js/bootstrap.min.js"></script>
+
+
+    <script>
+        $('pre').addClass('line-numbers');
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+    <script src="/assets/js/prism.js"></script>
+</html>

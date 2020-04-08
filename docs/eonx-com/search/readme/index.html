@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>EonX Docs</title>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700&display=swap" rel="stylesheet">
+    <script defer src="https://kit.fontawesome.com/955de18180.js" crossorigin="anonymous"></script>
+
+                <link id="theme-style" rel="stylesheet" href="/assets/css/theme.css">
+    
+
+    <link id="theme-style" rel="stylesheet" href="/assets/css/prism.css">
+</head>
+<body>
+
+
+
+<div class="page-header theme-bg-dark py-5 text-center position-relative">
+    <div class="theme-bg-shapes-right"></div>
+    <div class="theme-bg-shapes-left"></div>
+    <div class="container">
+        <h1 class="page-heading single-col-max mx-auto"><img class="logo-icon mr-2"
+                                                             src="https://39cszd96rb9jntgd3r2cirij-wpengine.netdna-ssl.com/wp-content/uploads/2019/09/eonx-logo@1x.png"
+                                                             alt="logo"></h1>
+        <h1 class="page-heading single-col-max mx-auto">Documentation</h1>
+                <div class="page-intro single-col-max mx-auto">Everything you need to get your software documentation online.</div>
+                <div class="main-search-box pt-3 d-block mx-auto">
+                    <form class="search-form w-100">
+                        <input type="text" placeholder="Search the docs..." name="search" class="form-control search-input">
+                        <button type="submit" class="btn search-btn" value="Search"><i class="fas fa-search"></i></button>
+                    </form>
+                </div>
+    </div>
+</div><!--//page-header-->
+<div class="page-content">
+    <div class="container">
+        <div class="docs-overview py-5">
+            <div class="row">
+                    <div class="col-12">
+        <h1>Search</h1>
+<p>The goals of this search package are to provide common functionality that enables creating and
+maintaining Elasticsearch search indices for an application.</p>
+<p>It is up to the application to provide implementations of the <code>SearchHandlerInterface</code> (for simple
+search indices that the package will ensure are created) and <code>TransformableSearchHandlerInterface</code>
+(for indices that will react to changes to entities in external systems and transform those entities
+into search documents to be indexed).</p>
+<p>An example implementation of both is provided.</p>
+<h2>Overview</h2>
+<p>This package provides multiple parts to enable easy search.</p>
+<ul>
+<li>There are index management commands provided that allow for reindexing without destroying the
+previous indices.</li>
+<li>Command options that will only reindex when the index mappings have changed
+(not yet implemented PYMT-1690)</li>
+<li>The Lumen service provider will auto discover any services tagged with <code>search_handler</code> and will
+use those discovered handlers to create and manage indices in Elasticsearch.</li>
+<li>The Lumen bridge providers a listener that will react to any Doctrine entity changes through the
+use of EasyEntityChange.</li>
+<li>The search handler interfaces provide multiple options for implementation depending on the
+application requirements.</li>
+</ul>
+<h2>Theory of Operation</h2>
+<p>The primary and default implementation of this package sets up a listener that will react to any
+entity changes inside Doctrine and dispatch jobs for re-indexing those entities based on Search
+Handlers that are interested in specific changes.</p>
+<p>Each application Search Handler will define an array of <code>ChangeSubscription</code> DTOs that describe the
+entities and relevant properties that should trigger the reindexing of a document.</p>
+<p>The package will handle batching search updates into multiple jobs for handling, and pass a
+<code>ObjectForChange</code> DTO to the application Search Handler that describes an object that has changed -
+either the object was updated or deleted. It is then up to the Search Handler to return a
+<code>DocumentAction</code> DTO that describes what should happen to the Elasticsearch document.</p>
+<h3>Lifecycle - Index management</h3>
+<p>When an application is initially created or deployed, the indices <strong>must</strong> be created before the
+application writes to Elasticsearch. Elasticsearch will eagerly create indices which is a behavior
+we dont want- so before the application accepts requests a migration/search setup process must run.</p>
+<p>Following an imaginary index <code>transactions</code> through the following process:</p>
+<pre><code class="language-bash"># This command will create initial indices that are suffixed with the current date, and add an alias
+# for each one that is suffixed with _new. No aliases exist at the root at this time.
+#
+# The system creates a `transactions_20200102121314` and a `transactions_new` alias that points to
+# the date suffixed index.
+$ ./artisan search:index:create
+
+# This command fills the _new aliases with all document data for any search handlers that implement
+# the TransformableSearchHandlerInterface. This command has options for synchronously filling or
+# creating jobs to fill with workers.
+#
+# The system fills all data from the `getFillIterable` method on the TransactionSearchHandler. The
+# index is still not live at this point.
+$ ./artisan search:index:fill
+
+# This command will atomically swap any root (live) aliases for any indices suffixed with _new that
+# have had data populated. After this command is run, the application has been switched to the new
+# indexes.
+#
+# The system sees that `transactions_new` (which points to `transactions_20200102121314`) has data 
+# in it, and atomically swaps `transactions` (which currently points to 
+# `transactions_20191212121212`) to now point to `transactions_20200102121314`. All index changes 
+# occur at the same time and if any fail to swap, they all fail.
+$ ./artisan search:index:live
+
+# This command cleans up any old aliases/indices that are no longer required.
+#
+# The `transactions_2019121212` index is removed.
+$ ./artisan search:index:clean</code></pre>
+<h3>Lifecycle - reacting to Doctrine changes</h3>
+<p>This package listens for <code>EntityChange</code> events from the EasyEntityChange package. The
+<code>EntityUpdateWorker</code> converts these events into <code>ObjectForChange</code> DTOs that are then processed
+against the Search Handler subscriptions to find any intersections.</p>
+<p>Once any intersections are found, the work is batched and dispatched as jobs for workers to process
+as required.</p>
+<h2>Example Search Handler</h2>
+<p>The below example is verbose, and contains code that would normally be placed inside an abstract
+search handler, to show the expectations of an implementation of the
+<code>TransformableSearchHandlerInterface</code>.</p>
+<pre><code class="language-php">&lt;?php
+declare(strict_types=1);
+
+namespace App\Services\Search;
+
+use EonX\EasyEntityChange\DataTransferObjects\ChangedEntity;
+use LoyaltyCorp\Search\Bridge\Doctrine\DoctrineSearchHandler;
+use LoyaltyCorp\Search\DataTransferObjects\DocumentAction;
+use LoyaltyCorp\Search\DataTransferObjects\DocumentDelete;
+use LoyaltyCorp\Search\DataTransferObjects\DocumentUpdate;
+use LoyaltyCorp\Search\DataTransferObjects\Handlers\ChangeSubscription;
+use LoyaltyCorp\Search\DataTransferObjects\Handlers\ObjectForChange;
+use LoyaltyCorp\Search\DataTransferObjects\Handlers\ObjectForDelete;
+use LoyaltyCorp\Search\DataTransferObjects\Handlers\ObjectForUpdate;
+
+/**
+ * This handler represents a single index in Elasticsearch, and reacts to a single primary
+ * entity for building those indicies.
+ * 
+ * The extends annotation below tells phpstan that we're creating a handler for dealing
+ * with Transactions only, and enables additional checks to ensure code correctness. For
+ * more details, check out PhpStan Generics.
+ * 
+ * @extends DoctrineSearchHandler&lt;Transaction&gt;
+ */
+class TransactionHandler extends DoctrineSearchHandler 
+{
+    /**
+     * This method is used to define the Elasticsearch mappings. By convention, our indices should
+     * be defined with dynamic-&gt;strict wherever they can be, to avoid issues with mistakes in the
+     * transform method or the mappings being out of sync.
+     *
+     * {@inheritdoc}
+     */
+    public static function getMappings(): array
+    {
+        return [
+            'doc' =&gt; [
+                'dynamic' =&gt; 'strict',
+                'properties' =&gt; [
+                    'createdAt' =&gt; [
+                        'type' =&gt; 'date',
+                    ],
+                    // Additional mappings as required
+                ],
+            ],
+        ];
+    }
+
+    /**
+     * Depending on the requirements of the application and if the Elasticsearch system is clustered
+     * these settings may need to be modified, but for a default implementation with a single ES node
+     * the defaults of 1 for both settings are preferred.
+     *
+     * {@inheritdoc}
+     */
+    public static function getSettings(): array
+    {
+        return [
+            'number_of_replicas' =&gt; 1,
+            'number_of_shards' =&gt; 1,
+        ];
+    }
+
+    /**
+     * The handler key is used internally by the search package to keep track of which handler needs
+     * what data, the key needs to be unique across the application.
+     *
+     * {@inheritdoc}
+     */
+    public function getHandlerKey(): string
+    {
+        return 'transactions';
+    }
+
+    /**
+     * This is the index name that will be used by the search package. Indexes will be created with
+     * a date suffix and aliased to the "real index" name during the search setup or reindexing
+     * process.
+     *
+     * {@inheritdoc}
+     */
+    public function getIndexName(): string
+    {
+        return 'transactions';
+    }
+
+    /**
+     * This method returns the subscriptions for any objects that this search handler is interested
+     * in - and optionally a transformation callback that will turn the ChangedEntity that it
+     * receives into an iterable of ObjectForUpdate DTOs for batch processing.
+     *
+     * {@inheritdoc}
+     */
+    public function getSubscriptions(): iterable
+    {
+        yield from parent::getSubscriptions();
+
+        // React to transaction metadata changes.
+        yield new ChangeSubscription(
+            Metadata::class,
+            ['key', 'value'],
+            fn (ChangedEntity $change) =&gt; $this-&gt;loadTransactionsFromMetadata($change)
+        );
+
+        // React to changes to the user's email address
+        yield new ChangeSubscription(
+            User::class,
+            ['email'],
+            fn (ChangedEntity $change) =&gt; $this-&gt;loadTransactionsFromUser($change)      
+         );
+    }
+
+    /**
+     * Loads related transactions from a metadata change.
+     *
+     * @phpstan-return iterable&lt;ObjectForUpdate&lt;Transaction&gt;&gt;
+     *
+     * @param \EonX\EasyEntityChange\DataTransferObjects\ChangedEntity $change
+     *
+     * @return \LoyaltyCorp\Search\DataTransferObjects\Handlers\ObjectForChange[]
+     */
+    public function loadTransactionsFromMetadata(ChangedEntity $change): iterable
+    {
+        if ($change-&gt;getClass() !== Metadata::class ||
+            \is_string($change-&gt;getIds()['metadataId'] ?? null) === false) {
+            return [];
+        }
+
+        $repository = $this-&gt;getEntityManager()-&gt;getRepository(Transaction::class);
+
+        return $repository-&gt;getSearchTransactionsForMetadataUpdate($change-&gt;getIds()['metadataId']);
+    }
+
+    /**
+     * Loads related transactions from a user.
+     *
+     * @phpstan-return iterable&lt;ObjectForUpdate&lt;Transaction&gt;&gt;
+     *
+     * @param \EonX\EasyEntityChange\DataTransferObjects\ChangedEntity $change
+     *
+     * @return \LoyaltyCorp\Search\DataTransferObjects\Handlers\ObjectForChange[]
+     */
+    public function loadTransactionsFromUser(ChangedEntity $change): iterable
+    {
+        if ($change-&gt;getClass() !== User::class ||
+            \is_string($change-&gt;getIds()['userId'] ?? null) === false) {
+            return [];
+        }
+
+        $repository = $this-&gt;getEntityManager()-&gt;getRepository(Transaction::class);
+
+        return $repository-&gt;getSearchTransactionsForUserUpdate($change-&gt;getIds()['userId']);
+    }
+
+    /**
+     * This method takes an ObjectForChange and returns a DocumentAction.
+     *
+     * Its primary purpose is to either decide that a document should be deleted or updated.
+     *
+     * {@inheritdoc}
+     */
+    public function transform(ObjectForChange $change): ?DocumentAction
+    {
+        // We didnt get a $change that makes sense for this transform method.
+        if ($change-&gt;getClass() !== Transaction::class ||
+            ($change-&gt;getObject() instanceof Transaction) === false) {
+            return null;
+        }
+
+        // If we got an ObjectForDelete and we have the searchId metadata,
+        // issue a delete action to search.
+        if ($change instanceof ObjectForDelete === true &amp;&amp;
+            \is_string($change-&gt;getMetadata()['searchId'] ?? null) === true) {
+            return new DocumentDelete($change-&gt;getMetadata()['searchId']);
+        }
+
+        // If we didnt get an Update or Delete we dont know what the system// 
+        // wants, lets not do anything.
+        if ($change instanceof ObjectForUpdate === false) {
+            return null;
+        }
+
+        /**
+         * PHPStorm isnt capable of recognising that this is a Transaction even though
+         * we check it above. This is just for IDE compatibility.
+         *
+         * @var \App\Database\Entities\Transaction $transaction
+         */
+        $transaction = $change-&gt;getObject();
+
+        // An object without an external id cannot be transformed.
+        if (\is_string($transaction-&gt;getExternalId()) === false) {
+            return null;
+        }
+
+        return new DocumentUpdate(
+            $transaction-&gt;getExternalId(),
+            [
+                'id' =&gt; $transaction-&gt;getId(),
+                'created_at' =&gt; $transaction-&gt;getCreatedAt(),
+                // ...
+            ]
+        );
+    }
+}</code></pre>
+<h3>Example Entity Repository</h3>
+<p>Along with the search handler, there are a few methods that need to be implemented into
+the entity's repository. The package provides a SearchRepository trait that does the
+heavy lifting, but you still need to implement the interface and a few methods that
+proxy to the trait.</p>
+<pre><code class="language-php">&lt;?php
+declare(strict_types=1);
+
+namespace App\Database\Repositories;
+
+use LoyaltyCorp\Search\Bridge\Doctrine\Interfaces\FillableRepositoryInterface;
+use LoyaltyCorp\Search\Bridge\Doctrine\SearchRepositoryTrait;
+use LoyaltyCorp\Search\DataTransferObjects\Handlers\ObjectForUpdate;
+
+/**
+ * @implements FillableRepositoryInterface&lt;Transaction&gt;
+ */
+class TransactionRepository extends Repository implements FillableRepositoryInterface
+{
+    use SearchRepositoryTrait;
+
+    /**
+     * {@inheritdoc}
+     *
+     * @throws \Doctrine\ORM\ORMException
+     */
+    public function getFillIterable(): iterable
+    {
+        return $this-&gt;doGetFillIterable(
+            $this-&gt;createQueryBuilder('e'),
+            $this-&gt;entityManager-&gt;getClassMetadata(Transaction::class),
+            Transaction::class
+        );
+    }
+
+    /**
+     * Returns an iterable of transactions that relate to a user.
+     *
+     * @phpstan-return array&lt;ObjectForUpdate&lt;Transaction&gt;&gt;
+     *
+     * @param string $metadataId
+     *
+     * @return \LoyaltyCorp\Search\DataTransferObjects\Handlers\ObjectForUpdate[]
+     *
+     * @throws \Doctrine\ORM\ORMException
+     */
+    public function getSearchTransactionsForMetadataUpdate(string $metadataId): iterable
+    {
+        $builder = $this-&gt;createQueryBuilder('t');
+        $builder-&gt;select('t.transactionId');
+
+        $builder-&gt;where(':metadata MEMBER OF t.metadata');
+        $builder-&gt;setParameter('metadata', $metadataId);
+
+        $index = 0;
+        foreach ($builder-&gt;getQuery()-&gt;iterate([], AbstractQuery::HYDRATE_SCALAR) as $result) {
+            yield new ObjectForUpdate(
+                Transaction::class,
+                ['transactionId' =&gt; $result[$index++]['transactionId']]
+            );
+        }
+    }
+
+    /**
+     * Returns an iterable of transactions that relate to a user.
+     *
+     * @phpstan-return array&lt;ObjectForUpdate&lt;Transaction&gt;&gt;
+     *
+     * @param string $userId
+     *
+     * @return \LoyaltyCorp\Search\DataTransferObjects\Handlers\ObjectForUpdate[]
+     *
+     * @throws \Doctrine\ORM\ORMException
+     */
+    public function getSearchTransactionsForUserUpdate(string $userId): iterable
+    {
+        $builder = $this-&gt;createQueryBuilder('t');
+        $builder-&gt;select('t.transactionId');
+
+        $builder-&gt;where('IDENTITY(t.user) = :user');
+        $builder-&gt;setParameter('user', $userId);
+
+        $index = 0;
+        foreach ($builder-&gt;getQuery()-&gt;iterate([], AbstractQuery::HYDRATE_SCALAR) as $result) {
+            yield new ObjectForUpdate(
+                Transaction::class,
+                ['transactionId' =&gt; $result[$index++]['transactionId']]
+            );
+        }
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @throws \Doctrine\ORM\Mapping\MappingException
+     */
+    public function prefillSearch(iterable $changes): void
+    {
+        $this-&gt;doPrefillSearch(
+            $this-&gt;createQueryBuilder('e'),
+            $this-&gt;entityManager-&gt;getClassMetadata(Transaction::class),
+            Transaction::class,
+            $changes
+        );
+    }
+}</code></pre>
+    </div>
+            </div><!--//row-->
+        </div><!--//container-->
+    </div><!--//container-->
+</div><!--//page-content-->
+
+<section class="cta-section text-center py-5 theme-bg-dark position-relative">
+    <div class="theme-bg-shapes-right"></div>
+    <div class="theme-bg-shapes-left"></div>
+    <div class="container">
+        <h3 class="mb-2 text-white mb-3">Launch Your Software Project Like A Pro</h3>
+        <div class="section-intro text-white mb-3 single-col-max mx-auto">Want to launch your software project and start
+            getting traction from your target users? Check out our premium <a class="text-white"
+                                                                              href="https://themes.3rdwavemedia.com/bootstrap-templates/startup/coderpro-bootstrap-4-startup-template-for-software-projects/">Bootstrap
+                4 startup template CoderPro</a>! It has everything you need to promote your product.
+        </div>
+        <div class="pt-3 text-center">
+            <a class="btn btn-light"
+               href="https://themes.3rdwavemedia.com/bootstrap-templates/startup/coderpro-bootstrap-4-startup-template-for-software-projects/">Get
+                CoderPro<i class="fas fa-arrow-alt-circle-right ml-2"></i></a>
+        </div>
+    </div>
+</section><!--//cta-section-->
+
+
+<footer class="footer">
+
+    <div class="footer-bottom text-center py-5">
+
+        <ul class="social-list list-unstyled pb-4 mb-0">
+            <li class="list-inline-item"><a href="#"><i class="fab fa-github fa-fw"></i></a></li>
+            <li class="list-inline-item"><a href="#"><i class="fab fa-twitter fa-fw"></i></a></li>
+            <li class="list-inline-item"><a href="#"><i class="fab fa-slack fa-fw"></i></a></li>
+            <li class="list-inline-item"><a href="#"><i class="fab fa-product-hunt fa-fw"></i></a></li>
+            <li class="list-inline-item"><a href="#"><i class="fab fa-facebook-f fa-fw"></i></a></li>
+            <li class="list-inline-item"><a href="#"><i class="fab fa-instagram fa-fw"></i></a></li>
+        </ul><!--//social-list-->
+
+        <!--/* This template is released under the Creative Commons Attribution 3.0 License. Please keep the attribution link below when using for your own project. Thank you for your support. :) If you'd like to use the template without the attribution, you can buy the commercial license via our website: themes.3rdwavemedia.com */-->
+        <small class="copyright">Designed with <i class="fas fa-heart" style="color: #fb866a;"></i> by <a
+                    class="theme-link" href="http://themes.3rdwavemedia.com" target="_blank">Xiaoying Riley</a> for
+            developers</small>
+    </div>
+
+</footer>
+
+</body>
+        <script src="/assets/js/jquery-3.4.1.min.js"></script>
+    <script src="/assets/js/jquery.scrollTo.min.js"></script>
+    <script src="/assets/js/popper.min.js"></script>
+    <script src="/assets/js/bootstrap.min.js"></script>
+
+
+    <script>
+        $('pre').addClass('line-numbers');
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+    <script src="/assets/js/prism.js"></script>
+</html>

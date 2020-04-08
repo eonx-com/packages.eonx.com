@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>EonX Docs</title>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700&display=swap" rel="stylesheet">
+    <script defer src="https://kit.fontawesome.com/955de18180.js" crossorigin="anonymous"></script>
+
+            <link id="theme-style" rel="stylesheet" href="/assets/css/theme.css">
+        <link id="theme-style" rel="stylesheet" href="/assets/css/prism.css">
+    </head>
+<body class="docs-page">
+<header class="header fixed-top">
+    <div class="branding docs-branding">
+        <div class="container-fluid position-relative py-2">
+            <div class="docs-logo-wrapper">
+                <button id="docs-sidebar-toggler" class="docs-sidebar-toggler docs-sidebar-visible mr-2 d-xl-none" type="button">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <div class="site-logo"><a class="navbar-brand" href="/"><img class="logo-icon mr-2" src="https://39cszd96rb9jntgd3r2cirij-wpengine.netdna-ssl.com/wp-content/uploads/2019/09/eonx-logo@1x.png" alt="logo"></a></div>
+            </div><!--//docs-logo-wrapper-->
+            <div class="docs-top-utilities d-flex justify-content-end align-items-center">
+                <div class="top-search-box d-none d-lg-flex">
+                    <form class="search-form">
+                        <input type="text" placeholder="Search the docs..." name="search" class="form-control search-input">
+                        <button type="submit" class="btn search-btn" value="Search"><i class="fas fa-search"></i></button>
+                    </form>
+                </div>
+
+            </div><!--//docs-top-utilities-->
+        </div><!--//container-->
+    </div><!--//branding-->
+</header><!--//header-->
+
+    <div class="docs-wrapper">
+        <div id="docs-sidebar" class="docs-sidebar">
+            <nav id="docs-nav" class="docs-nav navbar">
+                <ul class="section-items list-unstyled nav flex-column pb-3">
+                    <li class="nav-item section-title">
+                        <a class="nav-link scrollto active" href="#intro">
+                        <span class="theme-icon-holder mr-2">
+                            <i class="fas fa-cubes"></i>
+                        </span>
+                            eonx-com/easy-core
+                        </a>
+                    </li>
+
+                                            <li class="nav-item"><a class="nav-link scrollto" href="#eonx-com_easy-core_docs_lumen_config_cache">lumen_config_cache.md</a></li>
+                                            <li class="nav-item"><a class="nav-link scrollto" href="#eonx-com_easy-core_readme">readme.md</a></li>
+                                    </ul>
+            </nav>
+        </div>
+        <div class="docs-content">
+            <div class="container">
+                <article class="docs-article" id="intro">
+                    <header class="docs-header">
+                        <h1 class="docs-heading">
+                            eonx-com/easy-core
+                            <a href="https://github.com/eonx-com/easy-monorepo"><i class="fa fa-github"></i></a>
+                        </h1>
+                        <section class="docs-intro">
+                            <p>Provides core features for Lumen applications</p>
+                        </section>
+                    </header>
+
+                                            <section class="docs-section" id="eonx-com_easy-core_docs_lumen_config_cache">
+                            <h2 class="section-heading">
+                                lumen_config_cache.md
+                                <div class="docs-time">
+                                    <a href="https://github.com/eonx-com/easy-monorepo/edit/master/packages/EasyCore/docs/lumen_config_cache.md" target="_blank" title="Edit on Github">
+                                        Edit on github <i class="fa fa-github"></i>
+                                    </a>
+                                </div>
+                            </h2>
+
+                            <h1>To enable configuration cache</h1>
+<ul>
+<li>Register <code>EonX\EasyCore\Bridge\Laravel\CachedConfigurationServiceProvider</code> at <code>bootstrap/app.php</code>
+instead of <code>ConfigurationServiceProvider</code></li>
+<li>Execute <code>php artisan config:cache</code> at container start or whenever you want to update cache</li>
+<li>Add <code>echo "config:cache"</code> and <code>/usr/local/bin/php ${ARTISAN} config:cache</code> lines to startup.sh</li>
+</ul>
+<h1>To clear configuration cache</h1>
+<ul>
+<li>Execute <code>php artisan config:clear</code></li>
+</ul>
+<h1>To disable configuration cache</h1>
+<ul>
+<li>Remove <code>echo "config:cache"</code> and <code>/usr/local/bin/php ${ARTISAN} config:cache</code> lines from startup.sh</li>
+<li>Clear cache by executing <code>php artisan config:clear</code></li>
+<li>(Optionally) Replace <code>CachedConfigurationServiceProvider</code> with <code>ConfigurationServiceProvider</code> at <code>bootstrap/app.php</code></li>
+</ul>
+                        </section>
+                                            <section class="docs-section" id="eonx-com_easy-core_readme">
+                            <h2 class="section-heading">
+                                readme.md
+                                <div class="docs-time">
+                                    <a href="https://github.com/eonx-com/easy-monorepo/edit/master/packages/EasyCore/readme.md" target="_blank" title="Edit on Github">
+                                        Edit on github <i class="fa fa-github"></i>
+                                    </a>
+                                </div>
+                            </h2>
+
+                            <div align="center">
+    <h1>EonX - EasyCore</h1>
+    <p>Provides core features for Lumen applications.</p>
+</div>
+<hr />
+<h2>Roadmap</h2>
+<h2>Documentation</h2>
+<h2>Laravel / Lumen</h2>
+<ul>
+<li><a href="docs/laravel_install.md">Installation</a></li>
+</ul>
+                        </section>
+                                    </article>
+            </div>
+        </div>
+    </div>
+
+</body>
+    <script src="/assets/js/jquery-3.4.1.min.js"></script>
+    <script src="/assets/js/jquery.scrollTo.min.js"></script>
+    <script src="/assets/js/popper.min.js"></script>
+    <script src="/assets/js/bootstrap.min.js"></script>
+    <script src="/assets/js/docs.js"></script>
+
+    <script>
+        $('pre').addClass('line-numbers');
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+    <script src="/assets/js/prism.js"></script>
+</html>

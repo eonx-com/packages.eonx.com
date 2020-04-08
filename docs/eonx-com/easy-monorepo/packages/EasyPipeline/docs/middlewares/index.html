@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>EonX Docs</title>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700&display=swap" rel="stylesheet">
+    <script defer src="https://kit.fontawesome.com/955de18180.js" crossorigin="anonymous"></script>
+
+                <link id="theme-style" rel="stylesheet" href="/assets/css/theme.css">
+    
+
+    <link id="theme-style" rel="stylesheet" href="/assets/css/prism.css">
+</head>
+<body>
+
+
+
+<div class="page-header theme-bg-dark py-5 text-center position-relative">
+    <div class="theme-bg-shapes-right"></div>
+    <div class="theme-bg-shapes-left"></div>
+    <div class="container">
+        <h1 class="page-heading single-col-max mx-auto"><img class="logo-icon mr-2"
+                                                             src="https://39cszd96rb9jntgd3r2cirij-wpengine.netdna-ssl.com/wp-content/uploads/2019/09/eonx-logo@1x.png"
+                                                             alt="logo"></h1>
+        <h1 class="page-heading single-col-max mx-auto">Documentation</h1>
+                <div class="page-intro single-col-max mx-auto">Everything you need to get your software documentation online.</div>
+                <div class="main-search-box pt-3 d-block mx-auto">
+                    <form class="search-form w-100">
+                        <input type="text" placeholder="Search the docs..." name="search" class="form-control search-input">
+                        <button type="submit" class="btn search-btn" value="Search"><i class="fas fa-search"></i></button>
+                    </form>
+                </div>
+    </div>
+</div><!--//page-header-->
+<div class="page-content">
+    <div class="container">
+        <div class="docs-overview py-5">
+            <div class="row">
+                    <div class="col-12">
+        <div align="center">
+    <h1>EonX - EasyPipeline</h1>
+    <p>Provides an easy and powerful way to implement pipelines for anything.</p>
+</div>
+<hr />
+<p>This document describes the concept of middleware and how to use them.</p>
+<h1>What's a middleware</h1>
+<p>If you're not familiar with the Pipeline Design Pattern we recommend you to have a look at this <a href="https://www.cise.ufl.edu/research/ParallelPatterns/PatternLanguage/AlgorithmStructure/Pipeline.htm">documentation</a>.
+In this package the &quot;tasks or stages&quot; are the middleware and are defined by the <code>EonX\EasyPipeline\Interfaces\MiddlewareInterface</code>.</p>
+<h1>How to create a middleware</h1>
+<p>A middleware is a simple PHP object implementing the <code>EonX\EasyPipeline\Interfaces\MiddlewareInterface</code>, this
+interface defines only one method <code>handle($input, callable $next)</code> where <code>$input</code> is the pipeline input data, potentially
+modified by a previous middleware, and <code>$next</code> is the callable to tell the next middleware it can proceed with the input.</p>
+<p>To ensure the pipeline works as expected, each middleware MUST keep passing the input to the next middleware. Here is
+the minimum required code for a middleware:</p>
+<pre><code class="language-php">use EonX\EasyPipeline\Interfaces\MiddlewareInterface;
+
+final class MyMiddleware implements MiddlewareInterface
+{
+    /**
+     * Handle given input and pass return through next.
+     *
+     * @param mixed $input
+     * @param callable $next
+     *
+     * @return mixed
+     */
+     public function handle($input, callable $next)
+     {
+        // Do stuff here...
+
+        return $next($input); // Return the output of the next middleware for the given input
+     }
+}</code></pre>
+<h1>Log each step of your pipeline</h1>
+<p>This package comes with all the tools to allow your middleware to log information for each step of your pipeline, this
+can be really handy for debugging purposes. In order to allow your middleware to log information, it must implement
+the <code>EonX\EasyPipeline\Interfaces\MiddlewareLoggerAwareInterface</code> so that the pipeline know your middleware
+requires the <code>EonX\EasyPipeline\Interfaces\MiddlewareLoggerInterface</code> instance.</p>
+<p>The <code>MiddlewareLoggerInterface</code> defines one method <code>log(string $middleware, $content): void</code>, the first <code>$middleware</code>
+parameter is to categorise the <code>$content</code> under a single identifier, it can be any string you want.</p>
+<p>This package provides you with the <code>EonX\EasyPipeline\Traits\MiddlewareLoggerAwareTrait</code> which defines the setter
+for the <code>MiddlewareLoggerInterface</code> and also the <code>log($content, ?string $middleware = null)</code> method to easily log content.
+The <code>$middleware</code> parameter is optional, when it is not set the trait will default it to your middleware class name.
+The trait is a convenient way of allowing your middleware to log content but if you do not like using traits you're free
+to implement the logging logic yourself.</p>
+<p>Here is the minimum required code for your middleware to log content:</p>
+<pre><code class="language-php">use EonX\EasyPipeline\Interfaces\MiddlewareInterface;
+use EonX\EasyPipeline\Interfaces\MiddlewareLoggerAwareInterface;
+use EonX\EasyPipeline\Traits\MiddlewareLoggerAwareTrait;
+
+final class MyMiddlewareWithLog implements MiddlewareInterface, MiddlewareLoggerAwareInterface
+{
+    use MiddlewareLoggerAwareTrait; // Will handle the setter for the MiddlewareLoggerInterface
+
+    /**
+     * Handle given input and pass return through next.
+     *
+     * @param mixed $input
+     * @param callable $next
+     *
+     * @return mixed
+     */
+     public function handle($input, callable $next)
+     {
+        // Do stuff here...
+
+        $this-&gt;log('Content to log');
+
+        return $next($input); // Return the output of the next middleware for the given input
+     }
+}</code></pre>
+    </div>
+            </div><!--//row-->
+        </div><!--//container-->
+    </div><!--//container-->
+</div><!--//page-content-->
+
+<section class="cta-section text-center py-5 theme-bg-dark position-relative">
+    <div class="theme-bg-shapes-right"></div>
+    <div class="theme-bg-shapes-left"></div>
+    <div class="container">
+        <h3 class="mb-2 text-white mb-3">Launch Your Software Project Like A Pro</h3>
+        <div class="section-intro text-white mb-3 single-col-max mx-auto">Want to launch your software project and start
+            getting traction from your target users? Check out our premium <a class="text-white"
+                                                                              href="https://themes.3rdwavemedia.com/bootstrap-templates/startup/coderpro-bootstrap-4-startup-template-for-software-projects/">Bootstrap
+                4 startup template CoderPro</a>! It has everything you need to promote your product.
+        </div>
+        <div class="pt-3 text-center">
+            <a class="btn btn-light"
+               href="https://themes.3rdwavemedia.com/bootstrap-templates/startup/coderpro-bootstrap-4-startup-template-for-software-projects/">Get
+                CoderPro<i class="fas fa-arrow-alt-circle-right ml-2"></i></a>
+        </div>
+    </div>
+</section><!--//cta-section-->
+
+
+<footer class="footer">
+
+    <div class="footer-bottom text-center py-5">
+
+        <ul class="social-list list-unstyled pb-4 mb-0">
+            <li class="list-inline-item"><a href="#"><i class="fab fa-github fa-fw"></i></a></li>
+            <li class="list-inline-item"><a href="#"><i class="fab fa-twitter fa-fw"></i></a></li>
+            <li class="list-inline-item"><a href="#"><i class="fab fa-slack fa-fw"></i></a></li>
+            <li class="list-inline-item"><a href="#"><i class="fab fa-product-hunt fa-fw"></i></a></li>
+            <li class="list-inline-item"><a href="#"><i class="fab fa-facebook-f fa-fw"></i></a></li>
+            <li class="list-inline-item"><a href="#"><i class="fab fa-instagram fa-fw"></i></a></li>
+        </ul><!--//social-list-->
+
+        <!--/* This template is released under the Creative Commons Attribution 3.0 License. Please keep the attribution link below when using for your own project. Thank you for your support. :) If you'd like to use the template without the attribution, you can buy the commercial license via our website: themes.3rdwavemedia.com */-->
+        <small class="copyright">Designed with <i class="fas fa-heart" style="color: #fb866a;"></i> by <a
+                    class="theme-link" href="http://themes.3rdwavemedia.com" target="_blank">Xiaoying Riley</a> for
+            developers</small>
+    </div>
+
+</footer>
+
+</body>
+        <script src="/assets/js/jquery-3.4.1.min.js"></script>
+    <script src="/assets/js/jquery.scrollTo.min.js"></script>
+    <script src="/assets/js/popper.min.js"></script>
+    <script src="/assets/js/bootstrap.min.js"></script>
+
+
+    <script>
+        $('pre').addClass('line-numbers');
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+    <script src="/assets/js/prism.js"></script>
+</html>

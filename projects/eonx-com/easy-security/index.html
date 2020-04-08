@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>EonX Docs</title>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700&display=swap" rel="stylesheet">
+    <script defer src="https://kit.fontawesome.com/955de18180.js" crossorigin="anonymous"></script>
+
+            <link id="theme-style" rel="stylesheet" href="/assets/css/theme.css">
+        <link id="theme-style" rel="stylesheet" href="/assets/css/prism.css">
+    </head>
+<body class="docs-page">
+<header class="header fixed-top">
+    <div class="branding docs-branding">
+        <div class="container-fluid position-relative py-2">
+            <div class="docs-logo-wrapper">
+                <button id="docs-sidebar-toggler" class="docs-sidebar-toggler docs-sidebar-visible mr-2 d-xl-none" type="button">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <div class="site-logo"><a class="navbar-brand" href="/"><img class="logo-icon mr-2" src="https://39cszd96rb9jntgd3r2cirij-wpengine.netdna-ssl.com/wp-content/uploads/2019/09/eonx-logo@1x.png" alt="logo"></a></div>
+            </div><!--//docs-logo-wrapper-->
+            <div class="docs-top-utilities d-flex justify-content-end align-items-center">
+                <div class="top-search-box d-none d-lg-flex">
+                    <form class="search-form">
+                        <input type="text" placeholder="Search the docs..." name="search" class="form-control search-input">
+                        <button type="submit" class="btn search-btn" value="Search"><i class="fas fa-search"></i></button>
+                    </form>
+                </div>
+
+            </div><!--//docs-top-utilities-->
+        </div><!--//container-->
+    </div><!--//branding-->
+</header><!--//header-->
+
+    <div class="docs-wrapper">
+        <div id="docs-sidebar" class="docs-sidebar">
+            <nav id="docs-nav" class="docs-nav navbar">
+                <ul class="section-items list-unstyled nav flex-column pb-3">
+                    <li class="nav-item section-title">
+                        <a class="nav-link scrollto active" href="#intro">
+                        <span class="theme-icon-holder mr-2">
+                            <i class="fas fa-cubes"></i>
+                        </span>
+                            eonx-com/easy-security
+                        </a>
+                    </li>
+
+                                            <li class="nav-item"><a class="nav-link scrollto" href="#eonx-com_easy-security_docs_laravel_install">laravel_install.md</a></li>
+                                            <li class="nav-item"><a class="nav-link scrollto" href="#eonx-com_easy-security_docs_symfony_install">symfony_install.md</a></li>
+                                            <li class="nav-item"><a class="nav-link scrollto" href="#eonx-com_easy-security_readme">readme.md</a></li>
+                                    </ul>
+            </nav>
+        </div>
+        <div class="docs-content">
+            <div class="container">
+                <article class="docs-article" id="intro">
+                    <header class="docs-header">
+                        <h1 class="docs-heading">
+                            eonx-com/easy-security
+                            <a href="https://github.com/eonx-com/easy-monorepo"><i class="fa fa-github"></i></a>
+                        </h1>
+                        <section class="docs-intro">
+                            <p>Provides security features to be generic across applications</p>
+                        </section>
+                    </header>
+
+                                            <section class="docs-section" id="eonx-com_easy-security_docs_laravel_install">
+                            <h2 class="section-heading">
+                                laravel_install.md
+                                <div class="docs-time">
+                                    <a href="https://github.com/eonx-com/easy-monorepo/edit/master/packages/EasySecurity/docs/laravel_install.md" target="_blank" title="Edit on Github">
+                                        Edit on github <i class="fa fa-github"></i>
+                                    </a>
+                                </div>
+                            </h2>
+
+                            <div align="center">
+    <h1>EonX - EasySecurity</h1>
+    <p>Provides security features to be generic across applications.</p>
+</div>
+<hr />
+<p>This document describes the steps to install this package into a <a href="https://laravel.com/">Laravel</a> and/or <a href="https://lumen.laravel.com/">Lumen</a> application.</p>
+<h1>Require package (Composer)</h1>
+<p>Laravel uses <a href="https://getcomposer.org/">Composer</a> to manage its dependencies. You can require this package as following:</p>
+<pre><code class="language-bash">$ composer require eonx/easy-security</code></pre>
+<h1>Package Service Provider</h1>
+<p>Once the package required, you must tell your application to use it. Laravel uses service providers to do so, if you are
+not familiar with this concept make sure to have a look at the <a href="https://laravel.com/docs/5.7/providers">documentation</a>.</p>
+<pre><code class="language-php">// config/app.php
+
+'providers' =&gt; [
+    // Other Service Providers...
+
+    \EonX\EasySecurity\Bridge\Laravel\EasySecurityServiceProvider::class
+],</code></pre>
+<h1>Lumen Actions Required</h1>
+<p>To install this package in a Lumen application the procedures are a bit different.</p>
+<h2>Register Service Provider</h2>
+<p>In a Lumen application you must explicitly tell the application to register the package's service provider as following:</p>
+<pre><code class="language-php">// bootstrap/app.php
+
+$app = new Laravel\Lumen\Application(\dirname(__DIR__));
+
+// Other actions...
+
+$app-&gt;register(\EonX\EasySecurity\Bridge\Laravel\EasySecurityServiceProvider::class);</code></pre>
+<h1>Your own Service Provider</h1>
+<p>The services required for this package to work are the same as described in the <a href="symfony_install.md">Symfony documentation</a>.
+The only difference is how to register them as services within your application. Here comes your Service Provider:</p>
+<pre><code class="language-php">namespace App\Providers;
+
+use App\Services\Security\Factories\ContextFactory;
+use App\Services\Security\Providers\InMemoryRolesProvider;
+use App\Services\Security\Providers\ProviderProvider;
+use App\Services\Security\Providers\UserProvider;
+use EonX\EasySecurity\Bridge\TagsInterface;
+use EonX\EasySecurity\Interfaces\ContextFactoryInterface;
+use EonX\EasySecurity\Interfaces\ProviderProviderInterface;
+use EonX\EasySecurity\Interfaces\RolesProviderInterface;
+use EonX\EasySecurity\Interfaces\UserProviderInterface;
+use EonX\EasySecurity\Modifiers\ProviderFromHeaderModifier;
+use EonX\EasySecurity\Modifiers\ProviderFromJwtModifier;
+use EonX\EasySecurity\Modifiers\RolesFromJwtModifier;
+use EonX\EasySecurity\Modifiers\UserFromJwtModifier;
+use Illuminate\Support\ServiceProvider;
+
+final class SecurityServiceProvider extends ServiceProvider
+{
+    /**
+     * Register security services.
+     *
+     * @return void
+     */
+    public function register(): void
+    {
+        $this-&gt;app-&gt;singleton(ContextFactoryInterface::class, ContextFactory::class);
+        $this-&gt;app-&gt;singleton(RolesProviderInterface::class, InMemoryRolesProvider::class);
+        $this-&gt;app-&gt;singleton(ProviderProviderInterface::class, ProviderProvider::class);
+        $this-&gt;app-&gt;singleton(UserProviderInterface::class, UserProvider::class);
+
+        // DataResolvers
+        $dataResolvers = [
+            RolesFromJwtModifier::class,
+            ProviderFromJwtModifier::class,
+            ProviderFromHeaderModifier::class,
+            UserFromJwtModifier::class
+        ];
+
+        foreach ($dataResolvers as $dataResolver) {
+            $this-&gt;app-&gt;singleton($dataResolver);
+            $this-&gt;app-&gt;tag($dataResolver, [TagsInterface::TAG_CONTEXT_DATA_RESOLVER]);
+        }
+    }
+}</code></pre>
+                        </section>
+                                            <section class="docs-section" id="eonx-com_easy-security_docs_symfony_install">
+                            <h2 class="section-heading">
+                                symfony_install.md
+                                <div class="docs-time">
+                                    <a href="https://github.com/eonx-com/easy-monorepo/edit/master/packages/EasySecurity/docs/symfony_install.md" target="_blank" title="Edit on Github">
+                                        Edit on github <i class="fa fa-github"></i>
+                                    </a>
+                                </div>
+                            </h2>
+
+                            <div align="center">
+    <h1>EonX - EasySecurity</h1>
+    <p>Provides security features to be generic across applications.</p>
+</div>
+<hr />
+<p>This document describes the steps to install this package in a <a href="https://symfony.com">Symfony</a> application.</p>
+<h1>Dependencies</h1>
+<p>This package has dependencies on the following packages, please see their documentation directly:</p>
+<ul>
+<li><a href="https://github.com/eonx-com/easy-api-token">EasyApiToken</a></li>
+<li><a href="https://github.com/eonx-com/easy-psr7-factory">EasyPsr7Factory</a></li>
+</ul>
+<h1>Require package (Composer)</h1>
+<p>Laravel uses <a href="https://github.com/eonx-com/easy-api-token">Composer</a> to manage its dependencies. You can require this package as following:</p>
+<pre><code class="language-bash">$ composer require eonx/easy-security</code></pre>
+<h1>Register Bundle</h1>
+<p>If your application doesn't use Symfony Flex then you will have to register the bundle yourself:</p>
+<pre><code class="language-php">// config/bundles.php
+
+return [
+    // Other bundles ...
+
+    EonX\EasySecurity\Bridge\Symfony\EasySecurityBundle::class =&gt; ['all' =&gt; true]
+];</code></pre>
+<h1>Getting Started</h1>
+<h2>Create Context and ContextFactory</h2>
+<p>This package provides you built-in features to resolve a security context specific to your application, to do so it
+needs to know about the Context class and how to create it (via your ContextFactory).</p>
+<h3>Context</h3>
+<p>You application MUST define a Context class (you can name it whatever you want but come on.. let's be consistent!).
+This class MUST somehow implement <code>Eonx\EasySecurity\Interfaces\ContextInterface</code>. This package provides a base <code>Context</code>
+class and here are our recommendation in term of implementation:</p>
+<ul>
+<li>Create a <code>ContextInterface</code> interface which extends <code>Eonx\EasySecurity\Interfaces\ContextInterface</code></li>
+<li>Create a <code>Context</code> class which extends <code>Eonx\EasySecurity\Context</code> and implements your <code>ContextInterface</code></li>
+</ul>
+<p>This way when you migrate to PHP7.4, you will be able to use <a href="https://www.php.net/manual/en/language.oop5.variance.php">Covariance</a>!</p>
+<pre><code class="language-php">// src/Security/Interfaces/ContextInterface.php
+namespace App\Security;
+
+use Eonx\EasySecurity\Interfaces\ContextInterface as BaseContextInterface;
+
+interface ContextInterface extends BaseContextInterface 
+{
+    // Override methods and return types here...
+}
+
+// src/Security/Context.php
+namespace App\Security;
+
+use App\Security\ContextInterface;
+use Eonx\EasySecurity\Context as BaseContext;
+
+final class Context extends BaseContext implements ContextInterface
+{
+    // Override methods and return types here...
+}</code></pre>
+<h3>ContextFactory</h3>
+<p>Once you've defined your <code>Context</code> and <code>ContextInterface</code>, you'll need to tell the package how to instantiate your
+it using a... <code>ContextFactory</code>! This package provides you with the <code>EonX\EasySecurity\Interfaces\ContextFactoryInterface</code>
+you just have to do the implementation:</p>
+<pre><code class="language-php">// src/Security/Factories/ContextFactory.php
+
+namespace App\Security\Factories;
+
+use App\Security\Interfaces\ContextInterface;
+use EonX\EasySecurity\Interfaces\ContextFactoryInterface;
+use EonX\EasySecurity\Interfaces\Resolvers\ContextResolvingDataInterface;
+
+final class ContextFactory implements ContextFactoryInterface
+{
+    public function create(ContextResolvingDataInterface $data): ContextInterface
+    {
+        return new Context($data-&gt;getApiToken(), $data-&gt;getRoles(), $data-&gt;getProvider(), $data-&gt;getUser());
+    }
+}</code></pre>
+<h3>Register ContextFactory as Service</h3>
+<p>For this package to be able to use your context factory you need to register it as a service under
+<code>EonX\EasySecurity\Interfaces\ContextFactoryInterface</code>:</p>
+<pre><code class="language-yaml"># config/services.yaml
+
+services:
+    # Other services...
+
+    EonX\EasySecurity\Interfaces\ContextFactoryInterface: '@App\Security\Factories\ContextFactory'</code></pre>
+<h2>Context Data Providers</h2>
+<h3>User and Provider Interfaces</h3>
+<p>This package defines <code>EonX\EasySecurity\Interfaces\UserInterface</code> and <code>EonX\EasySecurity\Interfaces\ProviderInterface</code>.
+Those interfaces are really basic so this package can work with a large panel of applications having different user and
+provider objects. Same as <code>Context</code> and its interface you will use <a href="https://www.php.net/manual/en/language.oop5.variance.php">Covariance</a>.</p>
+<p>The only thing you need to make sure is that the objects your application will provide to the context resolver are
+implementing those interfaces.</p>
+<h3>Providers</h3>
+<p>This package handles all the generic tasks as decoding api token from request, fetch user id from api token, ...
+All the application's specific logic is delegated to your application, logic isn't it!? To tell the package how to
+retrieve the object specific to your application you will use what we call &quot;providers&quot;, this package provides the following interfaces:</p>
+<ul>
+<li><code>EonX\EasySecurity\Interfaces\ProviderProviderInterface</code>: Provides the <code>Provider</code> instance</li>
+<li><code>EonX\EasySecurity\Interfaces\UserProviderInterface</code>: Provides the <code>User</code> instance</li>
+<li><code>EonX\EasySecurity\Interfaces\RolesProviderInterface</code>: Provides the list of <code>Role</code> instances</li>
+</ul>
+<p>Your job is to create an implementation for each provider and register it as service.</p>
+<pre><code class="language-php">// src/Security/Providers/UserProvider.php
+
+namespace App\Security\Providers;
+
+use App\Repository\UserRepositoryInterface;
+use EonX\EasySecurity\Interfaces\UserInterface;
+use EonX\EasySecurity\Interfaces\UserProviderInterface;
+
+final class UserProvider implements UserProviderInterface
+{
+    /**
+     * @var \App\Repository\UserRepositoryInterface
+     */
+     private $userRepo;
+
+    /**
+     * UserProvider constructor.
+     *
+     * @param \App\Repository\UserRepositoryInterface $userRepo
+     */
+     public function __construct(UserRepositoryInterface $userRepo)
+     {
+        $this-&gt;userRepo = $userRepo;
+     }
+
+     /**
+      * Get user for given uniqueId and data.
+      *
+      * @param int|string $uniqueId
+      * @param mixed[] $data
+      *
+      * @return null|\EonX\EasySecurity\Interfaces\UserInterface
+      */
+      public function getUser($uniqueId, array $data): ?UserInterface
+      {
+          $user = $this-&gt;userRepo-&gt;findOneByExternalId($uniqueId);
+
+          $user-&gt;setFirstName($data['fn'] ?? null);
+          $user-&gt;setLastName($data['ln'] ?? null);
+          $user-&gt;setExternalId($uniqueId);
+
+          return $user;
+      }
+}</code></pre>
+<pre><code class="language-php">// src/Security/Providers/ProviderProvider.php 
+
+namespace App\Security\Providers;
+
+use App\Repository\ProviderRepositoryInterface;
+use EonX\EasySecurity\Interfaces\ProviderInterface;
+use EonX\EasySecurity\Interfaces\ProviderProviderInterface;
+
+final class ProviderProvider implements ProviderProviderInterface
+{
+    /**
+     * @var \App\Repository\ProviderRepositoryInterface
+     */
+    private $providerRepo;
+
+    /**
+     * ProviderProvider constructor.
+     *
+     * @param \App\Repository\ProviderRepositoryInterface $providerRepo
+     */
+    public function __construct(ProviderRepositoryInterface $providerRepo)
+    {
+        $this-&gt;providerRepo = $providerRepo;
+    }
+
+    /**
+     * Get provider for given uniqueId.
+     *
+     * @param int|string $uniqueId
+     *
+     * @return null|\EonX\EasySecurity\Interfaces\ProviderInterface
+     */
+    public function getProvider($uniqueId): ?ProviderInterface
+    {
+        return $this-&gt;providerRepo-&gt;findOne($uniqueId);
+    }
+}</code></pre>
+<pre><code class="language-php">// src/Security/Providers/InMemoryRolesProvider.php
+
+namespace App\Security\Providers;
+
+use App\Security\Interfaces\PermissionsInterface;
+use App\Security\Interfaces\RolesInterface;
+use EonX\EasySecurity\Role;
+use EonX\EasySecurity\RolesProviders\AbstractInMemoryRolesProvider;
+
+final class InMemoryRolesProvider extends AbstractInMemoryRolesProvider
+{
+    /**
+     * Init roles.
+     *
+     * @return \EonX\EasySecurity\Interfaces\RoleInterface[]
+     */
+    protected function initRoles(): array
+    {
+        return [
+            new Role(RolesInterface::ROLE_SUPER_ADMIN, [
+                PermissionsInterface::CATEGORY_CREATE,
+                // Other permissions...
+            ])
+        ];
+    }
+}</code></pre>
+<pre><code class="language-yaml"># config/services.yaml
+
+services:
+    # Other services...
+
+    EonX\EasySecurity\Interfaces\ProviderProviderInterface: '@App\Security\Providers\ProviderProvider'
+    EonX\EasySecurity\Interfaces\UserProviderInterface: '@App\Security\Providers\UserProvider'
+    EonX\EasySecurity\Interfaces\RolesProviderInterface: '@App\Security\Providers\InMemoryRolesProvider'</code></pre>
+<h3>Data Resolvers</h3>
+<p>This package uses data resolvers to resolve the context data, it comes with built-in resolvers you can re-use or you
+have the possibility to create your own by implementing <code>EonX\EasySecurity\Interfaces\Resolvers\ContextDataResolverInterface</code>.
+Done! It will be automatically injected into the context resolver. If you need some resolvers to be executed in a specific
+order you can use the <code>getPriority(): int</code> method to do so, the smallest priority will be executed first.</p>
+<p>To use the built-in context data resolvers you just need to register them in your services config:</p>
+<pre><code class="language-yaml"># config/services.yaml
+
+services:
+    # Other services...
+
+    EonX\EasySecurity\Resolvers\RolesFromJwtDataResolver: ~
+    EonX\EasySecurity\Resolvers\ProviderFromJwtDataResolver: ~
+    EonX\EasySecurity\Resolvers\ProviderFromHeaderDataResolver: ~
+    EonX\EasySecurity\Resolvers\UserFromJwtDataResolver: ~</code></pre>
+<h3>Configure Bundle</h3>
+<p>You need to tell the package to use your context interface as service id for the context, this way it will allow you
+to use dependency injection with your own context interface!</p>
+<pre><code class="language-yaml"># config/packages/easy_security.yaml
+
+easy_security:
+    context_service_id: App\Security\Interfaces\ContextInterface</code></pre>
+<h3>Symfony Firewall and Authenticator</h3>
+<p>You're nearly there! The last step is to configure Symfony Security component to use all your previous work:</p>
+<pre><code class="language-yaml"># config/packages/security.yaml
+
+security:
+    firewalls:
+        # Other firewalls...
+
+        main:
+            pattern: ^/.+
+            stateless: true
+            anonymous: false
+            guard:
+                authenticators:
+                    - EonX\EasySecurity\Bridge\Symfony\Security\ContextAuthenticator</code></pre>
+<p>And you're done! Enjoy!</p>
+                        </section>
+                                            <section class="docs-section" id="eonx-com_easy-security_readme">
+                            <h2 class="section-heading">
+                                readme.md
+                                <div class="docs-time">
+                                    <a href="https://github.com/eonx-com/easy-monorepo/edit/master/packages/EasySecurity/readme.md" target="_blank" title="Edit on Github">
+                                        Edit on github <i class="fa fa-github"></i>
+                                    </a>
+                                </div>
+                            </h2>
+
+                            <div align="center">
+    <h1>EonX - EasySecurity</h1>
+    <p>Provides security features to be generic across applications.</p>
+</div>
+<hr />
+<h2>Documentation</h2>
+<ul>
+<li><a href="docs/symfony_install.md">Installation in Symfony</a></li>
+<li><a href="docs/laravel_install.md">Installation in Laravel/Lumen</a></li>
+</ul>
+                        </section>
+                                    </article>
+            </div>
+        </div>
+    </div>
+
+</body>
+    <script src="/assets/js/jquery-3.4.1.min.js"></script>
+    <script src="/assets/js/jquery.scrollTo.min.js"></script>
+    <script src="/assets/js/popper.min.js"></script>
+    <script src="/assets/js/bootstrap.min.js"></script>
+    <script src="/assets/js/docs.js"></script>
+
+    <script>
+        $('pre').addClass('line-numbers');
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+    <script src="/assets/js/prism.js"></script>
+</html>
