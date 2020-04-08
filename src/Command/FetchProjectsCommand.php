@@ -7,7 +7,9 @@ use App\Filesystem\Interfaces\ProjectFinderInterface;
 use App\Services\Git\GitManagerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Yaml\Yaml;
 use function sprintf;
@@ -36,14 +38,26 @@ final class FetchProjectsCommand extends Command
     {
         $this
             ->setName('projects:fetch')
-            ->setDescription('Fetch projects listed in docs_config.yaml');
+            ->setDescription('Fetch projects listed in docs_config.yaml')
+            ->addOption('show-config', null, InputOption::VALUE_OPTIONAL | InputOption::VALUE_NONE);
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        $style = new SymfonyStyle($input, $output);
+
         $config = Yaml::parseFile(__DIR__ . '/../../docs_config.yaml');
 
+        if ($input->hasOption('show-config')) {
+            $output->writeln(\print_r($config, true));
+        }
+
         if ($this->filesystem->exists(ProjectFinderInterface::PROJECTS_DIR) === false) {
+            $style->comment(\sprintf(
+                'Directory "%s" does not exist, creating it...',
+                ProjectFinderInterface::PROJECTS_DIR
+            ));
+
             $this->filesystem->mkdir(ProjectFinderInterface::PROJECTS_DIR);
         }
 

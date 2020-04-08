@@ -67,7 +67,7 @@ final class GitManager implements GitManagerInterface
      */
     public function completeRemoteRepositoryWithGithubToken(string $remoteRepository): string
     {
-        $token = \getenv('ACCESS_TOKEN');
+        $token = \getenv('GITHUB_ACCESS_TOKEN');
 
         // Do nothing if it is null or an empty string.
         if ($token === false) {
@@ -75,10 +75,10 @@ final class GitManager implements GitManagerInterface
         }
 
         [, $partAfterAt,
-        ] = explode('@', $remoteRepository, 2);
+        ] = \explode('@', $remoteRepository, 2);
         $partAfterAt = Strings::replace($partAfterAt, '#:#', '/');
 
-        return sprintf('https://%s@%s', $token, $partAfterAt);
+        return \sprintf('https://%s@%s', $token, $partAfterAt);
     }
 
     /**
