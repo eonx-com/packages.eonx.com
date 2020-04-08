@@ -17,7 +17,7 @@
                     <div class="card-text">
                         {{ project.description }}
                     </div>
-                    <a class="card-link-mask" href="{{ path('projects_index', {'slug': project.slug}) }}"></a>
+                    <a class="card-link-mask" href="{{ path('projects_index', {'slug': project.slug})|githubPage }}"></a>
                 </div><!--//card-body-->
                 <div class="card-footer">
                     <div class="float-left">

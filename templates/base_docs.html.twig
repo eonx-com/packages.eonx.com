@@ -11,8 +11,8 @@
     <script defer src="https://kit.fontawesome.com/955de18180.js" crossorigin="anonymous"></script>
 
     {% block stylesheets %}
-        <link id="theme-style" rel="stylesheet" href="{{ asset('assets/css/theme.css') }}">
-        <link id="theme-style" rel="stylesheet" href="{{ asset('assets/css/prism.css') }}">
+        <link id="theme-style" rel="stylesheet" href="{{ githubPage('assets/css/theme.css') }}">
+        <link id="theme-style" rel="stylesheet" href="{{ githubPage('assets/css/prism.css') }}">
     {% endblock %}
 </head>
 <body class="docs-page">
@@ -51,17 +51,17 @@
 
 </body>
 {% block javascripts %}
-    <script src="{{ asset('assets/js/jquery-3.4.1.min.js') }}"></script>
-    <script src="{{ asset('assets/js/jquery.scrollTo.min.js') }}"></script>
-    <script src="{{ asset('assets/js/popper.min.js') }}"></script>
-    <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('assets/js/docs.js') }}"></script>
+    <script src="{{ githubPage('assets/js/jquery-3.4.1.min.js') }}"></script>
+    <script src="{{ githubPage('assets/js/jquery.scrollTo.min.js') }}"></script>
+    <script src="{{ githubPage('assets/js/popper.min.js') }}"></script>
+    <script src="{{ githubPage('assets/js/bootstrap.min.js') }}"></script>
+    <script src="{{ githubPage('assets/js/docs.js') }}"></script>
 
     <script>
         $('pre').addClass('line-numbers');
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
-    <script src="{{ asset('assets/js/prism.js') }}"></script>
+    <script src="{{ githubPage('assets/js/prism.js') }}"></script>
 {% endblock %}
 </html>
