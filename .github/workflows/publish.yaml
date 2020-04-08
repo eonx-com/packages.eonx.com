@@ -17,7 +17,7 @@ jobs:
                     coverage: none
 
             -   run: composer install --no-progress
-            -   run: bin/console projects:fetch
+            -   run: bin/console projects:fetch -vvv
             -   run: bin/console dump-static-site
 
             -   name: Publish
