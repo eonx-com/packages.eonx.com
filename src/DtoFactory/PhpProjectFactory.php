@@ -26,7 +26,6 @@ final class PhpProjectFactory implements ProjectFactoryInterface
     public function __construct(GitManagerInterface $gitManager)
     {
         $this->gitManager = $gitManager;
-        $this->projectsDirPath = (string)(new SmartFileInfo(ProjectFinderInterface::PROJECTS_DIR))->getRealPath();
     }
 
     public function createFromFileInfo(SmartFileInfo $fileInfo): ?Project
@@ -58,9 +57,18 @@ final class PhpProjectFactory implements ProjectFactoryInterface
 
     private function getLocalBasePath(SmartFileInfo $fileInfo): string
     {
-        $basePath = Strings::replace($fileInfo->getPath(), \sprintf('#%s/#', $this->projectsDirPath), '');
+        $basePath = Strings::replace($fileInfo->getPath(), \sprintf('#%s/#', $this->getProjectsDirPath()), '');
 
-        return \sprintf('%s/%s', $this->projectsDirPath, \explode('/', $basePath)[0]);
+        return \sprintf('%s/%s', $this->getProjectsDirPath(), \explode('/', $basePath)[0]);
+    }
+
+    private function getProjectsDirPath(): string
+    {
+        if ($this->projectsDirPath !== null) {
+            return $this->projectsDirPath;
+        }
+
+        return $this->projectsDirPath = (string)(new SmartFileInfo(ProjectFinderInterface::PROJECTS_DIR))->getRealPath();
     }
 
     private function getType(string $type): string

@@ -16,6 +16,11 @@ final class Documentation
     private $htmlContent;
 
     /**
+     * @var bool
+     */
+    private $isSection;
+
+    /**
      * @var string
      */
     private $localPath;
@@ -29,6 +34,11 @@ final class Documentation
      * @var \App\Dto\Project
      */
     private $project;
+
+    /**
+     * @var null|string
+     */
+    private $sectionIcon;
 
     /**
      * @var string
@@ -53,7 +63,9 @@ final class Documentation
         string $githubEditUrl,
         Project $project,
         ?string $title = null,
-        ?int $weight = null
+        ?int $weight = null,
+        ?bool $isSection = null,
+        ?string $sectionIcon = null
     ) {
         $this->name = $name;
         $this->slug = $slug;
@@ -63,6 +75,8 @@ final class Documentation
         $this->project = $project;
         $this->title = $title ?? $name;
         $this->weight = $weight ?? 0;
+        $this->isSection = $isSection ?? false;
+        $this->sectionIcon = $sectionIcon;
     }
 
     public function getGithubEditUrl(): string
@@ -90,6 +104,11 @@ final class Documentation
         return $this->project;
     }
 
+    public function getSectionIcon(): ?string
+    {
+        return $this->sectionIcon;
+    }
+
     public function getSlug(): string
     {
         return $this->slug;
@@ -103,5 +122,10 @@ final class Documentation
     public function getWeight(): int
     {
         return $this->weight;
+    }
+
+    public function isSection(): bool
+    {
+        return $this->isSection;
     }
 }

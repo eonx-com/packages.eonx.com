@@ -21,7 +21,7 @@ final class DocumentationFactory implements DocumentationFactoryInterface
     /**
      * @var string
      */
-    private const SLASHES_WITH_SPACES_PATTERN = '(?:---config---[\s]*[\r\n]+)';
+    private const SLASHES_WITH_SPACES_PATTERN = '(?:---eonx_docs---[\s]*[\r\n]+)';
 
     /**
      * @var \App\Services\Parsedown\ExtendedParsedown
@@ -47,7 +47,9 @@ final class DocumentationFactory implements DocumentationFactoryInterface
             $this->getGithubEditUrl($project, $fileInfo),
             $project,
             $config['title'] ?? null,
-            $config['weight'] ?? null
+            $config['weight'] ?? null,
+            isset($config['is_section']),
+            $config['section_icon'] ?? null
         );
     }
 

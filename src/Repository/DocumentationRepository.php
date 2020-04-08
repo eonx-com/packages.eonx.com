@@ -12,9 +12,9 @@ use App\Repository\Interfaces\ProjectRepositoryInterface;
 final class DocumentationRepository implements DocumentationRepositoryInterface
 {
     /**
-     * @var \App\Dto\Documentation[]
+     * @var mixed[]
      */
-    private $cache;
+    private $cacheByProject = [];
 
     /**
      * @var \App\Filesystem\Interfaces\DocumentationFinderInterface
@@ -39,10 +39,6 @@ final class DocumentationRepository implements DocumentationRepositoryInterface
      */
     public function all(): array
     {
-        if ($this->cache !== null) {
-            return $this->cache;
-        }
-
         $docs = [];
 
         foreach ($this->projectRepository->all() as $project) {
@@ -51,7 +47,7 @@ final class DocumentationRepository implements DocumentationRepositoryInterface
             }
         }
 
-        return $this->cache = $docs;
+        return $docs;
     }
 
     /**
@@ -59,7 +55,15 @@ final class DocumentationRepository implements DocumentationRepositoryInterface
      */
     public function allForProject(Project $project): array
     {
-        return $this->documentationFinder->findDocumentations($project);
+        if (isset($this->cacheByProject[$project->getSlug()])) {
+            return $this->cacheByProject[$project->getSlug()];
+        }
+
+        $docs = $this->documentationFinder->findDocumentations($project);
+
+        $this->cacheByProject[$project->getSlug()] = $docs;
+
+        return $docs;
     }
 
     public function findOneForSlug(string $slug): ?Documentation
