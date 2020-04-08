@@ -1,0 +1,170 @@
+<?php
+declare(strict_types=1);
+
+namespace App\Dto;
+
+final class Project
+{
+    /**
+     * @var string
+     */
+    public const TYPE_PACKAGE = 'package';
+
+    /**
+     * @var string
+     */
+    public const TYPE_PROJECT = 'project';
+
+    /**
+     * @var string
+     */
+    private $description;
+
+    /**
+     * @var string
+     */
+    private $gitBranch;
+
+    /**
+     * @var string
+     */
+    private $gitOriginUrl;
+
+    /**
+     * @var string
+     */
+    private $language;
+
+    /**
+     * @var string
+     */
+    private $license;
+
+    /**
+     * @var string
+     */
+    private $localBasePath;
+
+    /**
+     * @var string
+     */
+    private $localPath;
+
+    /**
+     * @var string
+     */
+    private $name;
+
+    /**
+     * @var string
+     */
+    private $remoteOriginUrl;
+
+    /**
+     * @var null|string
+     */
+    private $remotePath;
+
+    /**
+     * @var string
+     */
+    private $slug;
+
+    /**
+     * @var string
+     */
+    private $type;
+
+    public function __construct(
+        string $name,
+        string $slug,
+        string $description,
+        string $language,
+        string $type,
+        string $license,
+        string $remoteOriginUrl,
+        string $localPath,
+        string $localBasePath,
+        string $gitOriginUrl,
+        string $gitBranch,
+        ?string $remotePath = null
+    ) {
+        $this->name = $name;
+        $this->slug = $slug;
+        $this->description = $description;
+        $this->language = $language;
+        $this->type = $type;
+        $this->license = $license;
+        $this->remoteOriginUrl = $remoteOriginUrl;
+        $this->localPath = $localPath;
+        $this->localBasePath = $localBasePath;
+        $this->gitOriginUrl = $gitOriginUrl;
+        $this->gitBranch = $gitBranch;
+        $this->remotePath = $remotePath;
+    }
+
+    public function getDescription(): string
+    {
+        return $this->description;
+    }
+
+    public function getGitBranch(): string
+    {
+        return $this->gitBranch;
+    }
+
+    public function getGitOriginUrl(): string
+    {
+        return $this->gitOriginUrl;
+    }
+
+    public function getLanguage(): string
+    {
+        return $this->language;
+    }
+
+    public function getLicense(): string
+    {
+        return $this->license;
+    }
+
+    public function getLocalBasePath(): string
+    {
+        return $this->localBasePath;
+    }
+
+    public function getLocalPath(): string
+    {
+        return $this->localPath;
+    }
+
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    public function getRemoteOriginUrl(): string
+    {
+        return $this->remoteOriginUrl;
+    }
+
+    public function getRemotePath(): ?string
+    {
+        return $this->remotePath;
+    }
+
+    public function getSlug(): string
+    {
+        return $this->slug;
+    }
+
+    public function getType(): string
+    {
+        return $this->type;
+    }
+
+    public function getTypeIcon(): string
+    {
+        return $this->type === self::TYPE_PACKAGE ? 'fas fa-cubes' : 'fas fa-cube';
+    }
+}

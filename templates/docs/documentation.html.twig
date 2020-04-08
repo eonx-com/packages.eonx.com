@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+    <link id="theme-style" rel="stylesheet" href="{{ asset('assets/css/prism.css') }}">
+{% endblock %}
+
+{% block body %}
+    <div class="col-12">
+        {{ documentation.htmlContent|raw }}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script>
+        $('pre').addClass('line-numbers');
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+    <script src="{{ asset('assets/js/prism.js') }}"></script>
+{% endblock %}
