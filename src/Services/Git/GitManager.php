@@ -55,6 +55,33 @@ final class GitManager implements GitManagerInterface
     }
 
     /**
+     * See https://gist.github.com/willprice/e07efd73fb7f13f917ea#file-push-sh-L15
+     * see https://stackoverflow.com/a/18936804/1348344
+     *
+     * Before:
+     * git@github.com:vendor/name.git
+     *
+     * After:
+     * https://GITHUB_USER_NAME:SECRET_TOKEN@github.com/vendor/package-name.git
+     * https://SECRET_TOKEN@github.com/vendor/package-name.git
+     */
+    public function completeRemoteRepositoryWithGithubToken(string $remoteRepository): string
+    {
+        $token = \getenv('ACCESS_TOKEN');
+
+        // Do nothing if it is null or an empty string.
+        if ($token === false) {
+            return $remoteRepository;
+        }
+
+        [, $partAfterAt,
+        ] = explode('@', $remoteRepository, 2);
+        $partAfterAt = Strings::replace($partAfterAt, '#:#', '/');
+
+        return sprintf('https://%s@%s', $token, $partAfterAt);
+    }
+
+    /**
      * @param mixed[] $command
      */
     private function exec(array $command, ?string $cwd = null): string

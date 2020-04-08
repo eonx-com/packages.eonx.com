@@ -49,7 +49,11 @@ final class FetchProjectsCommand extends Command
 
         foreach ($config['projects'] as $name => $remote) {
             $output->writeln(sprintf('Cloning %s in %s/%s', $remote, ProjectFinderInterface::PROJECTS_DIR, $name));
-            $output->writeln($this->gitManager->cloneRemoteToPath($remote, ProjectFinderInterface::PROJECTS_DIR, $name));
+            $output->writeln($this->gitManager->cloneRemoteToPath(
+                $this->gitManager->completeRemoteRepositoryWithGithubToken($remote),
+                ProjectFinderInterface::PROJECTS_DIR,
+                $name
+            ));
         }
 
         return 0;

@@ -9,6 +9,8 @@ interface GitManagerInterface
 {
     public function cloneRemoteToPath(string $remote, string $path, ?string $name = null): string;
 
+    public function completeRemoteRepositoryWithGithubToken(string $remoteRepository): string;
+
     public function getCurrentBranchFromFileInfo(SmartFileInfo $fileInfo): string;
 
     public function getOriginPath(string $path, string $branch): string;
