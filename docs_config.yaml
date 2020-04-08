@@ -1,3 +1,4 @@
 projects:
     easy-monorepo: 'git@github.com:eonx-com/easy-monorepo.git'
     search: 'git@github.com:eonx-com/search.git'
+    externals: 'git@github.com:eonx-com/externals.git'
