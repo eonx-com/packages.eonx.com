@@ -17,6 +17,7 @@ jobs:
                     coverage: none
 
             -   run: composer install --no-progress
+            -   run: mkdir projects
             -   run: bin/console projects:fetch -vvv
             -   run: bin/console dump-static-site
 
