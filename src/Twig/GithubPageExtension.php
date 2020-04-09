@@ -37,7 +37,7 @@ final class GithubPageExtension extends AbstractExtension
                 $path = Strings::substring($path, 1);
             }
 
-            return \sprintf('http://eonx-com.github.io/packages.eonx.com/%s', $path);
+            return \sprintf('/packages.eonx.com/%s', $path);
         };
     }
 }
