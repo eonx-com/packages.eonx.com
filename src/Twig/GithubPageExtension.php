@@ -33,6 +33,8 @@ final class GithubPageExtension extends AbstractExtension
     private function getClosure(): \Closure
     {
         return function (string $path): string {
+            return $path;
+
             if (Strings::startsWith($path, '/')) {
                 $path = Strings::substring($path, 1);
             }
