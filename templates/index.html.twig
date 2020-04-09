@@ -1,40 +1,33 @@
 {% extends 'base_docs_overview.html.twig' %}
 
 {% block body %}
-    <div class="col-3">
-        seg
-    </div>
-    <div class="col-9">
-        <div class="row">
-            {% for project in projects %}
-                <div class="col-12 col-md-6 col-lg-6 py-3">
-                    <div class="card shadow-sm">
-                        <div class="project-language-container">
+    {% for project in projects %}
+        <div class="col-12 col-lg-4 py-3">
+            <div class="card shadow-sm">
+                <div class="project-language-container">
                     <span class="fa-stack">
                         <i class="fas fa-circle fa-stack-2x"></i>
                         <i class="fab fa-{{ project.language }} fa-stack-1x fa-inverse"></i>
                     </span>
-                        </div>
-                        <div class="card-body">
-                            <h5 class="card-title mb-3">
-                                <span class="card-title-text">{{ project.name }}</span>
-                            </h5>
-                            <div class="card-text">
-                                {{ project.description }}
-                            </div>
-                            <a class="card-link-mask" href="{{ path('projects_index', {'slug': project.slug}) }}"></a>
-                        </div><!--//card-body-->
-                        <div class="card-footer">
-                            <div class="float-left">
-                                <i class="{{ project.typeIcon }}" title="{{ project.type }}"></i>
-                            </div>
-                            <div class="float-right">
-                                <a href="{{ project.remoteOriginUrl }}"><i class="fab fa-github"></i></a>
-                            </div>
-                        </div>
-                    </div><!--//card-->
-                </div><!--//col-->
-            {% endfor %}
-        </div>
-    </div>
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title mb-3">
+                        <span class="card-title-text">{{ project.name }}</span>
+                    </h5>
+                    <div class="card-text">
+                        {{ project.description }}
+                    </div>
+                    <a class="card-link-mask" href="{{ path('projects_index', {'slug': project.slug}) }}"></a>
+                </div><!--//card-body-->
+                <div class="card-footer">
+                    <div class="float-left">
+                        <i class="{{ project.typeIcon }}" title="{{ project.type }}"></i>
+                    </div>
+                    <div class="float-right">
+                        <a href="{{ project.remoteOriginUrl }}"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+            </div><!--//card-->
+        </div><!--//col-->
+    {% endfor %}
 {% endblock %}
