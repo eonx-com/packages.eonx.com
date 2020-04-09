@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Services\Git;
 
+use Carbon\CarbonInterface;
 use Symplify\SmartFileSystem\SmartFileInfo;
 
 interface GitManagerInterface
@@ -16,4 +17,6 @@ interface GitManagerInterface
     public function getOriginPath(string $path, string $branch): string;
 
     public function getOriginUrlFromFileInfo(SmartFileInfo $fileInfo): string;
+
+    public function getLastModifiedDate(SmartFileInfo $fileInfo): CarbonInterface;
 }

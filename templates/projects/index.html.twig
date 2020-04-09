@@ -47,6 +47,7 @@
                             <h2 class="section-heading">
                                 {{ doc.title }}
                                 <div class="docs-time">
+                                    Last Updated: {{ doc.lastModifiedAt|date('d/m/Y H:i:s') }} -
                                     <a href="{{ doc.githubEditUrl }}" target="_blank" title="Edit on Github">
                                         Edit on github <i class="fa fa-github"></i>
                                     </a>

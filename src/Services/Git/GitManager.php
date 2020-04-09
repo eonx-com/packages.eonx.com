@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace App\Services\Git;
 
+use Carbon\Carbon;
+use Carbon\CarbonInterface;
 use Nette\Utils\Strings;
 use Symfony\Component\Process\Process;
 use Symplify\SmartFileSystem\SmartFileInfo;
@@ -20,6 +22,35 @@ final class GitManager implements GitManagerInterface
         return $this->exec($command, $path);
     }
 
+    /**
+     * See https://gist.github.com/willprice/e07efd73fb7f13f917ea#file-push-sh-L15
+     * see https://stackoverflow.com/a/18936804/1348344
+     *
+     * Before:
+     * git@github.com:vendor/name.git
+     *
+     * After:
+     * https://GITHUB_USER_NAME:SECRET_TOKEN@github.com/vendor/package-name.git
+     * https://SECRET_TOKEN@github.com/vendor/package-name.git
+     */
+    public function completeRemoteRepositoryWithGithubToken(string $remoteRepository): string
+    {
+        $token = \getenv('GITHUB_ACCESS_TOKEN');
+
+        // Do nothing if it is null or an empty string.
+        if ($token === false) {
+            return $remoteRepository;
+        }
+
+        [
+            ,
+            $partAfterAt,
+        ] = \explode('@', $remoteRepository, 2);
+        $partAfterAt = Strings::replace($partAfterAt, '#:#', '/');
+
+        return \sprintf('https://%s@%s', $token, $partAfterAt);
+    }
+
     public function getCurrentBranchFromFileInfo(SmartFileInfo $fileInfo): string
     {
         $command = ['git', 'rev-parse', '--abbrev-ref', 'HEAD'];
@@ -30,6 +61,14 @@ final class GitManager implements GitManagerInterface
         }
 
         return $currentBranch;
+    }
+
+    public function getLastModifiedDate(SmartFileInfo $fileInfo): CarbonInterface
+    {
+        $command = \sprintf('git log -1 --format="%%aD" -- "%s"', $fileInfo->getFilename());
+        $output = $this->execProcess(Process::fromShellCommandline($command, $fileInfo->getPath()));
+        
+        return Carbon::parse($output);
     }
 
     public function getOriginPath(string $path, string $branch): string
@@ -55,38 +94,15 @@ final class GitManager implements GitManagerInterface
     }
 
     /**
-     * See https://gist.github.com/willprice/e07efd73fb7f13f917ea#file-push-sh-L15
-     * see https://stackoverflow.com/a/18936804/1348344
-     *
-     * Before:
-     * git@github.com:vendor/name.git
-     *
-     * After:
-     * https://GITHUB_USER_NAME:SECRET_TOKEN@github.com/vendor/package-name.git
-     * https://SECRET_TOKEN@github.com/vendor/package-name.git
-     */
-    public function completeRemoteRepositoryWithGithubToken(string $remoteRepository): string
-    {
-        $token = \getenv('GITHUB_ACCESS_TOKEN');
-
-        // Do nothing if it is null or an empty string.
-        if ($token === false) {
-            return $remoteRepository;
-        }
-
-        [, $partAfterAt,
-        ] = \explode('@', $remoteRepository, 2);
-        $partAfterAt = Strings::replace($partAfterAt, '#:#', '/');
-
-        return \sprintf('https://%s@%s', $token, $partAfterAt);
-    }
-
-    /**
      * @param mixed[] $command
      */
     private function exec(array $command, ?string $cwd = null): string
     {
-        $process = new Process($command, $cwd);
+        return $this->execProcess(new Process($command, $cwd));
+    }
+
+    private function execProcess(Process $process): string
+    {
         $process->run();
 
         return \trim($process->getOutput());

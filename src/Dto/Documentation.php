@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace App\Dto;
 
+use Carbon\CarbonInterface;
+
 final class Documentation
 {
     /**
@@ -19,6 +21,11 @@ final class Documentation
      * @var bool
      */
     private $isSection;
+
+    /**
+     * @var \Carbon\CarbonInterface
+     */
+    private $lastModifiedAt;
 
     /**
      * @var string
@@ -62,6 +69,7 @@ final class Documentation
         string $htmlContent,
         string $githubEditUrl,
         Project $project,
+        CarbonInterface $lastModifiedAt,
         ?string $title = null,
         ?int $weight = null,
         ?bool $isSection = null,
@@ -73,6 +81,7 @@ final class Documentation
         $this->htmlContent = $htmlContent;
         $this->githubEditUrl = $githubEditUrl;
         $this->project = $project;
+        $this->lastModifiedAt = $lastModifiedAt;
         $this->title = $title ?? $name;
         $this->weight = $weight ?? 0;
         $this->isSection = $isSection ?? false;
@@ -87,6 +96,11 @@ final class Documentation
     public function getHtmlContent(): string
     {
         return $this->htmlContent;
+    }
+
+    public function getLastModifiedAt(): CarbonInterface
+    {
+        return $this->lastModifiedAt;
     }
 
     public function getLocalPath(): string

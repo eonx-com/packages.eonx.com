@@ -6,6 +6,7 @@ namespace App\DtoFactory;
 use App\Dto\Documentation;
 use App\Dto\Project;
 use App\DtoFactory\Interfaces\DocumentationFactoryInterface;
+use App\Services\Git\GitManagerInterface;
 use App\Services\Parsedown\ExtendedParsedown;
 use Nette\Utils\Strings;
 use Symfony\Component\Yaml\Yaml;
@@ -24,13 +25,19 @@ final class DocumentationFactory implements DocumentationFactoryInterface
     private const SLASHES_WITH_SPACES_PATTERN = '(?:---eonx_docs---[\s]*[\r\n]+)';
 
     /**
+     * @var \App\Services\Git\GitManagerInterface
+     */
+    private $gitManager;
+
+    /**
      * @var \App\Services\Parsedown\ExtendedParsedown
      */
     private $markdown;
 
-    public function __construct(ExtendedParsedown $markdown)
+    public function __construct(ExtendedParsedown $markdown, GitManagerInterface $gitManager)
     {
         $this->markdown = $markdown;
+        $this->gitManager = $gitManager;
     }
 
     public function createFromFileInfo(Project $project, SmartFileInfo $fileInfo): Documentation
@@ -46,6 +53,7 @@ final class DocumentationFactory implements DocumentationFactoryInterface
             $this->markdown->parse($contents),
             $this->getGithubEditUrl($project, $fileInfo),
             $project,
+            $this->gitManager->getLastModifiedDate($fileInfo),
             $config['title'] ?? null,
             $config['weight'] ?? null,
             isset($config['is_section']),
