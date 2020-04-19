@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace App\Dto;
 
-final class Project
+final class Project implements \JsonSerializable
 {
     /**
      * @var string
@@ -19,6 +19,11 @@ final class Project
      * @var string
      */
     private $description;
+
+    /**
+     * @var string
+     */
+    private $docsUrl;
 
     /**
      * @var string
@@ -87,6 +92,7 @@ final class Project
         string $localBasePath,
         string $gitOriginUrl,
         string $gitBranch,
+        string $docsUrl,
         ?string $remotePath = null
     ) {
         $this->name = $name;
@@ -100,12 +106,18 @@ final class Project
         $this->localBasePath = $localBasePath;
         $this->gitOriginUrl = $gitOriginUrl;
         $this->gitBranch = $gitBranch;
+        $this->docsUrl = $docsUrl;
         $this->remotePath = $remotePath;
     }
 
     public function getDescription(): string
     {
         return $this->description;
+    }
+
+    public function getDocsUrl(): string
+    {
+        return $this->docsUrl;
     }
 
     public function getGitBranch(): string
@@ -166,5 +178,28 @@ final class Project
     public function getTypeIcon(): string
     {
         return $this->type === self::TYPE_PACKAGE ? 'fas fa-cubes' : 'fas fa-cube';
+    }
+
+    /**
+     * @return mixed[]
+     */
+    public function jsonSerialize(): array
+    {
+        return [
+            'name' => $this->name,
+            'slug' => $this->name,
+            'description' => $this->description,
+            'docsUrl' => $this->docsUrl,
+            'gitBranch' => $this->gitBranch,
+            'gitOriginUrl' => $this->gitOriginUrl,
+            'language' => $this->language,
+            'license' => $this->license,
+            'localBasePath' => $this->localBasePath,
+            'localPath' => $this->localPath,
+            'remoteOriginUrl' => $this->remoteOriginUrl,
+            'remotePath' => $this->remotePath,
+            'type' => $this->type,
+            'typeIcon' => $this->getTypeIcon(),
+        ];
     }
 }

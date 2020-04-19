@@ -18,6 +18,9 @@ jobs:
                     php-version: 7.3
                     coverage: none
 
+            -   run: yarn install
+            -   run: yarn encore prod
+
             -   run: composer install --no-progress
             -   run: bin/console projects:fetch
             -   run: bin/console dump-static-site

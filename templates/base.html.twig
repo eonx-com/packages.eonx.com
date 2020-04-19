@@ -15,13 +15,19 @@
     <link rel="apple-touch-icon-precomposed" href="https://39cszd96rb9jntgd3r2cirij-wpengine.netdna-ssl.com/wp-content/uploads/2019/09/eonx-512.png">
 
     {% block stylesheets %}
+        {{ encore_entry_link_tags('app') }}
+
         <link id="theme-style" rel="stylesheet" href="{{ asset('assets/css/theme.css') }}">
     {% endblock %}
 </head>
 
-{% block base_body %}{% endblock %}
+<div id="app">
+    {% block base_body %}{% endblock %}
+</div>
 
 {% block javascripts %}
+    {{ encore_entry_script_tags('app') }}
+
     <script src="{{ asset('assets/js/jquery-3.4.1.min.js') }}"></script>
     <script src="{{ asset('assets/js/jquery.scrollTo.min.js') }}"></script>
     <script src="{{ asset('assets/js/popper.min.js') }}"></script>

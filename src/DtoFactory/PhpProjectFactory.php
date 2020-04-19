@@ -9,6 +9,7 @@ use App\Filesystem\Interfaces\ProjectFinderInterface;
 use App\Services\Git\GitManagerInterface;
 use Nette\Utils\Json;
 use Nette\Utils\Strings;
+use Symfony\Component\Routing\RouterInterface;
 use Symplify\SmartFileSystem\SmartFileInfo;
 
 final class PhpProjectFactory implements ProjectFactoryInterface
@@ -23,9 +24,15 @@ final class PhpProjectFactory implements ProjectFactoryInterface
      */
     private $projectsDirPath;
 
-    public function __construct(GitManagerInterface $gitManager)
+    /**
+     * @var \Symfony\Component\Routing\RouterInterface
+     */
+    private $router;
+
+    public function __construct(GitManagerInterface $gitManager, RouterInterface $router)
     {
         $this->gitManager = $gitManager;
+        $this->router = $router;
     }
 
     public function createFromFileInfo(SmartFileInfo $fileInfo): ?Project
@@ -48,6 +55,7 @@ final class PhpProjectFactory implements ProjectFactoryInterface
             $this->getLocalBasePath($fileInfo),
             $this->gitManager->getOriginUrlFromFileInfo($fileInfo),
             $this->gitManager->getCurrentBranchFromFileInfo($fileInfo),
+            $this->router->generate('projects_index', ['slug' => $json['name']]),
             $this->gitManager->getOriginPath(
                 $composerJson['extra']['eonx_docs']['remote_path'] ?? '',
                 $this->gitManager->getCurrentBranchFromFileInfo($fileInfo)

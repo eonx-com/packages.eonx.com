@@ -2,33 +2,7 @@
 
 {% block body %}
     {% for project in projects %}
-        <div class="col-12 col-md-6 col-lg-6 py-3 project-card">
-            <div class="card shadow-sm">
-                <div class="project-language-container">
-                    <span class="fa-stack">
-                        <i class="fas fa-circle fa-stack-2x"></i>
-                        <i class="fab fa-{{ project.language }} fa-stack-1x fa-inverse"></i>
-                    </span>
-                </div>
-                <div class="card-body">
-                    <h5 class="card-title mb-3">
-                        <span class="card-title-text project-search">{{ project.name }}</span>
-                    </h5>
-                    <div class="card-text">
-                        {{ project.description }}
-                    </div>
-                    <a class="card-link-mask" href="{{ path('projects_index', {'slug': project.slug}) }}"></a>
-                </div><!--//card-body-->
-                <div class="card-footer">
-                    <div class="float-left">
-                        <i class="{{ project.typeIcon }}" title="{{ project.type }}"></i>
-                    </div>
-                    <div class="float-right">
-                        <a href="{{ project.remoteOriginUrl }}"><i class="fab fa-github"></i></a>
-                    </div>
-                </div>
-            </div><!--//card-->
-        </div><!--//col-->
+        <project-card :project="{{ project|json_encode }}"></project-card>
     {% endfor %}
 {% endblock %}
 
@@ -40,7 +14,7 @@
             $('#search-projects').on('keyup', function () {
                 let value = $(this).val().toLowerCase();
 
-                $(".project-card .project-search").filter(function() {
+                $(".project-card .project-search").filter(function () {
                     let hit = $(this).text().toLowerCase().indexOf(value) > -1;
                     let parent = $($(this).closest(".project-card")[0]);
 
