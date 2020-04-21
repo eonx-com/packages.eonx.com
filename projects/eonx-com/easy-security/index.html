@@ -71,25 +71,28 @@
                         </a>
                     </li>
 
-                                            <li class="nav-item section-title mt-3">
-                                                            <span class="theme-icon-holder mr-2">
-                                    <i class="fab fa-laravel"></i>
-                                </span>
-                                                        <a class="nav-link scrollto" href="#eonx-com_easy-security_docs_laravel_install">
-                                Laravel/Lumen
+                                            <li class="nav-item ">
+                            <a class="nav-link scrollto" href="#eonx-com_easy-security_readme">
+                                
+                                Introduction
                             </a>
                         </li>
                                             <li class="nav-item section-title mt-3">
-                                                            <span class="theme-icon-holder mr-2">
-                                    <i class="fab fa-symfony"></i>
-                                </span>
-                                                        <a class="nav-link scrollto" href="#eonx-com_easy-security_docs_symfony_install">
+                            <a class="nav-link scrollto" href="#eonx-com_easy-security_docs_symfony_install">
+                                                                    <span class="theme-icon-holder mr-2">
+                                        <i class="fab fa-symfony"></i>
+                                    </span>
+                                
                                 Symfony
                             </a>
                         </li>
-                                            <li class="nav-item ">
-                                                        <a class="nav-link scrollto" href="#eonx-com_easy-security_readme">
-                                Introduction
+                                            <li class="nav-item section-title mt-3">
+                            <a class="nav-link scrollto" href="#eonx-com_easy-security_docs_laravel_install">
+                                                                    <span class="theme-icon-holder mr-2">
+                                        <i class="fab fa-laravel"></i>
+                                    </span>
+                                
+                                Laravel/Lumen
                             </a>
                         </li>
                                     </ul>
@@ -108,6 +111,62 @@
                         </section>
                     </header>
 
+                                            <section class="docs-section" id="eonx-com_easy-security_readme">
+                            <h2 class="section-heading">
+                                Introduction
+                                <div class="docs-time">
+                                    Last Updated: 21/04/2020 23:08:01 -
+                                    <a href="https://github.com/eonx-com/easy-monorepo/edit/master/packages/EasySecurity/readme.md" target="_blank" title="Edit on Github">
+                                        Edit on github <i class="fa fa-github"></i>
+                                    </a>
+                                </div>
+                            </h2>
+
+                            <ul>
+<li>Authentication using multiple strategies (Api Keys, JWTs, Basic, ...)</li>
+<li>Authorization using a hierarchy of Roles and Permissions</li>
+<li>All that with built-in multi-tenancies support</li>
+<li>Across different famous frameworks</li>
+</ul>
+<p>This is what this package is all about!</p>
+<h2>Dependencies</h2>
+<p>This package has dependencies on the following packages, please see their documentation directly:</p>
+<ul>
+<li><a href="https://github.com/eonx-com/easy-api-token">EasyApiToken</a></li>
+<li><a href="https://github.com/eonx-com/easy-psr7-factory">EasyPsr7Factory</a></li>
+</ul>
+<h2>Require package (Composer)</h2>
+<p>The recommended way to install this package is to use <a href="https://getcomposer.org/">Composer</a>:</p>
+<pre><code class="language-bash">$ composer require eonx-com/easy-security</code></pre>
+
+                            <br>
+                        </section>
+                        <br>
+                                            <section class="docs-section" id="eonx-com_easy-security_docs_symfony_install">
+                            <h2 class="section-heading">
+                                Symfony
+                                <div class="docs-time">
+                                    Last Updated: 21/04/2020 23:08:01 -
+                                    <a href="https://github.com/eonx-com/easy-monorepo/edit/master/packages/EasySecurity/docs/symfony/install.md" target="_blank" title="Edit on Github">
+                                        Edit on github <i class="fa fa-github"></i>
+                                    </a>
+                                </div>
+                            </h2>
+
+                            <h2>Register Bundle</h2>
+<p>If you're using <a href="https://flex.symfony.com/">Symfony Flex</a>, this step has been done automatically for you. If not, you can register the bundle
+yourself:</p>
+<pre><code class="language-php">// config/bundles.php
+
+return [
+    // Other bundles ...
+
+    EonX\EasySecurity\Bridge\Symfony\EasySecurityBundle::class =&gt; ['all' =&gt; true],
+];</code></pre>
+
+                            <br>
+                        </section>
+                        <br>
                                             <section class="docs-section" id="eonx-com_easy-security_docs_laravel_install">
                             <h2 class="section-heading">
                                 Laravel/Lumen
@@ -140,57 +199,10 @@ $app = new Laravel\Lumen\Application(\dirname(__DIR__));
 // Other actions...
 
 $app-&gt;register(\EonX\EasySecurity\Bridge\Laravel\EasySecurityServiceProvider::class);</code></pre>
+
+                            <br>
                         </section>
-                                            <section class="docs-section" id="eonx-com_easy-security_docs_symfony_install">
-                            <h2 class="section-heading">
-                                Symfony
-                                <div class="docs-time">
-                                    Last Updated: 21/04/2020 23:08:01 -
-                                    <a href="https://github.com/eonx-com/easy-monorepo/edit/master/packages/EasySecurity/docs/symfony/install.md" target="_blank" title="Edit on Github">
-                                        Edit on github <i class="fa fa-github"></i>
-                                    </a>
-                                </div>
-                            </h2>
-
-                            <h2>Register Bundle</h2>
-<p>If you're using <a href="https://flex.symfony.com/">Symfony Flex</a>, this step has been done automatically for you. If not, you can register the bundle
-yourself:</p>
-<pre><code class="language-php">// config/bundles.php
-
-return [
-    // Other bundles ...
-
-    EonX\EasySecurity\Bridge\Symfony\EasySecurityBundle::class =&gt; ['all' =&gt; true],
-];</code></pre>
-                        </section>
-                                            <section class="docs-section" id="eonx-com_easy-security_readme">
-                            <h2 class="section-heading">
-                                Introduction
-                                <div class="docs-time">
-                                    Last Updated: 21/04/2020 23:08:01 -
-                                    <a href="https://github.com/eonx-com/easy-monorepo/edit/master/packages/EasySecurity/readme.md" target="_blank" title="Edit on Github">
-                                        Edit on github <i class="fa fa-github"></i>
-                                    </a>
-                                </div>
-                            </h2>
-
-                            <ul>
-<li>Authentication using multiple strategies (Api Keys, JWTs, Basic, ...)</li>
-<li>Authorization using a hierarchy of Roles and Permissions</li>
-<li>All that with built-in multi-tenancies support</li>
-<li>Across different famous frameworks</li>
-</ul>
-<p>This is what this package is all about!</p>
-<h2>Dependencies</h2>
-<p>This package has dependencies on the following packages, please see their documentation directly:</p>
-<ul>
-<li><a href="https://github.com/eonx-com/easy-api-token">EasyApiToken</a></li>
-<li><a href="https://github.com/eonx-com/easy-psr7-factory">EasyPsr7Factory</a></li>
-</ul>
-<h2>Require package (Composer)</h2>
-<p>The recommended way to install this package is to use <a href="https://getcomposer.org/">Composer</a>:</p>
-<pre><code class="language-bash">$ composer require eonx-com/easy-security</code></pre>
-                        </section>
+                        <br>
                                     </article>
             </div>
         </div>
