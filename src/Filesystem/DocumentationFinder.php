@@ -41,7 +41,7 @@ final class DocumentationFinder implements DocumentationFinderInterface
         $docs = \array_map($map, $this->getMarkdownFiles([$project->getLocalPath()]));
 
         \usort($docs, static function (Documentation $first, Documentation $second): int {
-            return $second->getWeight() <=> $first->getWeight();
+            return $first->getWeight() <=> $second->getWeight();
         });
 
         return $docs;

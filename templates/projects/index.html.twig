@@ -16,12 +16,13 @@
 
                     {% for doc in docs %}
                         <li class="nav-item {{ doc.isSection() ? 'section-title mt-3' : '' }}">
-                            {% if doc.sectionIcon %}
-                                <span class="theme-icon-holder mr-2">
-                                    <i class="{{ doc.sectionIcon }}"></i>
-                                </span>
-                            {% endif %}
                             <a class="nav-link scrollto" href="#{{ doc.slug|replace({'/': '_'}) }}">
+                                {% if doc.sectionIcon %}
+                                    <span class="theme-icon-holder mr-2">
+                                        <i class="{{ doc.sectionIcon }}"></i>
+                                    </span>
+                                {% endif %}
+
                                 {{ doc.title }}
                             </a>
                         </li>
@@ -55,7 +56,10 @@
                             </h2>
 
                             {{ doc.htmlContent|raw }}
+
+                            <br>
                         </section>
+                        <br>
                     {% endfor %}
                 </article>
             </div>
