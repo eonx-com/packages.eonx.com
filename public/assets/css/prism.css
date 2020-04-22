@@ -261,3 +261,10 @@ pre > code.diff-highlight .token.inserted:not(.prefix) {
 	display: block;
 }
 
+.token.inserted {
+    background-color: rgba(0, 255, 0, .6);
+}
+.token.deleted {
+    color: #fff;
+    background-color: rgba(255, 0, 0, .6);
+}
