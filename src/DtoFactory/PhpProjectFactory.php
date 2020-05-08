@@ -43,8 +43,10 @@ final class PhpProjectFactory implements ProjectFactoryInterface
             return null;
         }
 
+        $name = $json['extra']['eonx_docs']['name'] ?? $json['name'];
+
         return new Project(
-            $json['name'],
+            $name,
             $json['name'],
             $json['description'],
             'php',
@@ -59,7 +61,9 @@ final class PhpProjectFactory implements ProjectFactoryInterface
             $this->gitManager->getOriginPath(
                 $composerJson['extra']['eonx_docs']['remote_path'] ?? '',
                 $this->gitManager->getCurrentBranchFromFileInfo($fileInfo)
-            )
+            ),
+            $json['extra']['eonx_docs']['finder_pattern'] ?? null,
+            $json['extra']['eonx_docs']['finder_depth'] ?? null
         );
     }
 

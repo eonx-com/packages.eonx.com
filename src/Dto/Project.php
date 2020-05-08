@@ -26,6 +26,16 @@ final class Project implements \JsonSerializable
     private $docsUrl;
 
     /**
+     * @var null|mixed
+     */
+    private $finderDepth;
+
+    /**
+     * @var null|string
+     */
+    private $finderPattern;
+
+    /**
      * @var string
      */
     private $gitBranch;
@@ -93,7 +103,9 @@ final class Project implements \JsonSerializable
         string $gitOriginUrl,
         string $gitBranch,
         string $docsUrl,
-        ?string $remotePath = null
+        ?string $remotePath = null,
+        ?string $finderPattern = null,
+        $finderDepth = null
     ) {
         $this->name = $name;
         $this->slug = $slug;
@@ -108,6 +120,8 @@ final class Project implements \JsonSerializable
         $this->gitBranch = $gitBranch;
         $this->docsUrl = $docsUrl;
         $this->remotePath = $remotePath;
+        $this->finderPattern = $finderPattern;
+        $this->finderDepth = $finderDepth;
     }
 
     public function getDescription(): string
@@ -118,6 +132,16 @@ final class Project implements \JsonSerializable
     public function getDocsUrl(): string
     {
         return $this->docsUrl;
+    }
+
+    public function getFinderDepth()
+    {
+        return $this->finderDepth;
+    }
+
+    public function getFinderPattern(): ?string
+    {
+        return $this->finderPattern;
     }
 
     public function getGitBranch(): string
@@ -200,6 +224,8 @@ final class Project implements \JsonSerializable
             'remotePath' => $this->remotePath,
             'type' => $this->type,
             'typeIcon' => $this->getTypeIcon(),
+            'finderPattern' => $this->finderPattern,
+            'finderDepth' => $this->finderDepth,
         ];
     }
 }

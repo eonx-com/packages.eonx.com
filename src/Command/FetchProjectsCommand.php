@@ -12,7 +12,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Yaml\Yaml;
-use function sprintf;
 
 final class FetchProjectsCommand extends Command
 {
@@ -39,39 +38,68 @@ final class FetchProjectsCommand extends Command
         $this
             ->setName('projects:fetch')
             ->setDescription('Fetch projects listed in docs_config.yaml')
-            ->addOption('show-config', null, InputOption::VALUE_OPTIONAL | InputOption::VALUE_NONE);
+            ->addOption('show-config', null, InputOption::VALUE_NONE);
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $style = new SymfonyStyle($input, $output);
+        $output->writeln(''); // Blank line at the start not to look squishy
 
+        $style = new SymfonyStyle($input, $output);
         $config = Yaml::parseFile(__DIR__ . '/../../docs_config.yaml');
 
         if ($input->hasOption('show-config')) {
-            $output->writeln(\print_r($config, true));
+            $this->displayConfig($config, $style);
         }
 
-        if ($this->filesystem->exists(ProjectFinderInterface::PROJECTS_DIR) === false) {
-            $style->comment(\sprintf(
-                'Directory "%s" does not exist, creating it...',
-                ProjectFinderInterface::PROJECTS_DIR
-            ));
-
-            $this->filesystem->mkdir(ProjectFinderInterface::PROJECTS_DIR);
-        }
+        $this->createProjectsDirIfDoesntExist($style);
 
         foreach ($config['projects'] as $name => $remote) {
-            $remote = $this->gitManager->completeRemoteRepositoryWithGithubToken($remote);
-
-            $output->writeln(sprintf('Cloning %s in %s/%s', $remote, ProjectFinderInterface::PROJECTS_DIR, $name));
-            $output->writeln($this->gitManager->cloneRemoteToPath(
-                $remote,
-                ProjectFinderInterface::PROJECTS_DIR,
-                $name
-            ));
+            $this->cloneProject($name, $remote, $style);
         }
 
         return 0;
+    }
+
+    private function cloneProject(string $name, string $remote, SymfonyStyle $style): void
+    {
+        $remote = $this->gitManager->completeRemoteRepositoryWithGithubToken($remote);
+
+        $this->gitManager->cloneRemoteToPath($remote, ProjectFinderInterface::PROJECTS_DIR, $name);
+
+        $message = \sprintf(
+            '- Cloning <info>%s</info> (<comment>%s</comment>): %s/%s',
+            $name,
+            $remote,
+            ProjectFinderInterface::PROJECTS_DIR,
+            $name
+        );
+
+        $style->writeln($message);
+    }
+
+    private function createProjectsDirIfDoesntExist(SymfonyStyle $style): void
+    {
+        if ($this->filesystem->exists(ProjectFinderInterface::PROJECTS_DIR)) {
+            return;
+        }
+
+        $style->note(\sprintf(
+            'Directory "%s" does not exist, creating it...',
+            ProjectFinderInterface::PROJECTS_DIR
+        ));
+
+        $this->filesystem->mkdir(ProjectFinderInterface::PROJECTS_DIR);
+    }
+
+    private function displayConfig(array $config, SymfonyStyle $style): void
+    {
+        $rows = [];
+
+        foreach ($config['projects'] ?? [] as $name => $repo) {
+            $rows[] = [$name, $repo];
+        }
+
+        $style->table(['Project Name', 'Repository'], $rows);
     }
 }

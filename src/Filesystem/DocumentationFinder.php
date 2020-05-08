@@ -38,7 +38,7 @@ final class DocumentationFinder implements DocumentationFinderInterface
             return $this->documentationFactory->createFromFileInfo($project, $fileInfo);
         };
 
-        $docs = \array_map($map, $this->getMarkdownFiles([$project->getLocalPath()]));
+        $docs = \array_map($map, $this->getMarkdownFiles($project));
 
         \usort($docs, static function (Documentation $first, Documentation $second): int {
             return $first->getWeight() <=> $second->getWeight();
@@ -52,12 +52,16 @@ final class DocumentationFinder implements DocumentationFinderInterface
      *
      * @return \Symplify\SmartFileSystem\SmartFileInfo[]
      */
-    private function getMarkdownFiles(array $paths): array
+    private function getMarkdownFiles(Project $project): array
     {
         $finder = (new Finder())
-            ->in($paths)
-            ->name('*.md')
+            ->in([$project->getLocalPath()])
+            ->name($project->getFinderPattern() ?? '*.md')
             ->sortByName();
+
+        if ($project->getFinderDepth() !== null) {
+            $finder->depth($project->getFinderDepth());
+        }
 
         return $this->finderSanitizer->sanitize($finder);
     }
