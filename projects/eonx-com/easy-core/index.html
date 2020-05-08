@@ -72,15 +72,45 @@
                     </li>
 
                                             <li class="nav-item ">
-                            <a class="nav-link scrollto" href="#eonx-com_easy-core_docs_lumen_config_cache">
+                            <a class="nav-link scrollto" href="#eonx-com_easy-core_readme">
                                 
-                                lumen_config_cache.md
+                                Introduction
+                            </a>
+                        </li>
+                                            <li class="nav-item section-title mt-3">
+                            <a class="nav-link scrollto" href="#eonx-com_easy-core_docs_symfony_install">
+                                                                    <span class="theme-icon-holder mr-2">
+                                        <i class="fab fa-symfony"></i>
+                                    </span>
+                                
+                                Symfony
                             </a>
                         </li>
                                             <li class="nav-item ">
-                            <a class="nav-link scrollto" href="#eonx-com_easy-core_readme">
+                            <a class="nav-link scrollto" href="#eonx-com_easy-core_docs_symfony_api_platform_api_resource_iris">
                                 
-                                readme.md
+                                ApiPlatform: ApiResource IRIs
+                            </a>
+                        </li>
+                                            <li class="nav-item ">
+                            <a class="nav-link scrollto" href="#eonx-com_easy-core_docs_symfony_api_platform_api_resource_no_payload">
+                                
+                                ApiPlatform: ApiResource No Request Payload
+                            </a>
+                        </li>
+                                            <li class="nav-item section-title mt-3">
+                            <a class="nav-link scrollto" href="#eonx-com_easy-core_docs_laravel_install">
+                                                                    <span class="theme-icon-holder mr-2">
+                                        <i class="fab fa-laravel"></i>
+                                    </span>
+                                
+                                Laravel/Lumen
+                            </a>
+                        </li>
+                                            <li class="nav-item ">
+                            <a class="nav-link scrollto" href="#eonx-com_easy-core_docs_laravel_lumen_config_cache">
+                                
+                                Lumen cache config
                             </a>
                         </li>
                                     </ul>
@@ -99,60 +129,282 @@
                         </section>
                     </header>
 
-                                            <section class="docs-section" id="eonx-com_easy-core_docs_lumen_config_cache">
-                            <h2 class="section-heading">
-                                lumen_config_cache.md
-                                <div class="docs-time">
-                                    Last Updated: 11/12/2019 03:51:30 -
-                                    <a href="https://github.com/eonx-com/easy-monorepo/edit/master/packages/EasyCore/docs/lumen_config_cache.md" target="_blank" title="Edit on Github">
-                                        Edit on github <i class="fa fa-github"></i>
-                                    </a>
-                                </div>
-                            </h2>
-
-                            <h1>To enable configuration cache</h1>
-<ul>
-<li>Register <code>EonX\EasyCore\Bridge\Laravel\CachedConfigurationServiceProvider</code> at <code>bootstrap/app.php</code>
-instead of <code>ConfigurationServiceProvider</code></li>
-<li>Execute <code>php artisan config:cache</code> at container start or whenever you want to update cache</li>
-<li>Add <code>echo "config:cache"</code> and <code>/usr/local/bin/php ${ARTISAN} config:cache</code> lines to startup.sh</li>
-</ul>
-<h1>To clear configuration cache</h1>
-<ul>
-<li>Execute <code>php artisan config:clear</code></li>
-</ul>
-<h1>To disable configuration cache</h1>
-<ul>
-<li>Remove <code>echo "config:cache"</code> and <code>/usr/local/bin/php ${ARTISAN} config:cache</code> lines from startup.sh</li>
-<li>Clear cache by executing <code>php artisan config:clear</code></li>
-<li>(Optionally) Replace <code>CachedConfigurationServiceProvider</code> with <code>ConfigurationServiceProvider</code> at <code>bootstrap/app.php</code></li>
-</ul>
-
-                            <br>
-                        </section>
-                        <br>
                                             <section class="docs-section" id="eonx-com_easy-core_readme">
                             <h2 class="section-heading">
-                                readme.md
+                                Introduction
                                 <div class="docs-time">
-                                    Last Updated: 11/12/2019 03:51:30 -
+                                    Last Updated: 08/05/2020 15:48:46 -
                                     <a href="https://github.com/eonx-com/easy-monorepo/edit/master/packages/EasyCore/readme.md" target="_blank" title="Edit on Github">
                                         Edit on github <i class="fa fa-github"></i>
                                     </a>
                                 </div>
                             </h2>
 
-                            <div align="center">
-    <h1>EonX - EasyCore</h1>
-    <p>Provides core features for Lumen applications.</p>
-</div>
-<hr />
-<h2>Roadmap</h2>
-<h2>Documentation</h2>
-<h2>Laravel / Lumen</h2>
+                            <h3>Require package (Composer)</h3>
+<p>The recommended way to install this package is to use <a href="https://getcomposer.org/">Composer</a>:</p>
+<pre><code class="language-bash">$ composer require eonx-com/easy-core</code></pre>
+
+                            <br>
+                        </section>
+                        <br>
+                                            <section class="docs-section" id="eonx-com_easy-core_docs_symfony_install">
+                            <h2 class="section-heading">
+                                Symfony
+                                <div class="docs-time">
+                                    Last Updated: 08/05/2020 15:48:46 -
+                                    <a href="https://github.com/eonx-com/easy-monorepo/edit/master/packages/EasyCore/docs/symfony/install.md" target="_blank" title="Edit on Github">
+                                        Edit on github <i class="fa fa-github"></i>
+                                    </a>
+                                </div>
+                            </h2>
+
+                            <h3>Register Bundle</h3>
+<p>If you're using <a href="https://flex.symfony.com/">Symfony Flex</a>, this step has been done automatically for you. If not, you can register the bundle
+yourself:</p>
+<pre><code class="language-php">// config/bundles.php
+
+return [
+    // Other bundles ...
+
+    EonX\EasyCore\Bridge\Symfony\EasyCoreBundle::class =&gt; ['all' =&gt; true],
+];</code></pre>
+
+                            <br>
+                        </section>
+                        <br>
+                                            <section class="docs-section" id="eonx-com_easy-core_docs_symfony_api_platform_api_resource_iris">
+                            <h2 class="section-heading">
+                                ApiPlatform: ApiResource IRIs
+                                <div class="docs-time">
+                                    Last Updated: 08/05/2020 15:48:46 -
+                                    <a href="https://github.com/eonx-com/easy-monorepo/edit/master/packages/EasyCore/docs/symfony/api_platform/api_resource_iris.md" target="_blank" title="Edit on Github">
+                                        Edit on github <i class="fa fa-github"></i>
+                                    </a>
+                                </div>
+                            </h2>
+
+                            <p>By default <a href="https://api-platform.com/">ApiPlatform</a> requires an ApiResource to have at least:</p>
 <ul>
-<li><a href="docs/laravel_install.md">Installation</a></li>
+<li>A unique identifier: Used as <code>id</code> route parameter to generate the IRI for the ApiResource</li>
+<li>A GET item operation: The Symfony Router is used to generate the IRI for the ApiResource and it requires a route</li>
 </ul>
+<p>This can be an issue in the case you want to create a custom API endpoint, not part of standard CRUD, to trigger an
+action of your choice.</p>
+<p><br></p>
+<p>This package provides different simple solutions to allow you to create any custom endpoint your business logic requires:</p>
+<ul>
+<li>No IRI Item: Allows you to create an ApiResource with no IRI support</li>
+<li>Self Provided IRI: Allows you to create an ApiResource that provide the IRI itself</li>
+</ul>
+<p><br></p>
+<h3>No IRI Item</h3>
+<p>Did you ever try to create a custom API endpoint outside of the traditional CRUD using ApiPlatform?
+An API endpoint that doesn't return a traditional resource with an identifier?
+How easy was it?  ...</p>
+<p><br></p>
+<p>Alright let's take a simple example, you want to implement an API endpoint as <code>POST - /api/emails/send</code> and this will
+return in the best case scenario something like:</p>
+<pre><code class="language-json">{
+    "message": "X emails successfully sent"
+}</code></pre>
+<p><br></p>
+<p>As explained ealier this example will be harder than expected to implement as ApiPlatform will require you to add an
+identifier on the ApiResource and an item operation that you won't ever use.</p>
+<p><br></p>
+<p>Here is the solution: <code>EonX\EasyCore\Bridge\Symfony\ApiPlatform\Interfaces\NoIriItemInterface</code>. When using the
+<code>EasyCoreBundle</code> in your application, simply make your ApiResource implement this interface will allow you to get rid of
+the errors and implement only what you really need.</p>
+<pre><code class="language-php">// src/Api/Resource/EmailsSendResource.php
+
+namespace App\Api\Resource;
+
+use ApiPlatform\Core\Annotation\ApiResource;
+use EonX\EasyCore\Bridge\Symfony\ApiPlatform\Interfaces\NoIriItemInterface;
+
+/**
+ * @ApiResource(
+ *     collectionOperations={
+ *         "post"={
+ *             "path"="/emails/send"
+ *         }
+ *     },
+ *     itemOperations={}
+ * )
+ */
+final class EmailsSendResource implements NoIriItemInterface
+{
+    /**
+     * @var string
+     */
+    private $message;
+
+    public function getMessage(): ?string 
+    {
+        return $this-&gt;message;
+    }
+
+    public function setMessage(string $message): void
+    {
+        $this-&gt;message = $message;
+    }
+}</code></pre>
+<p><br></p>
+<h3>Self Provided IRI</h3>
+<p>In the previous example the created ApiResource didn't support IRI at all. This solution allows you to create ApiResources
+supporting IRI generation and control the way those IRIs are generated.</p>
+<p>Use the <code>EonX\EasyCore\Bridge\Symfony\ApiPlatform\Interfaces\SelfProvidedIriItemInterface</code>.</p>
+<pre><code class="language-php">// src/Api/Resource/EmailsSendWithIriResource.php
+
+namespace App\Api\Resource;
+
+use ApiPlatform\Core\Annotation\ApiResource;
+use EonX\EasyCore\Bridge\Symfony\ApiPlatform\Interfaces\SelfProvidedIriItemInterface;
+
+/**
+ * @ApiResource(
+ *     collectionOperations={
+ *         "post"={
+ *             "path"="/emails/send"
+ *         }
+ *     },
+ *     itemOperations={}
+ * )
+ */
+final class EmailsSendWithIriResource implements SelfProvidedIriItemInterface
+{
+    /**
+     * @var string
+     */
+    private $message;
+
+    public function getIri(): string
+    {
+        return '/emails/reports';
+    }
+
+    public function getMessage(): ?string 
+    {
+        return $this-&gt;message;
+    }
+
+    public function setMessage(string $message): void
+    {
+        $this-&gt;message = $message;
+    }
+}</code></pre>
+
+                            <br>
+                        </section>
+                        <br>
+                                            <section class="docs-section" id="eonx-com_easy-core_docs_symfony_api_platform_api_resource_no_payload">
+                            <h2 class="section-heading">
+                                ApiPlatform: ApiResource No Request Payload
+                                <div class="docs-time">
+                                    Last Updated: 08/05/2020 15:48:46 -
+                                    <a href="https://github.com/eonx-com/easy-monorepo/edit/master/packages/EasyCore/docs/symfony/api_platform/api_resource_no_payload.md" target="_blank" title="Edit on Github">
+                                        Edit on github <i class="fa fa-github"></i>
+                                    </a>
+                                </div>
+                            </h2>
+
+                            <p>By default <a href="https://api-platform.com/">ApiPlatform</a>, requires an ApiResource to have at least one property as it uses them to:</p>
+<ul>
+<li>generate the documentation</li>
+<li>serialise/de-serialise the ApiResource from the request and to the response</li>
+</ul>
+<p><br></p>
+<p>This can be an issue in the case you want to create a simple endpoint with no request payload.
+This package provides a feature to allow you to create an ApiResource with no request payload.</p>
+<p><br></p>
+<h3>No Properties ApiResource</h3>
+<p>To create a simple API endpoint with no request payload but still beneficiate of the auto generated documentation and
+ApiPlatform features such as DataPersister, create an ApiResource that implements the <code>EonX\EasyCore\Bridge\Symfony\ApiPlatform\Interfaces</code>.</p>
+<pre><code class="language-php">// src/Api/Resource/EmailsSendResource.php
+
+namespace App\Api\Resource;
+
+use ApiPlatform\Core\Annotation\ApiResource;
+use EonX\EasyCore\Bridge\Symfony\ApiPlatform\Interfaces\NoPropertiesApiResourceInterface;
+
+/**
+ * @ApiResource()
+ */
+final class EmailsSendResource implements NoPropertiesApiResourceInterface
+{
+    // No properties!
+}</code></pre>
+
+                            <br>
+                        </section>
+                        <br>
+                                            <section class="docs-section" id="eonx-com_easy-core_docs_laravel_install">
+                            <h2 class="section-heading">
+                                Laravel/Lumen
+                                <div class="docs-time">
+                                    Last Updated: 08/05/2020 15:48:46 -
+                                    <a href="https://github.com/eonx-com/easy-monorepo/edit/master/packages/EasyCore/docs/laravel/install.md" target="_blank" title="Edit on Github">
+                                        Edit on github <i class="fa fa-github"></i>
+                                    </a>
+                                </div>
+                            </h2>
+
+                            <h3>Package Service Provider</h3>
+<p>Once the package required, you must tell your application to use it. Laravel uses service providers to do so, if you are
+not familiar with this concept make sure to have a look at the <a href="https://laravel.com/docs/5.8/providers">documentation</a>.</p>
+<pre><code class="language-php">// config/app.php
+
+'providers' =&gt; [
+    // Other Service Providers...
+
+    \EonX\EasyCore\Bridge\Laravel\Providers\EasyCoreServiceProvider::class
+],</code></pre>
+<p><br></p>
+<h4>Lumen Actions Required</h4>
+<p>To install this package in a Lumen application the procedures are a bit different.</p>
+<p><br></p>
+<h5>Register Service Provider</h5>
+<p>In a Lumen application you must explicitly tell the application to register the package's service provider as following:</p>
+<pre><code class="language-php">// bootstrap/app.php
+
+$app = new Laravel\Lumen\Application(\dirname(__DIR__));
+
+// Other actions...
+
+$app-&gt;register(\EonX\EasyCore\Bridge\Laravel\Providers\EasyCoreServiceProvider::class);</code></pre>
+
+                            <br>
+                        </section>
+                        <br>
+                                            <section class="docs-section" id="eonx-com_easy-core_docs_laravel_lumen_config_cache">
+                            <h2 class="section-heading">
+                                Lumen cache config
+                                <div class="docs-time">
+                                    Last Updated: 08/05/2020 15:48:46 -
+                                    <a href="https://github.com/eonx-com/easy-monorepo/edit/master/packages/EasyCore/docs/laravel/lumen_config_cache.md" target="_blank" title="Edit on Github">
+                                        Edit on github <i class="fa fa-github"></i>
+                                    </a>
+                                </div>
+                            </h2>
+
+                            <p>Laravel comes with a built-in feature to cache the configuration of the application. Unfortunately it is not the case
+for Lumen, this package provides this cache configuration in a Lumen context.</p>
+<p><br></p>
+<h3>Register the CachedConfigurationServiceProvider</h3>
+<pre><code class="language-php">// bootstrap/app.php
+
+$app = new Laravel\Lumen\Application(\dirname(__DIR__));
+
+// Other actions...
+
+$app-&gt;register(\EonX\EasyCore\Bridge\Laravel\Providers\CachedConfigServiceProvider::class);</code></pre>
+<p><br></p>
+<h3>Cache the app configuration</h3>
+<p>To cache of the Lumen application you need to run a console command and... That's it!</p>
+<pre><code class="language-bash">$ php artisan config:cache</code></pre>
+<p><br></p>
+<h3>Clear the cached configuration</h3>
+<p>To clear the cached configuration you need to run a console command and... That's it once again!</p>
+<pre><code class="language-bash">$ php artisan config:clear</code></pre>
 
                             <br>
                         </section>
