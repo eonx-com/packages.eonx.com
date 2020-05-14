@@ -46,6 +46,9 @@
                     {% for doc in docs %}
                         <section class="docs-section" id="{{ doc.slug|replace({'/': '_'}) }}">
                             <h2 class="section-heading">
+                                {% if doc.isSection() and doc.sectionIcon %}
+                                    <i class="{{ doc.sectionIcon }}"></i>
+                                {% endif %}
                                 {{ doc.title }}
                                 <div class="docs-time">
                                     Last Updated: {{ doc.lastModifiedAt|date('d/m/Y H:i:s') }} -
