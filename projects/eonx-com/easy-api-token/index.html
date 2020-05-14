@@ -72,15 +72,51 @@
                     </li>
 
                                             <li class="nav-item ">
-                            <a class="nav-link scrollto" href="#eonx-com_easy-api-token_docs_laravel_install">
+                            <a class="nav-link scrollto" href="#eonx-com_easy-api-token_readme">
                                 
-                                laravel_install.md
+                                Introduction
                             </a>
                         </li>
                                             <li class="nav-item ">
-                            <a class="nav-link scrollto" href="#eonx-com_easy-api-token_readme">
+                            <a class="nav-link scrollto" href="#eonx-com_easy-api-token_docs_decoders">
                                 
-                                readme.md
+                                Decoders
+                            </a>
+                        </li>
+                                            <li class="nav-item ">
+                            <a class="nav-link scrollto" href="#eonx-com_easy-api-token_docs_usage">
+                                
+                                Usage
+                            </a>
+                        </li>
+                                            <li class="nav-item section-title mt-3">
+                            <a class="nav-link scrollto" href="#eonx-com_easy-api-token_docs_symfony_install">
+                                                                    <span class="theme-icon-holder mr-2">
+                                        <i class="fab fa-symfony"></i>
+                                    </span>
+                                
+                                Symfony
+                            </a>
+                        </li>
+                                            <li class="nav-item ">
+                            <a class="nav-link scrollto" href="#eonx-com_easy-api-token_docs_symfony_config">
+                                
+                                Configuration
+                            </a>
+                        </li>
+                                            <li class="nav-item section-title mt-3">
+                            <a class="nav-link scrollto" href="#eonx-com_easy-api-token_docs_laravel_install">
+                                                                    <span class="theme-icon-holder mr-2">
+                                        <i class="fab fa-laravel"></i>
+                                    </span>
+                                
+                                Laravel/Lumen
+                            </a>
+                        </li>
+                                            <li class="nav-item ">
+                            <a class="nav-link scrollto" href="#eonx-com_easy-api-token_docs_laravel_config">
+                                
+                                Configuration
                             </a>
                         </li>
                                     </ul>
@@ -99,29 +135,369 @@
                         </section>
                     </header>
 
-                                            <section class="docs-section" id="eonx-com_easy-api-token_docs_laravel_install">
+                                            <section class="docs-section" id="eonx-com_easy-api-token_readme">
                             <h2 class="section-heading">
-                                laravel_install.md
+                                                                Introduction
                                 <div class="docs-time">
-                                    Last Updated: 11/12/2019 03:51:30 -
-                                    <a href="https://github.com/eonx-com/easy-monorepo/edit/master/packages/EasyApiToken/docs/laravel_install.md" target="_blank" title="Edit on Github">
+                                    Last Updated: 14/05/2020 05:40:55 -
+                                    <a href="https://github.com/eonx-com/easy-monorepo/edit/master/packages/EasyApiToken/readme.md" target="_blank" title="Edit on Github">
                                         Edit on github <i class="fa fa-github"></i>
                                     </a>
                                 </div>
                             </h2>
 
-                            <div align="center">
-    <h1>EonX - EasyApiToken</h1>
-    <p>Tools to handle API tokens like a pro.</p>
-</div>
-<hr />
-<p>This document describes the steps to install this package into a <a href="https://laravel.com/">Laravel</a> and/or <a href="https://lumen.laravel.com/">Lumen</a> application.</p>
-<h1>Require package (Composer)</h1>
-<p>Laravel uses <a href="https://getcomposer.org/">Composer</a> to manage its dependencies. You can require this package as following:</p>
-<pre><code class="language-bash">$ composer require eonx/easy-api-token</code></pre>
-<h1>Service Provider</h1>
+                            <p>It is common to restrict access to the endpoints of an API by implementing an authentication mechanism.
+To do so, you have a lot of available solutions: Basic Auth, API keys, JWTs, etc.
+Which one to pick?
+There is no magic solution, and you should make your decision based on the specific
+problem you're trying to solve.</p>
+<p>This package will decode the incoming HTTP Request to extract the &quot;ApiToken&quot; as a PHP object that your application can
+then use. It comes with built-in decoders for: </p>
+<ul>
+<li>Basic Auth </li>
+<li>API keys</li>
+<li>JWTs (Auth0, Firebase)</li>
+</ul>
+<p>So you can start supporting each of those strategies with no effort. It also provides a &quot;chain&quot; decoder allowing you
+to support multiple ApiToken strategies for the same API endpoint. </p>
+<p>Each ApiToken implements a common interface allowing you to use them as parameters regardless of the ApiToken strategy
+used, also each ApiToken has its own specific PHP class allowing you to implement business logic based on the ApiToken
+strategy used.</p>
+<p><br></p>
+<h3>Require package (Composer)</h3>
+<p>The recommended way to install this package is to use <a href="https://getcomposer.org/">Composer</a>:</p>
+<pre><code class="language-bash">$ composer require eonx-com/easy-api-token</code></pre>
+
+                            <br>
+                        </section>
+                        <br>
+                                            <section class="docs-section" id="eonx-com_easy-api-token_docs_decoders">
+                            <h2 class="section-heading">
+                                                                Decoders
+                                <div class="docs-time">
+                                    Last Updated: 14/05/2020 05:40:55 -
+                                    <a href="https://github.com/eonx-com/easy-monorepo/edit/master/packages/EasyApiToken/docs/decoders.md" target="_blank" title="Edit on Github">
+                                        Edit on github <i class="fa fa-github"></i>
+                                    </a>
+                                </div>
+                            </h2>
+
+                            <p>Let's have a look at the built-in decoders!</p>
+<h3>Basic</h3>
+<p>This decoder will handle BasicAuth using the Authorization header and return a
+<code>EonX\EasyApiToken\Interfaces\Tokens\BasicAuthEasyApiTokenInterface</code> instance. This interface allows you to retrieve
+the username and password provided on the request.</p>
+<p><br></p>
+<h3>User ApiKey</h3>
+<p>This decoder will handle an ApiKey passed as the BasicAuth username in the Authorization header and return a
+<code>EonX\EasyApiToken\Interfaces\Tokens\ApiKeyEasyApiTokenInterface</code> instance.
+This interface allows you to retrieve the ApiKey given on the request.</p>
+<p style="display: none">Required otherwise it breaks the warning format below</p>
+<div class="callout-block callout-block-warning"><div class="content">
+<h4 class="callout-title"><span class="callout-icon-holder mr-1">
+<i class="fa fa-exclamation-triangle"></i>
+<span>Warning</span>
+</span></h4>
+<div><p>If a password is given as part of the BasicAuth this decoder will not consider it as an ApiKey.</p></div>
+</div></div>
+<p><br></p>
+<h3>JWT Header</h3>
+<p>This decoder will handle Bearer token using the Authorization header and return a
+<code>EonX\EasyApiToken\Interfaces\Tokens\JwtEasyApiTokenInterface</code> instance. This interface allows you to retrieve any
+claim on the JWT, retrieve claims as array (useful for hash) and check the presence of a claim.</p>
+<p><br></p>
+<h3>JWT Param</h3>
+<p>This decoder will handle a JWT as query parameter, it will return the same instance as <code>JWT Header</code>.</p>
+<p><br></p>
+<h3>JWT Drivers</h3>
+<p>When using the JWT decoders, you will have to configure the underlying driver you want to use or even create your own.
+By default, this package comes with 2 built-in drivers:</p>
+<ul>
+<li>Auth0: Allows you to decode JWT from <a href="https://auth0.com/">Auth0</a></li>
+<li>Firebase: Allows you to decode JWT using the <a href="https://github.com/firebase/php-jwt">Firebase PHP package</a></li>
+</ul>
+
+                            <br>
+                        </section>
+                        <br>
+                                            <section class="docs-section" id="eonx-com_easy-api-token_docs_usage">
+                            <h2 class="section-heading">
+                                                                Usage
+                                <div class="docs-time">
+                                    Last Updated: 14/05/2020 05:40:55 -
+                                    <a href="https://github.com/eonx-com/easy-monorepo/edit/master/packages/EasyApiToken/docs/usage.md" target="_blank" title="Edit on Github">
+                                        Edit on github <i class="fa fa-github"></i>
+                                    </a>
+                                </div>
+                            </h2>
+
+                            <p>For the examples used in this document, we will assume we're working on a Symfony project. For any information regarding
+another framework you can refer to its dedicated section. If the section doesn't exist it means that it is not supported
+yet! Please feel free to contribute.</p>
+<p style="display: none">Required not to break format below</p>
+<div class="callout-block callout-block-info"><div class="content">
+<h4 class="callout-title"><span class="callout-icon-holder mr-1">
+<i class="fa fa-info-circle"></i>
+<span>PSR7</span>
+</span></h4>
+<div><p>Decoders will expect a PSR7 Request to work, you can use any library to convert Symfony Requests to PSR7 ones.
+In the following examples we will be using <a href="https://github.com/eonx-com/easy-psr7-factory">EasyPsr7Factory</a></p></div>
+</div></div>
+<p><br></p>
+<h3>Decoding BasicAuth only</h3>
+<p>To decode BasicAuth only we will register a single decoder for BasicAuth.</p>
+<pre><code class="language-yaml"># config/packages/easy_api_token.yaml
+
+easy_api_token:
+    decoders:
+        basic: null</code></pre>
+<p><br></p>
+<p>Once the configuration done, we will be able to use the <code>EasyApiTokenDecoderFactoryInterface</code> to build our decoder using
+its name. The name of a decoder is the key used to register it under <code>decoders</code> in the configuration, so in our case it
+is <code>basic</code>.</p>
+<p>Once the decoder built, we just have to use it to decode the ApiToken for a given request. Let's take the example of
+controller.</p>
+<pre><code class="language-php">// src/Controller/MyController.php
+
+namespace App\Controller;
+
+use EonX\EasyApiToken\Interfaces\Factories\EasyApiTokenDecoderFactoryInterface;
+use EonX\EasyPsr7Factory\Interfaces\EasyPsr7FactoryInterface;
+use Symfony\Component\HttpFoundation\Request;
+
+final class MyController
+{
+    public function __invoke(
+        EasyApiTokenDecoderFactoryInterface $decoderFactory,
+        EasyPsr7FactoryInterface $psr7Factory,
+        Request $request
+    ){
+        $decoder = $decoderFactory-&gt;build('basic'); // Use the name of the decoder as an argument
+
+        $psr7Request = $psr7Factory-&gt;createRequest($request); // Convert Symfony request to PSR7 request
+
+        $apiToken = $decoder-&gt;decode($psr7Request); // Decode token for given PSR7 request
+
+        /**
+         * $apiToken will be either a EonX\EasyApiToken\Interfaces\Tokens\BasicAuthEasyApiTokenInterface instance
+         * or null if no BasicAuth provided on the given request.
+         */
+
+        // Use the $apiToken...
+    }
+}</code></pre>
+<p><br></p>
+<h3>Decoding User ApiKey only</h3>
+<p>Let's start from the previous example and see how to decode User ApiKey only instead of BasicAuth.
+First, modify your configuration to add the <code>user-apikey</code> decoder.</p>
+<pre><code class="language-yaml"># config/packages/easy_api_token.yaml
+
+easy_api_token:
+    decoders:
+        basic: null # Already there from previous example
+
+        user-apikey: null</code></pre>
+<p>Once the configuration updated, simply change the argument given to the decoder factory to be <code>user-apikey</code> and... done!</p>
+<pre><code class="language-php">// src/Controller/MyController.php
+
+namespace App\Controller;
+
+use EonX\EasyApiToken\Interfaces\Factories\EasyApiTokenDecoderFactoryInterface;
+use EonX\EasyPsr7Factory\Interfaces\EasyPsr7FactoryInterface;
+use Symfony\Component\HttpFoundation\Request;
+
+final class MyController
+{
+    public function __invoke(
+        EasyApiTokenDecoderFactoryInterface $decoderFactory,
+        EasyPsr7FactoryInterface $psr7Factory,
+        Request $request
+    ){
+        $decoder = $decoderFactory-&gt;build('user-apikey'); // Use the name of the decoder as an argument
+
+        $psr7Request = $psr7Factory-&gt;createRequest($request); // Convert Symfony request to PSR7 request
+
+        $apiToken = $decoder-&gt;decode($psr7Request); // Decode token for given PSR7 request
+
+        /**
+         * $apiToken will now be either a EonX\EasyApiToken\Interfaces\Tokens\ApiKeyEasyApiTokenInterface instance
+         * or null if no BasicAuth provided on the given request.
+         */
+
+        // Use the $apiToken...
+    }
+}</code></pre>
+<p><br></p>
+<h3>Decoding BasicAuth and User ApiKey</h3>
+<p>We now know how to decode BasicAuth or User ApiKey, good but...
+How are we supposed to know when to use one or the other?</p>
+<p>Here comes the <code>chain</code> decoder, this decoder isn't made to handle any ApiToken strategy but to accept a list of decoders
+and loop through each of them until an ApiToken is decoded! Let's see how that works.</p>
+<p><br></p>
+<p>Modify your configuration to add the <code>chain</code> decoder and set the other decoders into its <code>list</code> option.</p>
+<pre><code class="language-yaml"># config/packages/easy_api_token.yaml
+
+easy_api_token:
+    decoders:
+        chain:
+            list: # The list option contains a list of other decoders name
+                - basic
+                - user-apikey
+
+        # Existing decoders
+        basic: null
+        user-apikey: null</code></pre>
+<p><br></p>
+<p>Once the configuration updated, replace the argument for the decoder factory to <code>chain</code> and... Again we're done!</p>
+<pre><code class="language-php">// src/Controller/MyController.php
+
+namespace App\Controller;
+
+use EonX\EasyApiToken\Interfaces\Factories\EasyApiTokenDecoderFactoryInterface;
+use EonX\EasyPsr7Factory\Interfaces\EasyPsr7FactoryInterface;
+use Symfony\Component\HttpFoundation\Request;
+
+final class MyController
+{
+    public function __invoke(
+        EasyApiTokenDecoderFactoryInterface $decoderFactory,
+        EasyPsr7FactoryInterface $psr7Factory,
+        Request $request
+    ){
+        $decoder = $decoderFactory-&gt;build('chain'); // Use the name of the decoder as an argument
+
+        $psr7Request = $psr7Factory-&gt;createRequest($request); // Convert Symfony request to PSR7 request
+
+        $apiToken = $decoder-&gt;decode($psr7Request); // Decode token for given PSR7 request
+
+        /**
+         * $apiToken now be an instance of any ApiToken returned by the configured decoders under chain.list
+         * So in our case, $apiToken can be either:
+         *
+         * - EonX\EasyApiToken\Interfaces\Tokens\BasicAuthEasyApiTokenInterface: BasicAuth provided
+         * - EonX\EasyApiToken\Interfaces\Tokens\ApiKeyEasyApiTokenInterface: User ApiKey provided
+         * - null: neither BasicAuth or User ApiKey provided
+         */
+
+        // Use the $apiToken...
+    }
+}</code></pre>
+<p><br></p>
+<p style="display: none">Required not to break format below</p>
+<div class="callout-block callout-block-success"><div class="content">
+<h4 class="callout-title"><span class="callout-icon-holder mr-1">
+<i class="fa fa-thumbs-up"></i>
+<span>Congratulations</span>
+</span></h4>
+<div><p>The logic illustrated within the previous examples applies to any decoders, so you now know how to handle multiple
+authentication mechanism (ApiToken strategy) for any of your API endpoints and with only 3 lines of code!</p></div>
+</div></div>
+
+                            <br>
+                        </section>
+                        <br>
+                                            <section class="docs-section" id="eonx-com_easy-api-token_docs_symfony_install">
+                            <h2 class="section-heading">
+                                                                    <i class="fab fa-symfony"></i>
+                                                                Symfony
+                                <div class="docs-time">
+                                    Last Updated: 14/05/2020 05:40:55 -
+                                    <a href="https://github.com/eonx-com/easy-monorepo/edit/master/packages/EasyApiToken/docs/symfony/install.md" target="_blank" title="Edit on Github">
+                                        Edit on github <i class="fa fa-github"></i>
+                                    </a>
+                                </div>
+                            </h2>
+
+                            <h3>Register Bundle</h3>
+<p>If you're using <a href="https://flex.symfony.com/">Symfony Flex</a>, this step has been done automatically for you. If not, you can register the bundle
+yourself:</p>
+<pre><code class="language-php">// config/bundles.php
+
+return [
+    // Other bundles ...
+
+    EonX\EasyApiToken\Bridge\Symfony\EasyApiTokenBundle::class =&gt; ['all' =&gt; true],
+];</code></pre>
+
+                            <br>
+                        </section>
+                        <br>
+                                            <section class="docs-section" id="eonx-com_easy-api-token_docs_symfony_config">
+                            <h2 class="section-heading">
+                                                                Configuration
+                                <div class="docs-time">
+                                    Last Updated: 14/05/2020 05:40:55 -
+                                    <a href="https://github.com/eonx-com/easy-monorepo/edit/master/packages/EasyApiToken/docs/symfony/config.md" target="_blank" title="Edit on Github">
+                                        Edit on github <i class="fa fa-github"></i>
+                                    </a>
+                                </div>
+                            </h2>
+
+                            <h3>Create the configuration file</h3>
+<p>This package defines the <code>easy_api_token</code> extension, so to implement your own configuration simply create the following
+file:</p>
+<pre><code class="language-yaml"># config/packages/easy_api_token.yaml
+
+easy_api_token:
+    # Your configuration here...</code></pre>
+<h3>Configure decoders</h3>
+<p>Define your decoders under the <code>decoders</code> key in your configuration as:</p>
+<pre><code class="language-yaml"># config/packages/easy_api_token.yaml
+
+easy_api_token:
+    decoders:
+        basic: null # Built-in decoder for BasicAuth
+        user-apikey: null # Built-in decoder for ApiKey</code></pre>
+<h3>Built-in Decoders</h3>
+<p>This package comes with built-in decoders, let's see which ones and how to configure them.</p>
+<pre><code class="language-yaml"># config/packages/easy_api_token.yaml
+
+easy_api_token:
+    decoders:
+        chain:
+            list:
+                - basic
+                - user-apikey
+                - jwt-header
+
+        basic: null
+        user-apikey: null
+        jwt-header:
+            driver: auth0
+            options:
+                cache_path: path/to/cache
+                valid_audiences: ['id1', 'id2']
+                authorized_iss: ['xyz.auth0', 'abc.goog']
+                private_key: someprivatekeystring
+                allowed_algos: ['HS256', 'RS256']
+        jwt-param:
+            driver: firebase
+            options:
+                algo: HS256
+                allowed_algos: ['HS256', 'RS256']
+                leeway: 15
+                param: authParam
+                private_key: someprivatekeystring
+                public_key: somepublickeystring</code></pre>
+
+                            <br>
+                        </section>
+                        <br>
+                                            <section class="docs-section" id="eonx-com_easy-api-token_docs_laravel_install">
+                            <h2 class="section-heading">
+                                                                    <i class="fab fa-laravel"></i>
+                                                                Laravel/Lumen
+                                <div class="docs-time">
+                                    Last Updated: 14/05/2020 05:40:55 -
+                                    <a href="https://github.com/eonx-com/easy-monorepo/edit/master/packages/EasyApiToken/docs/laravel/install.md" target="_blank" title="Edit on Github">
+                                        Edit on github <i class="fa fa-github"></i>
+                                    </a>
+                                </div>
+                            </h2>
+
+                            <h3>Package Service Provider</h3>
 <p>Once the package required, you must tell your application to use it. Laravel uses service providers to do so, if you are
-not familiar with this concept make sure to have a look at the <a href="https://laravel.com/docs/5.7/providers">documentation</a>.</p>
+not familiar with this concept make sure to have a look at the <a href="https://laravel.com/docs/5.8/providers">documentation</a>.</p>
 <pre><code class="language-php">// config/app.php
 
 'providers' =&gt; [
@@ -129,10 +505,11 @@ not familiar with this concept make sure to have a look at the <a href="https://
 
     \EonX\EasyApiToken\Bridge\Laravel\EasyApiTokenServiceProvider::class
 ],</code></pre>
-<h1>Config</h1>
-<h1>Lumen Actions Required</h1>
+<p><br></p>
+<h4>Lumen Actions Required</h4>
 <p>To install this package in a Lumen application the procedures are a bit different.</p>
-<h2>Register Service Provider</h2>
+<p><br></p>
+<h5>Register Service Provider</h5>
 <p>In a Lumen application you must explicitly tell the application to register the package's service provider as following:</p>
 <pre><code class="language-php">// bootstrap/app.php
 
@@ -140,38 +517,81 @@ $app = new Laravel\Lumen\Application(\dirname(__DIR__));
 
 // Other actions...
 
-$app-&gt;register(\EonX\EasyApiToken\Bridge\Laravel\EasyApiTokenServiceProvider::class);</code></pre>
-<h2>Add Config</h2>
-<p>In a Lumen application you must explicitly tell the application to add the package's config as following:</p>
-<pre><code class="language-php">// bootstrap/app.php
+$app-&gt;register(\EonX\EasyApiToken\Bridge\Laravel\EasyApiTokenServiceProvider::class);
 
-$app = new Laravel\Lumen\Application(\dirname(__DIR__));
-
-// Other actions...
+// Configure the package
 
 $app-&gt;configure('easy-api-token');</code></pre>
 
                             <br>
                         </section>
                         <br>
-                                            <section class="docs-section" id="eonx-com_easy-api-token_readme">
+                                            <section class="docs-section" id="eonx-com_easy-api-token_docs_laravel_config">
                             <h2 class="section-heading">
-                                readme.md
+                                                                Configuration
                                 <div class="docs-time">
-                                    Last Updated: 11/12/2019 03:51:30 -
-                                    <a href="https://github.com/eonx-com/easy-monorepo/edit/master/packages/EasyApiToken/readme.md" target="_blank" title="Edit on Github">
+                                    Last Updated: 14/05/2020 05:40:55 -
+                                    <a href="https://github.com/eonx-com/easy-monorepo/edit/master/packages/EasyApiToken/docs/laravel/config.md" target="_blank" title="Edit on Github">
                                         Edit on github <i class="fa fa-github"></i>
                                     </a>
                                 </div>
                             </h2>
 
-                            <div align="center">
-    <h1>EonX - EasyApiToken</h1>
-    <p>Tools to handle API tokens like a pro.</p>
-</div>
-<hr />
-<h2>Documentation</h2>
-<p>Coming soon...</p>
+                            <h3>Create the configuration file</h3>
+<p>This package defines the <code>easy-api-token</code> config, so to implement your own configuration simply create the following
+file:</p>
+<pre><code class="language-php"># config/easy-api-token.php
+
+return [
+    // Your config here...
+];</code></pre>
+<h3>Configure decoders</h3>
+<p>Define your decoders under the <code>decoders</code> key in your configuration as:</p>
+<pre><code class="language-php"># config/easy-api-token.php
+
+return [
+    'decoders' =&gt; [
+        'basic' =&gt; null, // Built-in decoder for BasicAuth
+        'user-apikey' =&gt; null, // Built-in decoder for ApiKey
+    ],
+];</code></pre>
+<h3>Built-in Decoders</h3>
+<p>This package comes with built-in decoders, let's see which ones and how to configure them.</p>
+<pre><code class="language-php">return [
+    'decoders' =&gt; [
+        'chain' =&gt; [
+            'list' =&gt; [
+                'basic',
+                'user-apikey',
+                'jwt-header',
+            ]
+        ],
+
+        'basic' =&gt; null,
+        'user-apikey' =&gt; null,
+        'jwt-header' =&gt; [
+            'driver' =&gt; 'auth0',
+            'options' =&gt; [
+                'cache_path' =&gt; 'path/to/cache',
+                'valid_audiences' =&gt; ['id1', 'id2'],
+                'authorized_iss' =&gt; ['xyz.auth0', 'abc.goog'],
+                'private_key' =&gt; 'someprivatekeystring',
+                'allowed_algos' =&gt; ['HS256', 'RS256'],
+            ]
+        ],
+        'jwt-param' =&gt; [
+            'driver' =&gt; 'firebase',
+            'options' =&gt; [
+                'algo' =&gt; 'HS256',
+                'allowed_algos' =&gt; ['HS256', 'RS256'],
+                'leeway' =&gt; 15,
+                'param' =&gt; 'authParam',
+                'private_key' =&gt; 'someprivatekeystring',
+                'public_key' =&gt; 'somepublickeystring',
+            ]
+        ]
+    ],
+];</code></pre>
 
                             <br>
                         </section>
