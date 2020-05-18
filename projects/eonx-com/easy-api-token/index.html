@@ -426,7 +426,7 @@ return [
                             <h2 class="section-heading">
                                                                 Configuration
                                 <div class="docs-time">
-                                    Last Updated: 14/05/2020 05:40:55 -
+                                    Last Updated: 18/05/2020 02:39:12 -
                                     <a href="https://github.com/eonx-com/easy-monorepo/edit/master/packages/EasyApiToken/docs/symfony/config.md" target="_blank" title="Edit on Github">
                                         Edit on github <i class="fa fa-github"></i>
                                     </a>
@@ -465,10 +465,10 @@ easy_api_token:
         jwt-header:
             driver: auth0
             options:
-                cache_path: path/to/cache
+                cache_path: path/to/cache # Optional
                 valid_audiences: ['id1', 'id2']
                 authorized_iss: ['xyz.auth0', 'abc.goog']
-                private_key: someprivatekeystring
+                private_key: someprivatekeystring # Required only for HS256
                 allowed_algos: ['HS256', 'RS256']
         jwt-param:
             driver: firebase
@@ -530,7 +530,7 @@ $app-&gt;configure('easy-api-token');</code></pre>
                             <h2 class="section-heading">
                                                                 Configuration
                                 <div class="docs-time">
-                                    Last Updated: 14/05/2020 05:40:55 -
+                                    Last Updated: 18/05/2020 02:39:12 -
                                     <a href="https://github.com/eonx-com/easy-monorepo/edit/master/packages/EasyApiToken/docs/laravel/config.md" target="_blank" title="Edit on Github">
                                         Edit on github <i class="fa fa-github"></i>
                                     </a>
@@ -572,10 +572,10 @@ return [
         'jwt-header' =&gt; [
             'driver' =&gt; 'auth0',
             'options' =&gt; [
-                'cache_path' =&gt; 'path/to/cache',
+                'cache_path' =&gt; 'path/to/cache', // Optional
                 'valid_audiences' =&gt; ['id1', 'id2'],
                 'authorized_iss' =&gt; ['xyz.auth0', 'abc.goog'],
-                'private_key' =&gt; 'someprivatekeystring',
+                'private_key' =&gt; 'someprivatekeystring', // Required only for HS256
                 'allowed_algos' =&gt; ['HS256', 'RS256'],
             ]
         ],
