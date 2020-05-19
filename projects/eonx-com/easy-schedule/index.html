@@ -72,9 +72,24 @@
                     </li>
 
                                             <li class="nav-item ">
-                            <a class="nav-link scrollto" href="#eonx-com_easy-schedule_README">
+                            <a class="nav-link scrollto" href="#eonx-com_easy-schedule_readme">
                                 
-                                README.md
+                                Introduction
+                            </a>
+                        </li>
+                                            <li class="nav-item section-title mt-3">
+                            <a class="nav-link scrollto" href="#eonx-com_easy-schedule_docs_symfony_install">
+                                                                    <span class="theme-icon-holder mr-2">
+                                        <i class="fab fa-symfony"></i>
+                                    </span>
+                                
+                                Symfony
+                            </a>
+                        </li>
+                                            <li class="nav-item ">
+                            <a class="nav-link scrollto" href="#eonx-com_easy-schedule_docs_symfony_usage">
+                                
+                                Usage
                             </a>
                         </li>
                                     </ul>
@@ -93,34 +108,62 @@
                         </section>
                     </header>
 
-                                            <section class="docs-section" id="eonx-com_easy-schedule_README">
+                                            <section class="docs-section" id="eonx-com_easy-schedule_readme">
                             <h2 class="section-heading">
-                                                                README.md
+                                                                Introduction
                                 <div class="docs-time">
-                                    Last Updated: 10/03/2020 12:13:50 -
-                                    <a href="https://github.com/eonx-com/easy-monorepo/edit/master/packages/EasySchedule/README.md" target="_blank" title="Edit on Github">
+                                    Last Updated: 19/05/2020 05:48:16 -
+                                    <a href="https://github.com/eonx-com/easy-monorepo/edit/master/packages/EasySchedule/readme.md" target="_blank" title="Edit on Github">
                                         Edit on github <i class="fa fa-github"></i>
                                     </a>
                                 </div>
                             </h2>
 
-                            <div align="center">
-    <h1>EonX - EasySchedule</h1>
-    <p>Provides the Command Scheduling logic of Laravel in a Symfony Console application.</p>
-</div>
-<hr />
-<h2>Installation In Symfony</h2>
+                            <h3>Require package (Composer)</h3>
+<p>The recommended way to install this package is to use <a href="https://getcomposer.org/">Composer</a>:</p>
 <pre><code class="language-bash">$ composer require eonx-com/easy-schedule</code></pre>
-<p>Until a recipe is created for this bundle you will need to register it manually:</p>
+
+                            <br>
+                        </section>
+                        <br>
+                                            <section class="docs-section" id="eonx-com_easy-schedule_docs_symfony_install">
+                            <h2 class="section-heading">
+                                                                    <i class="fab fa-symfony"></i>
+                                                                Symfony
+                                <div class="docs-time">
+                                    Last Updated: 19/05/2020 05:48:16 -
+                                    <a href="https://github.com/eonx-com/easy-monorepo/edit/master/packages/EasySchedule/docs/symfony/install.md" target="_blank" title="Edit on Github">
+                                        Edit on github <i class="fa fa-github"></i>
+                                    </a>
+                                </div>
+                            </h2>
+
+                            <h3>Register Bundle</h3>
+<p>If you're using <a href="https://flex.symfony.com/">Symfony Flex</a>, this step has been done automatically for you. If not, you can register the bundle
+yourself:</p>
 <pre><code class="language-php">// config/bundles.php
 
 return [
-    // Other bundles...
+    // Other bundles ...
 
-    EonX\EasySchedule\Bridge\Symfony\ScheduleBundle::class =&gt; ['all' =&gt; true],
+    EonX\EasySchedule\Bridge\Symfony\EasyScheduleBundle::class =&gt; ['all' =&gt; true],
 ];</code></pre>
-<h2>Usage In Symfony</h2>
-<h3>Register Your Scheduled Commands</h3>
+
+                            <br>
+                        </section>
+                        <br>
+                                            <section class="docs-section" id="eonx-com_easy-schedule_docs_symfony_usage">
+                            <h2 class="section-heading">
+                                                                Usage
+                                <div class="docs-time">
+                                    Last Updated: 19/05/2020 05:48:16 -
+                                    <a href="https://github.com/eonx-com/easy-monorepo/edit/master/packages/EasySchedule/docs/symfony/usage.md" target="_blank" title="Edit on Github">
+                                        Edit on github <i class="fa fa-github"></i>
+                                    </a>
+                                </div>
+                            </h2>
+
+                            <h3>Register Your Scheduled Commands</h3>
 <p>To register the scheduled commands this bundle implements a concept of &quot;schedule providers&quot;, thanks to Symfony's
 autoconfigure feature, the only thing required is to create services that implement <code>EonX\EasySchedule\Interfaces\ScheduleProviderInterface</code>.
 The <code>ScheduleInterface</code> passed to the <code>schedule</code> method offers all the features of the <a href="https://laravel.com/docs/5.8/scheduling">Laravel Console Scheduling</a>.</p>
