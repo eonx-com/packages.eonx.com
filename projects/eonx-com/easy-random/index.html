@@ -115,7 +115,7 @@
                             <h2 class="section-heading">
                                                                 Introduction
                                 <div class="docs-time">
-                                    Last Updated: 16/06/2020 11:33:09 -
+                                    Last Updated: 16/06/2020 11:40:44 -
                                     <a href="https://github.com/eonx-com/easy-monorepo/edit/master/packages/EasyRandom/readme.md" target="_blank" title="Edit on Github">
                                         Edit on github <i class="fa fa-github"></i>
                                     </a>
@@ -165,14 +165,6 @@ $uuidV4Generator = new \EonX\EasyRandom\UuidV4\RamseyUuidV4Generator();
 $randomGenerator = (new \EonX\EasyRandom\RandomGenerator())-&gt;setUuidV4Generator($uuidV4Generator);
 
 $uuidV4 = $randomGenerator-&gt;uuidV4();</code></pre>
-<h4>In Symfony configure your preferred UUID V4 generator</h4>
-<p>To make this possible, the bundle will register the built-in generators as services.</p>
-<ul>
-<li><em>symfony_uuid4</em> alias for <code>EonX\EasyRandom\UuidV4\SymfonyUidUuidV4Generator</code></li>
-<li><em>ramsey_uuid4</em> alias for <code>EonX\EasyRandom\UuidV4\RamseyUuidV4Generator</code></li>
-</ul>
-<pre><code class="language-yaml">easy_random:
-    uuid_v4_generator: 'easy_random.symfony_uuid4'</code></pre>
 
                             <br>
                         </section>
@@ -182,7 +174,7 @@ $uuidV4 = $randomGenerator-&gt;uuidV4();</code></pre>
                                                                     <i class="fab fa-symfony"></i>
                                                                 Symfony
                                 <div class="docs-time">
-                                    Last Updated: 11/06/2020 13:22:15 -
+                                    Last Updated: 16/06/2020 11:40:44 -
                                     <a href="https://github.com/eonx-com/easy-monorepo/edit/master/packages/EasyRandom/docs/symfony/install.md" target="_blank" title="Edit on Github">
                                         Edit on github <i class="fa fa-github"></i>
                                     </a>
@@ -204,12 +196,11 @@ return [
 onto the random generator instance. To do so, you will first need to register the UUID V4 generator of your choice as
 a service and, then set the service id into the bundle configuration.</p>
 <h4>Register UUID V4 generator as a service</h4>
-<pre><code class="language-yaml"># config/services.yaml
-
-services:
-    # ...
-
-    EonX\EasyRandom\UuidV4\RamseyUuidV4Generator: null # That's it nothing else needed</code></pre>
+<p>By default, this package will register the built-in supported implementations as services:</p>
+<ul>
+<li><em>easy_random.ramsey_uuid4</em> alias for <code>EonX\EasyRandom\UuidV4\RamseyUuidV4Generator</code></li>
+<li><em>easy_random.symfony_uuid4</em> alias for <code>EonX\EasyRandom\UuidV4\SymfonyUidUuidV4Generator</code></li>
+</ul>
 <h4>Set the service id into the bundle configuration</h4>
 <pre><code class="language-yaml"># config/packages/easy_random.yaml
 
