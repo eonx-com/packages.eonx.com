@@ -65,20 +65,20 @@
                     <li class="nav-item section-title">
                         <a class="nav-link scrollto active" href="#intro">
                         <span class="theme-icon-holder mr-2">
-                            <i class="fas fa-cube"></i>
+                            <i class="fas fa-cubes"></i>
                         </span>
-                            eonx-com/easy-security
+                            eonx-com/easy-random
                         </a>
                     </li>
 
                                             <li class="nav-item ">
-                            <a class="nav-link scrollto" href="#eonx-com_easy-security_readme">
+                            <a class="nav-link scrollto" href="#eonx-com_easy-random_readme">
                                 
                                 Introduction
                             </a>
                         </li>
                                             <li class="nav-item section-title mt-3">
-                            <a class="nav-link scrollto" href="#eonx-com_easy-security_docs_symfony_install">
+                            <a class="nav-link scrollto" href="#eonx-com_easy-random_docs_symfony_install">
                                                                     <span class="theme-icon-holder mr-2">
                                         <i class="fab fa-symfony"></i>
                                     </span>
@@ -86,14 +86,8 @@
                                 Symfony
                             </a>
                         </li>
-                                            <li class="nav-item ">
-                            <a class="nav-link scrollto" href="#eonx-com_easy-security_docs_symfony_simplify_annotations">
-                                
-                                Simplify your security expressions
-                            </a>
-                        </li>
                                             <li class="nav-item section-title mt-3">
-                            <a class="nav-link scrollto" href="#eonx-com_easy-security_docs_laravel_install">
+                            <a class="nav-link scrollto" href="#eonx-com_easy-random_docs_laravel_install">
                                                                     <span class="theme-icon-holder mr-2">
                                         <i class="fab fa-laravel"></i>
                                     </span>
@@ -109,54 +103,87 @@
                 <article class="docs-article" id="intro">
                     <header class="docs-header">
                         <h1 class="docs-heading">
-                            eonx-com/easy-security
+                            eonx-com/easy-random
                             <a href="https://github.com/eonx-com/easy-monorepo"><i class="fa fa-github"></i></a>
                         </h1>
                         <section class="docs-intro">
-                            <p>Provides security features to be generic across applications</p>
+                            <p>Provides easy way to generate random values (string, int, uuids, ...)</p>
                         </section>
                     </header>
 
-                                            <section class="docs-section" id="eonx-com_easy-security_readme">
+                                            <section class="docs-section" id="eonx-com_easy-random_readme">
                             <h2 class="section-heading">
                                                                 Introduction
                                 <div class="docs-time">
-                                    Last Updated: 22/04/2020 00:07:25 -
-                                    <a href="https://github.com/eonx-com/easy-monorepo/edit/master/packages/EasySecurity/readme.md" target="_blank" title="Edit on Github">
+                                    Last Updated: 16/06/2020 11:33:09 -
+                                    <a href="https://github.com/eonx-com/easy-monorepo/edit/master/packages/EasyRandom/readme.md" target="_blank" title="Edit on Github">
                                         Edit on github <i class="fa fa-github"></i>
                                     </a>
                                 </div>
                             </h2>
 
-                            <ul>
-<li>Authentication using multiple strategies (Api Keys, JWTs, Basic, ...)</li>
-<li>Authorization using a hierarchy of Roles and Permissions</li>
-<li>All that with built-in multi-tenancies support</li>
-<li>Across different famous frameworks</li>
-</ul>
-<p>This is what this package is all about!</p>
-<p><br></p>
-<h3>Dependencies</h3>
-<p>This package has dependencies on the following packages, please see their documentation directly:</p>
+                            <p>Do you need to generate random and unique values? This package is for you!</p>
 <ul>
-<li><a href="https://github.com/eonx-com/easy-api-token">EasyApiToken</a></li>
-<li><a href="https://github.com/eonx-com/easy-psr7-factory">EasyPsr7Factory</a></li>
+<li>Strings</li>
+<li>Numbers</li>
+<li>UUIDs</li>
 </ul>
-<p><br></p>
+<p>All the randomness you need!</p>
 <h3>Require package (Composer)</h3>
 <p>The recommended way to install this package is to use <a href="https://getcomposer.org/">Composer</a>:</p>
-<pre><code class="language-bash">$ composer require eonx-com/easy-security</code></pre>
+<pre><code class="language-bash">$ composer require eonx-com/easy-random</code></pre>
+<h3>Usage</h3>
+<h4>Integers</h4>
+<pre><code class="language-php">// Will generate a random integer between 0 and 20 (both included)
+$myNumber = (new \EonX\EasyRandom\RandomGenerator())-&gt;randomInteger(0, 20);</code></pre>
+<h3>Strings</h3>
+<p>The random generator allows you to control the length, and the composition of the generated random strings via a nice
+fluent interface:</p>
+<pre><code class="language-php">$myString = (new \EonX\EasyRandom\RandomGenerator())
+    -&gt;randomString(16)
+    -&gt;excludeSimilar() // Will exclude similar characters
+    -&gt;excludeVowel() // Will exclude vowels, nice trick to avoid "bad words" in generated random strings
+    -&gt;includeNumeric(); // Include 0-9 numbers</code></pre>
+<p>Do you need to generate random strings for your end users?</p>
+<pre><code class="language-php">// Will generate "user friendly" random string:
+// - exclude ambiguous characters
+// - exclude symbols
+// - exclude vowels
+// - include numeric
+// - include uppercase
+
+$reference = (new \EonX\EasyRandom\RandomGenerator())
+    -&gt;randomString(16)
+    -&gt;userFriendly();</code></pre>
+<h3>UUID V4</h3>
+<p>The random generator allows you to generate UUID V4, to do so, you will need to set the UUID V4 generator of your choice
+onto the random generator instance.
+This package comes with built-in implementations for: <a href="https://github.com/ramsey/uuid">ramsey/uuid</a>, <a href="https://symfony.com/doc/current/components/uid.html">symfony/uid</a>.
+If you want to use your own, then you will need to make sure it implements <code>EonX\EasyRandom\Interfaces\UuidV4GeneratorInterface</code>.</p>
+<pre><code class="language-php">
+$uuidV4Generator = new \EonX\EasyRandom\UuidV4\RamseyUuidV4Generator();
+$randomGenerator = (new \EonX\EasyRandom\RandomGenerator())-&gt;setUuidV4Generator($uuidV4Generator);
+
+$uuidV4 = $randomGenerator-&gt;uuidV4();</code></pre>
+<h4>In Symfony configure your preferred UUID V4 generator</h4>
+<p>To make this possible, the bundle will register the built-in generators as services.</p>
+<ul>
+<li><em>symfony_uuid4</em> alias for <code>EonX\EasyRandom\UuidV4\SymfonyUidUuidV4Generator</code></li>
+<li><em>ramsey_uuid4</em> alias for <code>EonX\EasyRandom\UuidV4\RamseyUuidV4Generator</code></li>
+</ul>
+<pre><code class="language-yaml">easy_random:
+    uuid_v4_generator: 'easy_random.symfony_uuid4'</code></pre>
 
                             <br>
                         </section>
                         <br>
-                                            <section class="docs-section" id="eonx-com_easy-security_docs_symfony_install">
+                                            <section class="docs-section" id="eonx-com_easy-random_docs_symfony_install">
                             <h2 class="section-heading">
                                                                     <i class="fab fa-symfony"></i>
                                                                 Symfony
                                 <div class="docs-time">
                                     Last Updated: 11/06/2020 13:22:15 -
-                                    <a href="https://github.com/eonx-com/easy-monorepo/edit/master/packages/EasySecurity/docs/symfony/install.md" target="_blank" title="Edit on Github">
+                                    <a href="https://github.com/eonx-com/easy-monorepo/edit/master/packages/EasyRandom/docs/symfony/install.md" target="_blank" title="Edit on Github">
                                         Edit on github <i class="fa fa-github"></i>
                                     </a>
                                 </div>
@@ -170,84 +197,35 @@ yourself:</p>
 return [
     // Other bundles ...
 
-    EonX\EasySecurity\Bridge\Symfony\EasySecurityBundle::class =&gt; ['all' =&gt; true],
+    EonX\EasyRandom\Bridge\Symfony\EasyRandomBundle::class =&gt; ['all' =&gt; true],
 ];</code></pre>
+<h3>UUID V4 Generator</h3>
+<p>In the case you want to generate UUID V4 in your application, you will need to set the UUID V4 generator of your choice
+onto the random generator instance. To do so, you will first need to register the UUID V4 generator of your choice as
+a service and, then set the service id into the bundle configuration.</p>
+<h4>Register UUID V4 generator as a service</h4>
+<pre><code class="language-yaml"># config/services.yaml
+
+services:
+    # ...
+
+    EonX\EasyRandom\UuidV4\RamseyUuidV4Generator: null # That's it nothing else needed</code></pre>
+<h4>Set the service id into the bundle configuration</h4>
+<pre><code class="language-yaml"># config/packages/easy_random.yaml
+
+easy_random:
+    uuid_v4_generator: EonX\EasyRandom\UuidV4\RamseyUuidV4Generator # The service id</code></pre>
 
                             <br>
                         </section>
                         <br>
-                                            <section class="docs-section" id="eonx-com_easy-security_docs_symfony_simplify_annotations">
-                            <h2 class="section-heading">
-                                                                Simplify your security expressions
-                                <div class="docs-time">
-                                    Last Updated: 22/04/2020 00:41:27 -
-                                    <a href="https://github.com/eonx-com/easy-monorepo/edit/master/packages/EasySecurity/docs/symfony/simplify_annotations.md" target="_blank" title="Edit on Github">
-                                        Edit on github <i class="fa fa-github"></i>
-                                    </a>
-                                </div>
-                            </h2>
-
-                            <p>The <a href="https://symfony.com/doc/current/components/security.html">Security Component</a> offers the ability to define complex security strategies by using the <a href="https://symfony.com/doc/current/security/expressions.html">expressions</a> based
-on the <a href="https://symfony.com/doc/current/components/expression_language.html">ExpressionLanguage Component</a>.</p>
-<p>This package recommends defining your permissions using public constants on an interface as:</p>
-<pre><code class="language-php">namespace App\Security\Interfaces;
-
-interface PermissionsInterface
-{
-    public const PERMISSION_OBJECT_CREATE = 'object:create';
-}</code></pre>
-<p>Based on the example provided by the <a href="https://symfony.com/doc/current/security/expressions.html">Symfony documentation</a>, creating an expression to check if the user is granted
-our permissions we would have to do something like that:</p>
-<pre><code class="language-php">use Symfony\Component\ExpressionLanguage\Expression;
-// ...
-
-public function index()
-{
-    $this-&gt;denyAccessUnlessGranted(new Expression(
-        "is_granted(constant('\\App\\Security\\Interfaces\\PermissionInterface::PERMISSION_OBJECT_CREATE'), object)"
-    ));
-
-    // ...
-}</code></pre>
-<p>It works fine, but it requires you to write the fully qualified name of the constant each time and when used as part
-of annotations (e.g. on an ApiResource from ApiPlatform) it can break your coding standards because the line is too long...  </p>
-<p><br></p>
-<p>To simplify all that, this package provides an expression function to help us to use our permissions within expressions.</p>
-<h3>Define your permissions locations</h3>
-<p>In the config, define your permissions locations by providing a list of the classes/interfaces where your permissions
-are defined:</p>
-<pre><code class="language-yaml"># config/packages/easy_security.yaml
-
-easy_security:
-    permissions_locations:
-        - App\Security\Interfaces\PermissionsInterface</code></pre>
-<p>The package will now know where to look for your permissions.</p>
-<h3>Use the function in your expressions</h3>
-<p>Once the configuration is defined, we just have to use the <code>permission</code> expression function in our expressions and only
-give it the name of the constant:</p>
-<pre><code class="language-diff">use Symfony\Component\ExpressionLanguage\Expression;
-// ...
-
-public function index()
-{
-    $this-&gt;denyAccessUnlessGranted(new Expression(
--        "is_granted(constant('\\App\\Security\\Interfaces\\PermissionInterface::PERMISSION_OBJECT_CREATE'), object)"
-+        "is_granted(permission('PERMISSION_OBJECT_CREATE'), object)"
-    ));
-
-    // ...
-}</code></pre>
-
-                            <br>
-                        </section>
-                        <br>
-                                            <section class="docs-section" id="eonx-com_easy-security_docs_laravel_install">
+                                            <section class="docs-section" id="eonx-com_easy-random_docs_laravel_install">
                             <h2 class="section-heading">
                                                                     <i class="fab fa-laravel"></i>
                                                                 Laravel/Lumen
                                 <div class="docs-time">
                                     Last Updated: 11/06/2020 13:22:15 -
-                                    <a href="https://github.com/eonx-com/easy-monorepo/edit/master/packages/EasySecurity/docs/laravel/install.md" target="_blank" title="Edit on Github">
+                                    <a href="https://github.com/eonx-com/easy-monorepo/edit/master/packages/EasyRandom/docs/laravel/install.md" target="_blank" title="Edit on Github">
                                         Edit on github <i class="fa fa-github"></i>
                                     </a>
                                 </div>
@@ -261,7 +239,7 @@ not familiar with this concept make sure to have a look at the <a href="https://
 'providers' =&gt; [
     // Other Service Providers...
 
-    \EonX\EasySecurity\Bridge\Laravel\EasySecurityServiceProvider::class
+    \EonX\EasyRandom\Bridge\Laravel\EasyRandomServiceProvider::class,
 ],</code></pre>
 <h4>Lumen Actions Required</h4>
 <p>To install this package in a Lumen application the procedures are a bit different.</p>
@@ -273,7 +251,28 @@ $app = new Laravel\Lumen\Application(\dirname(__DIR__));
 
 // Other actions...
 
-$app-&gt;register(\EonX\EasySecurity\Bridge\Laravel\EasySecurityServiceProvider::class);</code></pre>
+$app-&gt;register(\EonX\EasyRandom\Bridge\Laravel\EasyRandomServiceProvider::class);</code></pre>
+<h3>UUID V4 Generator</h3>
+<p>In the case you want to generate UUID V4 in your application, you will need to set the UUID V4 generator of your choice
+onto the random generator instance. To do so, we recommend extending the random generator service as follows:</p>
+<pre><code class="language-php">// app/Providers/MyRandomServiceProvider.php
+
+use EonX\EasyRandom\Interfaces\RandomGeneratorInterface;
+use EonX\EasyRandom\UuidV4\RamseyUuidV4Generator;
+use Illuminate\Support\ServiceProvider;
+
+class MyRandomServiceProvider extends ServiceProvider
+{
+    public function register(): void 
+    {
+        $this-&gt;app-&gt;extend(
+            RandomGeneratorInterface::class, 
+            static function (RandomGeneratorInterface $randomGenerator): RandomGeneratorInterface {
+                return $randomGenerator-&gt;setUuidV4Generator(new RamseyUuidV4Generator());
+            }
+        );
+    }
+}</code></pre>
 
                             <br>
                         </section>
