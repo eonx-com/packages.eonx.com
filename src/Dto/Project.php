@@ -16,6 +16,11 @@ final class Project implements \JsonSerializable
     public const TYPE_PROJECT = 'project';
 
     /**
+     * @var bool
+     */
+    private $deprecated;
+
+    /**
      * @var string
      */
     private $description;
@@ -105,7 +110,8 @@ final class Project implements \JsonSerializable
         string $docsUrl,
         ?string $remotePath = null,
         ?string $finderPattern = null,
-        $finderDepth = null
+        $finderDepth = null,
+        ?bool $deprecated = null
     ) {
         $this->name = $name;
         $this->slug = $slug;
@@ -122,6 +128,7 @@ final class Project implements \JsonSerializable
         $this->remotePath = $remotePath;
         $this->finderPattern = $finderPattern;
         $this->finderDepth = $finderDepth;
+        $this->deprecated = $deprecated ?? false;
     }
 
     public function getDescription(): string
@@ -204,6 +211,11 @@ final class Project implements \JsonSerializable
         return $this->type === self::TYPE_PACKAGE ? 'fas fa-cubes' : 'fas fa-cube';
     }
 
+    public function isDeprecated(): bool
+    {
+        return $this->deprecated;
+    }
+
     /**
      * @return mixed[]
      */
@@ -212,6 +224,7 @@ final class Project implements \JsonSerializable
         return [
             'name' => $this->name,
             'slug' => $this->name,
+            'deprecated' => $this->deprecated,
             'description' => $this->description,
             'docsUrl' => $this->docsUrl,
             'gitBranch' => $this->gitBranch,

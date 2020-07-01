@@ -43,7 +43,9 @@ final class PhpProjectFactory implements ProjectFactoryInterface
             return null;
         }
 
-        $name = $json['extra']['eonx_docs']['name'] ?? $json['name'];
+        $extra = $json['extra']['eonx_docs'] ?? [];
+        $name = $extra['name'] ?? $json['name'];
+        $deprecated = isset($extra['deprecated']);
 
         return new Project(
             $name,
@@ -63,7 +65,8 @@ final class PhpProjectFactory implements ProjectFactoryInterface
                 $this->gitManager->getCurrentBranchFromFileInfo($fileInfo)
             ),
             $json['extra']['eonx_docs']['finder_pattern'] ?? null,
-            $json['extra']['eonx_docs']['finder_depth'] ?? null
+            $json['extra']['eonx_docs']['finder_depth'] ?? null,
+            $deprecated
         );
     }
 

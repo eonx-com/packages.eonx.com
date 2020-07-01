@@ -23,7 +23,10 @@
             </div>
             <div class="card-body">
                 <h5 class="card-title mb-3">
-                    <span class="card-title-text project-search">{{ project.name }}</span>
+                    <span class="card-title-text project-search">
+                        {{ project.name }}
+                        <span v-if="project.deprecated" class="badge badge-danger">Deprecated</span>
+                    </span>
                 </h5>
                 <div class="card-text">
                     {{ project.description }}
