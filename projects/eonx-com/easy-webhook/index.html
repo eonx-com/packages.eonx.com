@@ -97,7 +97,7 @@
                             <h2 class="section-heading">
                                                                 Introduction
                                 <div class="docs-time">
-                                    Last Updated: 24/07/2020 07:33:30 -
+                                    Last Updated: 24/07/2020 07:48:05 -
                                     <a href="https://github.com/eonx-com/easy-monorepo/edit/master/packages/EasyWebhook/readme.md" target="_blank" title="Edit on Github">
                                         Edit on github <i class="fa fa-github"></i>
                                     </a>
@@ -210,6 +210,14 @@ with you own.</p>
 <div><p>This package comes with a Doctrine DBAL store implementation you can use by simply providing it with your own connection.
 This store will persist each extra information on the webhook as a separate column.</p></div>
 </div></div>
+<p><br></p>
+<h3>Events</h3>
+<p>Events containing the webhook result are dispatched so you can have business logic associated to it:</p>
+<ul>
+<li><code>EonX\EasyWebhook\Events\SuccessWebhookEvent</code>: dispatched when webhook sent successfully </li>
+<li><code>EonX\EasyWebhook\Events\FailedWebhookEvent</code>: dispatched when webhook failed and is waiting to be retried </li>
+<li><code>EonX\EasyWebhook\Events\FinalFailedWebhookEvent</code>: dispatched when webhook failed and cannot be retried anymore </li>
+</ul>
 
                             <br>
                         </section>
