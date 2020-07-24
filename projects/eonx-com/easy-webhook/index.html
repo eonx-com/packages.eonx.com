@@ -97,7 +97,7 @@
                             <h2 class="section-heading">
                                                                 Introduction
                                 <div class="docs-time">
-                                    Last Updated: 24/07/2020 07:48:05 -
+                                    Last Updated: 24/07/2020 08:15:14 -
                                     <a href="https://github.com/eonx-com/easy-monorepo/edit/master/packages/EasyWebhook/readme.md" target="_blank" title="Edit on Github">
                                         Edit on github <i class="fa fa-github"></i>
                                     </a>
@@ -160,6 +160,11 @@ final class MyService
 at the configuration level by setting <code>send_async = false</code>. It can also be changed for specific webhook using the
 <code>sendNow()</code> method.</p>
 <pre><code class="language-php">$webhookClient-&gt;sendWebhook(Webhook::create('https://eonx.com')-&gt;sendNow());</code></pre>
+<p><br></p>
+<h3>Retry Strategy</h3>
+<p>By default, this package uses a retry-strategy which will increase the delay between retries exponentially. To modify
+the retry-strategy simply override the <code>EonX\EasyWebhook\Interfaces\WebhookRetryStrategyInterface</code> service with your
+own implementation, or the default one with different arguments.</p>
 <p><br></p>
 <h3>Webhook Configurators</h3>
 <p>This package has concept of webhook configurators which are used every time a webhook is sent. This mechanism is used
