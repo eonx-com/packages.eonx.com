@@ -115,7 +115,7 @@
                             <h2 class="section-heading">
                                                                 Introduction
                                 <div class="docs-time">
-                                    Last Updated: 20/07/2020 23:10:28 -
+                                    Last Updated: 24/07/2020 06:41:40 -
                                     <a href="https://github.com/eonx-com/easy-monorepo/edit/master/packages/EasyLock/readme.md" target="_blank" title="Edit on Github">
                                         Edit on github <i class="fa fa-github"></i>
                                     </a>
@@ -128,6 +128,15 @@ having to think about the event dispatcher used by each of our projects.</p>
 <h3>Require package (Composer)</h3>
 <p>The recommended way to install this package is to use <a href="https://getcomposer.org/">Composer</a>:</p>
 <pre><code class="language-bash">$ composer require eonx-com/easy-lock</code></pre>
+<h3>Usage</h3>
+<p>The Symfony Lock component has an excellent <a href="https://symfony.com/doc/current/components/lock.html">documentation</a> and we recommend referring to it.</p>
+<h6>Connection</h6>
+<p>To work with this package you simply have to register the connection to use for the locks store as a service under
+the <code>easy_lock.connection</code> id. This connection will be given to the <a href="https://github.com/symfony/symfony/blob/master/src/Symfony/Component/Lock/Store/StoreFactory.php">StoreFactory</a>, so its value can be anything
+supported by the Lock component.</p>
+<h6>Store</h6>
+<p>If defining the connection doesn't work for you, you can override the store instance within the service container under
+the <code>easy_lock.store</code> id.</p>
 
                             <br>
                         </section>
