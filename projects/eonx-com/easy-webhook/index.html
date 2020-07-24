@@ -77,12 +77,6 @@
                                 Introduction
                             </a>
                         </li>
-                                            <li class="nav-item ">
-                            <a class="nav-link scrollto" href="#eonx-com_easy-webhook_resources_doctrine_dbal_migration">
-                                
-                                doctrine_dbal_migration.md
-                            </a>
-                        </li>
                                     </ul>
             </nav>
         </div>
@@ -103,7 +97,7 @@
                             <h2 class="section-heading">
                                                                 Introduction
                                 <div class="docs-time">
-                                    Last Updated: 24/07/2020 04:55:35 -
+                                    Last Updated: 24/07/2020 07:17:18 -
                                     <a href="https://github.com/eonx-com/easy-monorepo/edit/master/packages/EasyWebhook/readme.md" target="_blank" title="Edit on Github">
                                         Edit on github <i class="fa fa-github"></i>
                                     </a>
@@ -116,10 +110,13 @@ having to think about the event dispatcher used by each of our projects.</p>
 <h3>Require package (Composer)</h3>
 <p>The recommended way to install this package is to use <a href="https://getcomposer.org/">Composer</a>:</p>
 <pre><code class="language-bash">$ composer require eonx-com/easy-webhook</code></pre>
+<p><br></p>
 <h3>Usage</h3>
 <p>The webhook client to send webhooks is automatically registered within the service container, so you can use
 dependency injection to access the fully configured client easily.</p>
-<pre><code class="language-php">use EonX\EasyWebhook\Interfaces\WebhookClientInterface;
+<pre><code class="language-php">// MyService.php
+
+use EonX\EasyWebhook\Interfaces\WebhookClientInterface;
 use EonX\EasyWebhook\Webhook;
 
 final class MyService
@@ -159,22 +156,27 @@ final class MyService
     }
 }</code></pre>
 <p>If not set the default method of a webhook is <code>POST</code>.</p>
+<p><br></p>
 <h3>Send webhooks asynchronously</h3>
 <p>By default, this package will send webhooks asynchronously if possible. This logic can be changed for every webhook
 at the configuration level by setting <code>send_async = false</code>. It can also be change for specific webhook using the
 <code>sendNow()</code> method.</p>
 <pre><code class="language-php">$webhookClient-&gt;sendWebhook(Webhook::create('https://eonx.com')-&gt;sendNow());</code></pre>
+<p><br></p>
 <h3>Webhook Configurators</h3>
 <p>This package has concept of webhook configurators which are used every time a webhook is sent. This mechanism is used
 internally to format the request body as an example. Configurators can also be used by the applications for manipulating
 every webhooks before sending them.</p>
-<dl>
-<dt>A webhook configurator is a service implementing <code>EonX\EasyWebhook\Interfaces\WebhookConfiguratorInterface</code>. </dt>
-<dd><p>:: tip
-Depends on the framework used by the application, the configurators might be automatically injected in the webhook
-client or you might have to manually tag them when registering them.</p></dd>
-<dd>::</dd>
-</dl>
+<p>A webhook configurator is a service implementing <code>EonX\EasyWebhook\Interfaces\WebhookConfiguratorInterface</code>. </p>
+<p style="display: none;"></p>
+<div class="callout-block callout-block-success"><div class="content">
+<h4 class="callout-title"><span class="callout-icon-holder mr-1">
+<i class="fa fa-thumbs-up"></i>
+<span>Tip</span>
+</span></h4>
+<div><p>Depends on the framework used by the application, the configurators might be automatically injected in the webhook
+client or you might have to manually tag them when registering them.</p></div>
+</div></div>
 <p>The configurators are executed according to their priority, the higher the priority is and the later the configurator
 will be executed. The default configurators of this package have a priority of <code>5000</code>.</p>
 <p>Here is how you would add a custom header to every webhook sent:</p>
@@ -195,62 +197,21 @@ final class MyCustomHeaderWebhookConfigurator extends AbstractWebhookConfigurato
         ]);
     }
 }</code></pre>
+<p><br></p>
 <h3>Webhook Result store</h3>
 <p>This package allows you to store webhook results within the persisting layer of your choice. By default, it will not
 store them anywhere.</p>
-<dl>
-<dt>To change the storing logic, simply override the <code>EonX\EasyWebhook\Interfaces\WebhookResultStoreInterface</code> service </dt>
-<dt>with you own.</dt>
-<dd><p>:: tip
-This package comes with a Doctrine DBAL store implementation you can use by simply providing it with your own connection.
-This store will persist each extra information on the webhook as a separate column.</p></dd>
-<dd>::</dd>
-</dl>
-
-                            <br>
-                        </section>
-                        <br>
-                                            <section class="docs-section" id="eonx-com_easy-webhook_resources_doctrine_dbal_migration">
-                            <h2 class="section-heading">
-                                                                doctrine_dbal_migration.md
-                                <div class="docs-time">
-                                    Last Updated: 24/07/2020 04:55:35 -
-                                    <a href="https://github.com/eonx-com/easy-monorepo/edit/master/packages/EasyWebhook/resources/doctrine_dbal_migration.md" target="_blank" title="Edit on Github">
-                                        Edit on github <i class="fa fa-github"></i>
-                                    </a>
-                                </div>
-                            </h2>
-
-                            <h1>MySQL Migrations</h1>
-<h2>Webhooks</h2>
-<pre><code class="language-php">final class WebhooksMigration
-{
-    public function up(): void 
-    {
-        $this-&gt;addSql(
-            'CREATE TABLE `easy_webhooks` (
-                `id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT "(DC2Type:guid)",
-                `method` varchar(10) NOT NULL,
-                `url` varchar(191) NOT NULL,
-                `status` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-                `response` LONGTEXT DEFAULT NULL COMMENT "(DC2Type:json)",
-                `http_options` LONGTEXT DEFAULT NULL COMMENT "(DC2Type:json)", 
-                `throwable` LONGTEXT DEFAULT NULL COMMENT "(DC2Type:json)",
-                `current_attempt` int(11) DEFAULT 0 NOT NULL,
-                `max_attempt` int(11) DEFAULT 0 NOT NULL,
-                `class` varchar(191) NOT NULL,
-                `created_at` datetime DEFAULT NULL,
-                `updated_at` datetime DEFAULT NULL,
-                PRIMARY KEY (`id`)
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;'
-        );
-    }
-
-    public function down(): void 
-    {
-        $this-&gt;addSql('DROP TABLE `easy_webhooks`;');
-    }   
-}</code></pre>
+<p>To change the storing logic, simply override the <code>EonX\EasyWebhook\Interfaces\WebhookResultStoreInterface</code> service
+with you own.</p>
+<p style="display: none;"></p>
+<div class="callout-block callout-block-success"><div class="content">
+<h4 class="callout-title"><span class="callout-icon-holder mr-1">
+<i class="fa fa-thumbs-up"></i>
+<span>Tip</span>
+</span></h4>
+<div><p>This package comes with a Doctrine DBAL store implementation you can use by simply providing it with your own connection.
+This store will persist each extra information on the webhook as a separate column.</p></div>
+</div></div>
 
                             <br>
                         </section>
