@@ -9,5 +9,5 @@ use Symplify\SmartFileSystem\SmartFileInfo;
 
 interface DocumentationFactoryInterface
 {
-    public function createFromFileInfo(Project $project, SmartFileInfo $fileInfo): Documentation;
+    public function createFromFileInfo(Project $project, SmartFileInfo $fileInfo): ?Documentation;
 }

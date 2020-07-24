@@ -40,11 +40,15 @@ final class DocumentationFactory implements DocumentationFactoryInterface
         $this->gitManager = $gitManager;
     }
 
-    public function createFromFileInfo(Project $project, SmartFileInfo $fileInfo): Documentation
+    public function createFromFileInfo(Project $project, SmartFileInfo $fileInfo): ?Documentation
     {
         $matches = Strings::match($fileInfo->getContents(), self::CONFIG_CONTENT_PATTERN);
         $config = isset($matches['config']) ? Yaml::parse($matches['config']) : [];
         $contents = $matches['content'] ?? $fileInfo->getContents();
+
+        if (isset($config['ignore'])) {
+            return null;
+        }
 
         return new Documentation(
             $fileInfo->getFilename(),

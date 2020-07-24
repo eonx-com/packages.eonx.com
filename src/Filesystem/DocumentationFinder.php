@@ -34,11 +34,15 @@ final class DocumentationFinder implements DocumentationFinderInterface
      */
     public function findDocumentations(Project $project): array
     {
-        $map = function (SmartFileInfo $fileInfo) use ($project): Documentation {
+        $filter = static function (?Documentation $documentation = null): bool {
+            return $documentation !== null;
+        };
+
+        $map = function (SmartFileInfo $fileInfo) use ($project): ?Documentation {
             return $this->documentationFactory->createFromFileInfo($project, $fileInfo);
         };
 
-        $docs = \array_map($map, $this->getMarkdownFiles($project));
+        $docs = \array_filter(\array_map($map, $this->getMarkdownFiles($project)), $filter);
 
         \usort($docs, static function (Documentation $first, Documentation $second): int {
             return $first->getWeight() <=> $second->getWeight();
