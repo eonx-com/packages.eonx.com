@@ -97,16 +97,71 @@
                             <h2 class="section-heading">
                                                                 Introduction
                                 <div class="docs-time">
-                                    Last Updated: 07/08/2020 13:09:59 -
+                                    Last Updated: 08/08/2020 09:27:08 -
                                     <a href="https://github.com/eonx-com/easy-monorepo/edit/master/packages/EasyNotification/readme.md" target="_blank" title="Edit on Github">
                                         Edit on github <i class="fa fa-github"></i>
                                     </a>
                                 </div>
                             </h2>
 
-                            <h3>Require package (Composer)</h3>
+                            <p>This package is made to ease dispatching notifications within EonX Notification service, and works with this service
+ONLY.</p>
+<h3>Require package (Composer)</h3>
 <p>The recommended way to install this package is to use <a href="https://getcomposer.org/">Composer</a>:</p>
 <pre><code class="language-bash">$ composer require eonx-com/easy-notification</code></pre>
+<p><br></p>
+<h3>Configuration</h3>
+<p>In order to send notifications to EonX Notification service, you need to create a Provider or reuse an existing one,
+and add the required credentials into your application:</p>
+<ul>
+<li><code>api_key</code>: The API key you can retrieve from the EonX Notification service</li>
+<li><code>api_url</code>: The URL of the Eonx Notification service you're willing to use</li>
+<li><code>provider</code>: Your Provider External ID from the EonX Notification service</li>
+</ul>
+<p><br></p>
+<h3>Usage</h3>
+<p>Once configured this package will fetch the required configuration from the EonX Notification service and register
+a <code>EonX\EasyNotification\Interfaces\NotificationClientInterface</code> service into your DI container. You can then inject
+this client into your own classes and send notifications:</p>
+<pre><code class="language-php">// src/Listener/UserCreatedListener.php
+
+namespace App\Listener;
+
+use App\Entity\User;
+use EonX\EasyNotification\Interfaces\NotificationClientInterface;use EonX\EasyNotification\Messages\RealTimeMessage;
+
+final class UserCreatedListener
+{
+    /**
+     * @var \EonX\EasyNotification\Interfaces\NotificationClientInterface
+     */
+    private $client;
+
+    public function __construct(NotificationClientInterface $client)
+    {
+        $this-&gt;client = $client;
+    }
+
+    public function created(User $user): void
+    {
+        /**
+         * Topics are "channels" to send notifications to.
+         * Every clients subscribing to any of the topics will then receive the notification.
+         */
+        $topics = [$user-&gt;getExternalId()]; // Good practice is to have 1 topic per user
+
+        /**
+         * Body is the notification contents each client will receive.
+         * Its structure is completely up to the application but should negotiated with subscribers.
+         */ 
+        $body = [
+            'title' =&gt; 'Welcome!',
+            'body' =&gt; \sprintf('We are to have you onboard %s', $user-&gt;getUsername()),
+        ];
+
+        $this-&gt;client-&gt;send(RealTimeMessage::create($body, $topics)); // Send real time message
+    }
+}</code></pre>
 
                             <br>
                         </section>
