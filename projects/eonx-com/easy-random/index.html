@@ -115,7 +115,7 @@
                             <h2 class="section-heading">
                                                                 Introduction
                                 <div class="docs-time">
-                                    Last Updated: 16/06/2020 11:40:44 -
+                                    Last Updated: 11/08/2020 16:25:26 -
                                     <a href="https://github.com/eonx-com/easy-monorepo/edit/master/packages/EasyRandom/readme.md" target="_blank" title="Edit on Github">
                                         Edit on github <i class="fa fa-github"></i>
                                     </a>
@@ -129,13 +129,16 @@
 <li>UUIDs</li>
 </ul>
 <p>All the randomness you need!</p>
+<p><br></p>
 <h3>Require package (Composer)</h3>
 <p>The recommended way to install this package is to use <a href="https://getcomposer.org/">Composer</a>:</p>
 <pre><code class="language-bash">$ composer require eonx-com/easy-random</code></pre>
+<p><br></p>
 <h3>Usage</h3>
 <h4>Integers</h4>
 <pre><code class="language-php">// Will generate a random integer between 0 and 20 (both included)
 $myNumber = (new \EonX\EasyRandom\RandomGenerator())-&gt;randomInteger(0, 20);</code></pre>
+<p><br></p>
 <h3>Strings</h3>
 <p>The random generator allows you to control the length, and the composition of the generated random strings via a nice
 fluent interface:</p>
@@ -155,6 +158,7 @@ fluent interface:</p>
 $reference = (new \EonX\EasyRandom\RandomGenerator())
     -&gt;randomString(16)
     -&gt;userFriendly();</code></pre>
+<p><br></p>
 <h3>UUID V4</h3>
 <p>The random generator allows you to generate UUID V4, to do so, you will need to set the UUID V4 generator of your choice
 onto the random generator instance.
@@ -174,7 +178,7 @@ $uuidV4 = $randomGenerator-&gt;uuidV4();</code></pre>
                                                                     <i class="fab fa-symfony"></i>
                                                                 Symfony
                                 <div class="docs-time">
-                                    Last Updated: 16/06/2020 11:40:44 -
+                                    Last Updated: 11/08/2020 16:25:26 -
                                     <a href="https://github.com/eonx-com/easy-monorepo/edit/master/packages/EasyRandom/docs/symfony/install.md" target="_blank" title="Edit on Github">
                                         Edit on github <i class="fa fa-github"></i>
                                     </a>
@@ -191,6 +195,7 @@ return [
 
     EonX\EasyRandom\Bridge\Symfony\EasyRandomBundle::class =&gt; ['all' =&gt; true],
 ];</code></pre>
+<p><br></p>
 <h3>UUID V4 Generator</h3>
 <p>In the case you want to generate UUID V4 in your application, you will need to set the UUID V4 generator of your choice
 onto the random generator instance. To do so, you will first need to register the UUID V4 generator of your choice as
@@ -215,7 +220,7 @@ easy_random:
                                                                     <i class="fab fa-laravel"></i>
                                                                 Laravel/Lumen
                                 <div class="docs-time">
-                                    Last Updated: 11/06/2020 13:22:15 -
+                                    Last Updated: 11/08/2020 16:25:26 -
                                     <a href="https://github.com/eonx-com/easy-monorepo/edit/master/packages/EasyRandom/docs/laravel/install.md" target="_blank" title="Edit on Github">
                                         Edit on github <i class="fa fa-github"></i>
                                     </a>
@@ -232,6 +237,7 @@ not familiar with this concept make sure to have a look at the <a href="https://
 
     \EonX\EasyRandom\Bridge\Laravel\EasyRandomServiceProvider::class,
 ],</code></pre>
+<p><br></p>
 <h4>Lumen Actions Required</h4>
 <p>To install this package in a Lumen application the procedures are a bit different.</p>
 <h5>Register Service Provider</h5>
@@ -243,6 +249,7 @@ $app = new Laravel\Lumen\Application(\dirname(__DIR__));
 // Other actions...
 
 $app-&gt;register(\EonX\EasyRandom\Bridge\Laravel\EasyRandomServiceProvider::class);</code></pre>
+<p><br></p>
 <h3>UUID V4 Generator</h3>
 <p>In the case you want to generate UUID V4 in your application, you will need to set the UUID V4 generator of your choice
 onto the random generator instance. To do so, we recommend extending the random generator service as follows:</p>
