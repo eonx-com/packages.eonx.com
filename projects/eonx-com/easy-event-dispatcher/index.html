@@ -115,7 +115,7 @@
                             <h2 class="section-heading">
                                                                 Introduction
                                 <div class="docs-time">
-                                    Last Updated: 16/07/2020 12:02:24 -
+                                    Last Updated: 11/08/2020 15:50:12 -
                                     <a href="https://github.com/eonx-com/easy-monorepo/edit/master/packages/EasyEventDispatcher/readme.md" target="_blank" title="Edit on Github">
                                         Edit on github <i class="fa fa-github"></i>
                                     </a>
@@ -128,6 +128,34 @@ having to think about the event dispatcher used by each of our projects.</p>
 <h3>Require package (Composer)</h3>
 <p>The recommended way to install this package is to use <a href="https://getcomposer.org/">Composer</a>:</p>
 <pre><code class="language-bash">$ composer require eonx-com/easy-event-dispatcher</code></pre>
+<p><br></p>
+<h3>Usage</h3>
+<p>This package will register the <code>EonX\EasyEventDispatcher\Interfaces\EventDispatcherInterface</code> within the DI container,
+allowing you to use dependency injection to dispatch your events.</p>
+<pre><code class="language-php">// src/MyService.php
+
+namespace App;
+
+use App\MyEvent;
+use EonX\EasyEventDispatcher\Interfaces\EventDispatcherInterface;
+
+final class MyService
+{
+    /**
+     * @var \EonX\EasyEventDispatcher\Interfaces\EventDispatcherInterface
+     */
+    private $eventDispatcher;
+
+    public function __construct(EventDispatcherInterface $eventDispatcher)
+    {
+        $this-&gt;eventDispatcher = $eventDispatcher;
+    }
+
+    public function myMethod(string $myParam): void
+    {
+        $this-&gt;eventDispatcher-&gt;dispatch(new MyEvent($myParam));
+    }
+}</code></pre>
 
                             <br>
                         </section>
