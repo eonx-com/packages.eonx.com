@@ -74,7 +74,7 @@
                                             <li class="nav-item ">
                             <a class="nav-link scrollto" href="#eonx-com_easy-psr7-factory_readme">
                                 
-                                readme.md
+                                Introduction
                             </a>
                         </li>
                                     </ul>
@@ -95,29 +95,26 @@
 
                                             <section class="docs-section" id="eonx-com_easy-psr7-factory_readme">
                             <h2 class="section-heading">
-                                                                readme.md
+                                                                Introduction
                                 <div class="docs-time">
-                                    Last Updated: 11/12/2019 03:51:30 -
+                                    Last Updated: 11/08/2020 16:22:55 -
                                     <a href="https://github.com/eonx-com/easy-monorepo/edit/master/packages/EasyPsr7Factory/readme.md" target="_blank" title="Edit on Github">
                                         Edit on github <i class="fa fa-github"></i>
                                     </a>
                                 </div>
                             </h2>
 
-                            <div align="center">
-    <h1>EonX - EasyPsr7Factory</h1>
-    <p>Provides an easy way to create PSR7 Request/Response from Symfony Request/Response.</p>
-</div>
-<hr />
-<h1>Documentation</h1>
+                            <p>Provides an easy way to create PSR7 Request/Response from Symfony Request/Response.</p>
 <h2>Installation</h2>
 <p>The recommended way to install this package is to use <a href="https://getcomposer.org/">Composer</a>.</p>
 <pre><code class="language-bash">$ composer require eonx/psr7-factory</code></pre>
+<p><br></p>
 <h2>How it works</h2>
 <p>You are working on a PHP application using the well known <a href="https://symfony.com/doc/current/components/http_foundation.html">Symfony HttpFoundation Component</a> and you want to
 implement some logic which can be used in any other PHP application using Request/Response? This package is for you!</p>
 <p>The EasyPsr7Factory will allow you to create a PSR-7 ServerRequestInterface implementation from a Symfony HttpFoundation
 Request and then will also allow you to create a Symfony Response from a PSR-7 ResponseInterface.</p>
+<p><br></p>
 <h2>Usage</h2>
 <pre><code class="language-php">use EonX\EasyPsr7Factory\EasyPsr7Factory;
 
@@ -126,11 +123,13 @@ $serverRequest = (new EasyPsr7Factory())-&gt;createRequest($symfonyRequest);
 
 // Gives you a \Symfony\Component\HttpFoundation\Response based on all values from the $psr7Response
 $symfonyResponse = (new EasyPsr7Factory())-&gt;createResponse($psr7Response);</code></pre>
+<p><br></p>
 <h2>Laravel / Lumen</h2>
 <p>You like the idea and you're not using Symfony but <a href="https://laravel.com/">Laravel</a>/<a href="https://lumen.laravel.com/">Lumen</a> instead? Lucky you this is an easy use case :)
 Laravel/Lumen Request/Response classes both extend the Symfony ones so this EasyPsr7Factory works for you too!</p>
 <p>And just to make your day, it comes with a service provider allowing you to create requests and responses from anywhere
 you want in your application :)</p>
+<p><br></p>
 <h3>Laravel</h3>
 <pre><code class="language-php">// config/app.php
 
@@ -139,10 +138,12 @@ you want in your application :)</p>
 
     \EonX\EasyPsr7Factory\Bridge\Laravel\EasyPsr7FactoryServiceProvider::class,
 ],</code></pre>
+<p><br></p>
 <h3>Lumen</h3>
 <pre><code class="language-php">// bootstrap/app.php
 
 $app-&gt;register(\EonX\EasyPsr7Factory\Bridge\Laravel\EasyPsr7FactoryServiceProvider::class);</code></pre>
+<p><br></p>
 <h2>Contributing</h2>
 <p>None of the existing implementations fit your needs? Don't hesitate to create an <a href="https://github.com/EonX/EonX/issues/new/choose">Issue</a> about it
 or event a <a href="https://github.com/EonX/EonX/compare">Pull Request</a> to help us grow the package.</p>

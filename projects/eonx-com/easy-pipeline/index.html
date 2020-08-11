@@ -72,27 +72,27 @@
                     </li>
 
                                             <li class="nav-item ">
-                            <a class="nav-link scrollto" href="#eonx-com_easy-pipeline_docs_laravel_install">
+                            <a class="nav-link scrollto" href="#eonx-com_easy-pipeline_readme">
                                 
-                                laravel_install.md
+                                Introduction
                             </a>
                         </li>
                                             <li class="nav-item ">
-                            <a class="nav-link scrollto" href="#eonx-com_easy-pipeline_docs_middleware_providers">
+                            <a class="nav-link scrollto" href="#eonx-com_easy-pipeline_docs_laravel_install">
                                 
-                                middleware_providers.md
+                                Installation
                             </a>
                         </li>
                                             <li class="nav-item ">
                             <a class="nav-link scrollto" href="#eonx-com_easy-pipeline_docs_middlewares">
                                 
-                                middlewares.md
+                                Middleware
                             </a>
                         </li>
                                             <li class="nav-item ">
-                            <a class="nav-link scrollto" href="#eonx-com_easy-pipeline_readme">
+                            <a class="nav-link scrollto" href="#eonx-com_easy-pipeline_docs_middleware_providers">
                                 
-                                readme.md
+                                Middleware Providers
                             </a>
                         </li>
                                     </ul>
@@ -111,26 +111,46 @@
                         </section>
                     </header>
 
+                                            <section class="docs-section" id="eonx-com_easy-pipeline_readme">
+                            <h2 class="section-heading">
+                                                                Introduction
+                                <div class="docs-time">
+                                    Last Updated: 11/08/2020 16:22:55 -
+                                    <a href="https://github.com/eonx-com/easy-monorepo/edit/master/packages/EasyPipeline/readme.md" target="_blank" title="Edit on Github">
+                                        Edit on github <i class="fa fa-github"></i>
+                                    </a>
+                                </div>
+                            </h2>
+
+                            <h2>Middleware and MiddlewareProviders</h2>
+<ul>
+<li><a href="docs/middlewares.md">Middleware</a></li>
+<li><a href="docs/middleware_providers.md">MiddlewareProviders</a></li>
+</ul>
+<h2>Laravel / Lumen</h2>
+<ul>
+<li><a href="docs/laravel_install.md">Installation</a></li>
+</ul>
+
+                            <br>
+                        </section>
+                        <br>
                                             <section class="docs-section" id="eonx-com_easy-pipeline_docs_laravel_install">
                             <h2 class="section-heading">
-                                                                laravel_install.md
+                                                                Installation
                                 <div class="docs-time">
-                                    Last Updated: 11/12/2019 03:51:30 -
+                                    Last Updated: 11/08/2020 16:20:23 -
                                     <a href="https://github.com/eonx-com/easy-monorepo/edit/master/packages/EasyPipeline/docs/laravel_install.md" target="_blank" title="Edit on Github">
                                         Edit on github <i class="fa fa-github"></i>
                                     </a>
                                 </div>
                             </h2>
 
-                            <div align="center">
-    <h1>EonX - EasyPipeline</h1>
-    <p>Provides an easy and powerful way to implement pipelines for anything.</p>
-</div>
-<hr />
-<p>This document describes the steps to install this package into a <a href="https://laravel.com/">Laravel</a> and/or <a href="https://lumen.laravel.com/">Lumen</a> application.</p>
+                            <p>This document describes the steps to install this package into a <a href="https://laravel.com/">Laravel</a> and/or <a href="https://lumen.laravel.com/">Lumen</a> application.</p>
 <h1>Require package (Composer)</h1>
 <p>Laravel uses <a href="https://getcomposer.org/">Composer</a> to manage its dependencies. You can require this package as following:</p>
 <pre><code class="language-bash">$ composer require eonx/easy-pipeline</code></pre>
+<p><br></p>
 <h1>Service Provider</h1>
 <p>Once the package required, you must tell your application to use it. Laravel uses service providers to do so, if you are
 not familiar with this concept make sure to have a look at the <a href="https://laravel.com/docs/5.7/providers">documentation</a>.</p>
@@ -143,6 +163,7 @@ automatically. Make sure to register it:</p>
 
     \EonX\EasyPipeline\Bridge\Laravel\EasyIlluminatePipelineServiceProvider::class
 ],</code></pre>
+<p><br></p>
 <h1>Config</h1>
 <p>To allow this package to work with your own pipelines you must let it know about your pipelines and
 middleware providers structure. To do so you will use the configuration file
@@ -151,12 +172,15 @@ update it with your own pipelines list.</p>
 <pre><code class="language-php">return [
     'pipelines' =&gt; [
         'pipeline-1' =&gt; \App\Pipelines\Pipeline1MiddlewareProvider::class,
-        'pipeline-2' =&gt; \App\Pipelines\Pipeline2MiddlewareProvider::class
-    ]</code></pre>
+        'pipeline-2' =&gt; \App\Pipelines\Pipeline2MiddlewareProvider::class,
+    ],
+];</code></pre>
 <p>Pipelines list must be an associative array where the keys are the names of your pipelines
 and the values the class of your middleware provider for each pipeline.</p>
+<p><br></p>
 <h1>Lumen Actions Required</h1>
 <p>To install this package in a Lumen application the procedures are a bit different.</p>
+<p><br></p>
 <h2>Register Service Provider</h2>
 <p>In a Lumen application you must explicitly tell the application to register the package's service provider as following:</p>
 <pre><code class="language-php">// bootstrap/app.php
@@ -166,6 +190,7 @@ $app = new Laravel\Lumen\Application(\dirname(__DIR__));
 // Other actions...
 
 $app-&gt;register(\EonX\EasyPipeline\Bridge\Laravel\EasyIlluminatePipelineServiceProvider::class);</code></pre>
+<p><br></p>
 <h2>Add Config</h2>
 <p>In a Lumen application you must explicitly tell the application to add the package's config as following:</p>
 <pre><code class="language-php">// bootstrap/app.php
@@ -175,11 +200,12 @@ $app = new Laravel\Lumen\Application(\dirname(__DIR__));
 // Other actions...
 
 $app-&gt;configure('easy-pipeline');</code></pre>
+<p><br></p>
 <h1>Usage</h1>
 <p>Prior to be able to use the pipelines in your application you will need create your middleware providers for each
 of your pipeline, for more information please have a look at the <a href="middleware_providers.md">documentation</a>.</p>
 <p>That's it you're all setup! You're now able to use your pipelines anywhere you want, using dependency
-injection or service locator (we strongly recommend to use the first one haha). To do so, you need to use the
+injection or service locator (we strongly recommend using the first one haha). To do so, you need to use the
 <code>EonX\EasyPipeline\Interfaces\PipelineFactoryInterface</code> to create your pipelines and their middleware list.</p>
 <pre><code class="language-php">use EonX\EasyPipeline\Interfaces\PipelineFactoryInterface;
 
@@ -210,32 +236,113 @@ final class MyClass
                             <br>
                         </section>
                         <br>
+                                            <section class="docs-section" id="eonx-com_easy-pipeline_docs_middlewares">
+                            <h2 class="section-heading">
+                                                                Middleware
+                                <div class="docs-time">
+                                    Last Updated: 11/08/2020 16:20:23 -
+                                    <a href="https://github.com/eonx-com/easy-monorepo/edit/master/packages/EasyPipeline/docs/middlewares.md" target="_blank" title="Edit on Github">
+                                        Edit on github <i class="fa fa-github"></i>
+                                    </a>
+                                </div>
+                            </h2>
+
+                            <p>This document describes the concept of middleware and how to use them.</p>
+<h1>What's a middleware</h1>
+<p>If you're not familiar with the Pipeline Design Pattern we recommend you to have a look at this <a href="https://www.cise.ufl.edu/research/ParallelPatterns/PatternLanguage/AlgorithmStructure/Pipeline.htm">documentation</a>.
+In this package the &quot;tasks or stages&quot; are the middleware and are defined by the <code>EonX\EasyPipeline\Interfaces\MiddlewareInterface</code>.</p>
+<p><br></p>
+<h1>How to create a middleware</h1>
+<p>A middleware is a simple PHP object implementing the <code>EonX\EasyPipeline\Interfaces\MiddlewareInterface</code>, this
+interface defines only one method <code>handle($input, callable $next)</code> where <code>$input</code> is the pipeline input data, potentially
+modified by a previous middleware, and <code>$next</code> is the callable to tell the next middleware it can proceed with the input.</p>
+<p>To ensure the pipeline works as expected, each middleware MUST keep passing the input to the next middleware. Here is
+the minimum required code for a middleware:</p>
+<pre><code class="language-php">use EonX\EasyPipeline\Interfaces\MiddlewareInterface;
+
+final class MyMiddleware implements MiddlewareInterface
+{
+    /**
+     * Handle given input and pass return through next.
+     *
+     * @param mixed $input
+     * @param callable $next
+     *
+     * @return mixed
+     */
+     public function handle($input, callable $next)
+     {
+        // Do stuff here...
+
+        return $next($input); // Return the output of the next middleware for the given input
+     }
+}</code></pre>
+<p><br></p>
+<h1>Log each step of your pipeline</h1>
+<p>This package comes with all the tools to allow your middleware to log information for each step of your pipeline, this
+can be really handy for debugging purposes. In order to allow your middleware to log information, it must implement
+the <code>EonX\EasyPipeline\Interfaces\MiddlewareLoggerAwareInterface</code> so that the pipeline know your middleware
+requires the <code>EonX\EasyPipeline\Interfaces\MiddlewareLoggerInterface</code> instance.</p>
+<p>The <code>MiddlewareLoggerInterface</code> defines one method <code>log(string $middleware, $content): void</code>, the first <code>$middleware</code>
+parameter is to categorise the <code>$content</code> under a single identifier, it can be any string you want.</p>
+<p>This package provides you with the <code>EonX\EasyPipeline\Traits\MiddlewareLoggerAwareTrait</code> which defines the setter
+for the <code>MiddlewareLoggerInterface</code> and also the <code>log($content, ?string $middleware = null)</code> method to easily log content.
+The <code>$middleware</code> parameter is optional, when it is not set the trait will default it to your middleware class name.
+The trait is a convenient way of allowing your middleware to log content but if you do not like using traits you're free
+to implement the logging logic yourself.</p>
+<p>Here is the minimum required code for your middleware to log content:</p>
+<pre><code class="language-php">use EonX\EasyPipeline\Interfaces\MiddlewareInterface;
+use EonX\EasyPipeline\Interfaces\MiddlewareLoggerAwareInterface;
+use EonX\EasyPipeline\Traits\MiddlewareLoggerAwareTrait;
+
+final class MyMiddlewareWithLog implements MiddlewareInterface, MiddlewareLoggerAwareInterface
+{
+    use MiddlewareLoggerAwareTrait; // Will handle the setter for the MiddlewareLoggerInterface
+
+    /**
+     * Handle given input and pass return through next.
+     *
+     * @param mixed $input
+     * @param callable $next
+     *
+     * @return mixed
+     */
+     public function handle($input, callable $next)
+     {
+        // Do stuff here...
+
+        $this-&gt;log('Content to log');
+
+        return $next($input); // Return the output of the next middleware for the given input
+     }
+}</code></pre>
+
+                            <br>
+                        </section>
+                        <br>
                                             <section class="docs-section" id="eonx-com_easy-pipeline_docs_middleware_providers">
                             <h2 class="section-heading">
-                                                                middleware_providers.md
+                                                                Middleware Providers
                                 <div class="docs-time">
-                                    Last Updated: 11/12/2019 03:51:30 -
+                                    Last Updated: 11/08/2020 16:20:23 -
                                     <a href="https://github.com/eonx-com/easy-monorepo/edit/master/packages/EasyPipeline/docs/middleware_providers.md" target="_blank" title="Edit on Github">
                                         Edit on github <i class="fa fa-github"></i>
                                     </a>
                                 </div>
                             </h2>
 
-                            <div align="center">
-    <h1>EonX - EasyPipeline</h1>
-    <p>Provides an easy and powerful way to implement pipelines for anything.</p>
-</div>
-<hr />
-<p>This document describes the concept of middleware providers and how to use them.</p>
+                            <p>This document describes the concept of middleware providers and how to use them.</p>
 <h1>What's a pipeline?</h1>
 <p>If you're not familiar with the Pipeline Design Pattern we recommend you to have a look at this <a href="https://www.cise.ufl.edu/research/ParallelPatterns/PatternLanguage/AlgorithmStructure/Pipeline.htm">documentation</a>.
 In this package the &quot;tasks or stages&quot; are represented by the <code>EonX\EasyPipeline\Interfaces\MiddlewareInterface</code>.
 So the pipelines created using this package will allow you to process input data through a collection of middleware.
 The only way to define the middleware each pipeline will use is via <code>EonX\EasyPipeline\Interfaces\MiddlewareProviderInterface</code>.</p>
+<p><br></p>
 <h1>How MiddlewareProviders work?</h1>
 <p>Each middleware provider must be an instance of the <code>EonX\EasyPipeline\Interfaces\MiddlewareProviderInterface</code>,
 this interface defines one simple method <code>getMiddlewareList(): array</code>. The objective of this method is to return a list
 of middleware to use within a pipeline instance.</p>
+<p><br></p>
 <h2>What values can my MiddlewareProviders return?</h2>
 <p>The middleware providers must return an array of <code>MiddlewareInterface</code>.</p>
 <p>That's it!? That's all!? Not really handy, I'm sure we can do better!</p>
@@ -243,17 +350,21 @@ of middleware to use within a pipeline instance.</p>
 That means you can also register your middleware inside the service container and return its service locator from your
 MiddlewareProvider and this package will know how to instantiate it! We recommend you to register your middleware using
 its <a href="https://en.wikipedia.org/wiki/Fully_qualified_name">FQCN</a>.</p>
+<p><br></p>
 <h3>Illuminate Pipeline implementation</h3>
 <p>The <a href="https://packagist.org/packages/illuminate/pipeline">Illuminate Pipeline</a> knows how to resolve middleware using the PSR Service Container as well, and on the top of
 that it also allows you to define your middleware using <code>callable</code>. So if you're a using the <code>IlluminatePipeline</code>
 implementation of this package your MiddlewareProviders can return closures and any kind of <code>callable</code> as well.</p>
+<p><br></p>
 <h4>Accessing the Pipeline name</h4>
 <p>If you're using the IlluminatePipelineFactory, a MiddlewareProvider can access the name it was registered under by implementing the <code>EonX\EasyPipeline\Interfaces\PipelineNameAwareInterface</code>.
 The factory will call <code>setPipelineName()</code> on any MiddlewareProviders implementing this.</p>
 <p>To save time, the <code>EonX\EasyPipeline\Traits\PipelineNameAwareTrait</code> is available, providing an implementation of this function and the private property <code>$pipelineName</code>.</p>
+<p><br></p>
 <h1>Dependency Injection</h1>
 <p>This package is using the PSR Service Container to instantiate your MiddlewareProviders which means you can use
 dependency injection on them, how convenient!</p>
+<p><br></p>
 <h1>Example</h1>
 <pre><code class="language-php">use App\Validator\MyValidatorInterface;
 use EonX\EasyPipeline\Interfaces\MiddlewareProviderInterface;
@@ -309,123 +420,6 @@ final class MyPipeline1MiddlewareProvider implements MiddlewareProviderInterface
         return $next($input);
      }
 }</code></pre>
-
-                            <br>
-                        </section>
-                        <br>
-                                            <section class="docs-section" id="eonx-com_easy-pipeline_docs_middlewares">
-                            <h2 class="section-heading">
-                                                                middlewares.md
-                                <div class="docs-time">
-                                    Last Updated: 11/12/2019 03:51:30 -
-                                    <a href="https://github.com/eonx-com/easy-monorepo/edit/master/packages/EasyPipeline/docs/middlewares.md" target="_blank" title="Edit on Github">
-                                        Edit on github <i class="fa fa-github"></i>
-                                    </a>
-                                </div>
-                            </h2>
-
-                            <div align="center">
-    <h1>EonX - EasyPipeline</h1>
-    <p>Provides an easy and powerful way to implement pipelines for anything.</p>
-</div>
-<hr />
-<p>This document describes the concept of middleware and how to use them.</p>
-<h1>What's a middleware</h1>
-<p>If you're not familiar with the Pipeline Design Pattern we recommend you to have a look at this <a href="https://www.cise.ufl.edu/research/ParallelPatterns/PatternLanguage/AlgorithmStructure/Pipeline.htm">documentation</a>.
-In this package the &quot;tasks or stages&quot; are the middleware and are defined by the <code>EonX\EasyPipeline\Interfaces\MiddlewareInterface</code>.</p>
-<h1>How to create a middleware</h1>
-<p>A middleware is a simple PHP object implementing the <code>EonX\EasyPipeline\Interfaces\MiddlewareInterface</code>, this
-interface defines only one method <code>handle($input, callable $next)</code> where <code>$input</code> is the pipeline input data, potentially
-modified by a previous middleware, and <code>$next</code> is the callable to tell the next middleware it can proceed with the input.</p>
-<p>To ensure the pipeline works as expected, each middleware MUST keep passing the input to the next middleware. Here is
-the minimum required code for a middleware:</p>
-<pre><code class="language-php">use EonX\EasyPipeline\Interfaces\MiddlewareInterface;
-
-final class MyMiddleware implements MiddlewareInterface
-{
-    /**
-     * Handle given input and pass return through next.
-     *
-     * @param mixed $input
-     * @param callable $next
-     *
-     * @return mixed
-     */
-     public function handle($input, callable $next)
-     {
-        // Do stuff here...
-
-        return $next($input); // Return the output of the next middleware for the given input
-     }
-}</code></pre>
-<h1>Log each step of your pipeline</h1>
-<p>This package comes with all the tools to allow your middleware to log information for each step of your pipeline, this
-can be really handy for debugging purposes. In order to allow your middleware to log information, it must implement
-the <code>EonX\EasyPipeline\Interfaces\MiddlewareLoggerAwareInterface</code> so that the pipeline know your middleware
-requires the <code>EonX\EasyPipeline\Interfaces\MiddlewareLoggerInterface</code> instance.</p>
-<p>The <code>MiddlewareLoggerInterface</code> defines one method <code>log(string $middleware, $content): void</code>, the first <code>$middleware</code>
-parameter is to categorise the <code>$content</code> under a single identifier, it can be any string you want.</p>
-<p>This package provides you with the <code>EonX\EasyPipeline\Traits\MiddlewareLoggerAwareTrait</code> which defines the setter
-for the <code>MiddlewareLoggerInterface</code> and also the <code>log($content, ?string $middleware = null)</code> method to easily log content.
-The <code>$middleware</code> parameter is optional, when it is not set the trait will default it to your middleware class name.
-The trait is a convenient way of allowing your middleware to log content but if you do not like using traits you're free
-to implement the logging logic yourself.</p>
-<p>Here is the minimum required code for your middleware to log content:</p>
-<pre><code class="language-php">use EonX\EasyPipeline\Interfaces\MiddlewareInterface;
-use EonX\EasyPipeline\Interfaces\MiddlewareLoggerAwareInterface;
-use EonX\EasyPipeline\Traits\MiddlewareLoggerAwareTrait;
-
-final class MyMiddlewareWithLog implements MiddlewareInterface, MiddlewareLoggerAwareInterface
-{
-    use MiddlewareLoggerAwareTrait; // Will handle the setter for the MiddlewareLoggerInterface
-
-    /**
-     * Handle given input and pass return through next.
-     *
-     * @param mixed $input
-     * @param callable $next
-     *
-     * @return mixed
-     */
-     public function handle($input, callable $next)
-     {
-        // Do stuff here...
-
-        $this-&gt;log('Content to log');
-
-        return $next($input); // Return the output of the next middleware for the given input
-     }
-}</code></pre>
-
-                            <br>
-                        </section>
-                        <br>
-                                            <section class="docs-section" id="eonx-com_easy-pipeline_readme">
-                            <h2 class="section-heading">
-                                                                readme.md
-                                <div class="docs-time">
-                                    Last Updated: 11/12/2019 03:51:30 -
-                                    <a href="https://github.com/eonx-com/easy-monorepo/edit/master/packages/EasyPipeline/readme.md" target="_blank" title="Edit on Github">
-                                        Edit on github <i class="fa fa-github"></i>
-                                    </a>
-                                </div>
-                            </h2>
-
-                            <div align="center">
-    <h1>EonX - EasyPipeline</h1>
-    <p>Provides an easy and powerful way to implement pipelines for anything.</p>
-</div>
-<hr />
-<h1>Documentation</h1>
-<h2>Middleware and MiddlewareProviders</h2>
-<ul>
-<li><a href="docs/middlewares.md">Middleware</a></li>
-<li><a href="docs/middleware_providers.md">MiddlewareProviders</a></li>
-</ul>
-<h2>Laravel / Lumen</h2>
-<ul>
-<li><a href="docs/laravel_install.md">Installation</a></li>
-</ul>
 
                             <br>
                         </section>
