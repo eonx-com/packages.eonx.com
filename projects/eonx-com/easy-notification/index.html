@@ -90,6 +90,15 @@
                             </a>
                         </li>
                                             <li class="nav-item section-title mt-3">
+                            <a class="nav-link scrollto" href="#eonx-com_easy-notification_docs_slack">
+                                                                    <span class="theme-icon-holder mr-2">
+                                        <i class="fab fa-slack"></i>
+                                    </span>
+                                
+                                Slack Integration
+                            </a>
+                        </li>
+                                            <li class="nav-item section-title mt-3">
                             <a class="nav-link scrollto" href="#eonx-com_easy-notification_docs_symfony_install">
                                                                     <span class="theme-icon-holder mr-2">
                                         <i class="fab fa-symfony"></i>
@@ -462,6 +471,112 @@ final class NotificationDeleteMessage
         return new JsonResponse([], 204);
     }
 }</code></pre>
+
+                            <br>
+                        </section>
+                        <br>
+                                            <section class="docs-section" id="eonx-com_easy-notification_docs_slack">
+                            <h2 class="section-heading">
+                                                                    <i class="fab fa-slack"></i>
+                                                                Slack Integration
+                                <div class="docs-time">
+                                    Last Updated: 12/08/2020 16:23:40 -
+                                    <a href="https://github.com/eonx-com/easy-monorepo/edit/master/packages/EasyNotification/docs/slack.md" target="_blank" title="Edit on Github">
+                                        Edit on github <i class="fa fa-github"></i>
+                                    </a>
+                                </div>
+                            </h2>
+
+                            <p>In order to send <a href="https://slack.com/">Slack</a> messages you will need to create an App in your Workspace, make sure you create a Bot user
+for this app and request the <code>chat:write</code>, and <code>chat:write:public</code> scopes for its Bot Token. Then add this Bot Token
+to your Provider in the EonX Notification service.</p>
+<p>That's it! You're all setup to start sending Slack messages within your Workspace!</p>
+<p><br></p>
+<h3>How To Send Slack Messages</h3>
+<p>Sending Slack messages requires installing 3 additional packages, using a python script and certificate signed by
+<a href="https://en.wikipedia.org/wiki/Stewart_Butterfield">Stewart Butterfield</a> himself! </p>
+<p>Just kidding... Simply use your existing <code>EonX\EasyNotification\Interfaces\NotificationClientInterface</code> service!</p>
+<p><br></p>
+<h3>Simple Slack Message</h3>
+<p>The simplest Slack message is made of a <code>channel</code> and a <code>text</code>.</p>
+<pre><code class="language-php">// src/Listener/UserCreatedListener.php
+
+namespace App\Listener;
+
+use App\Entity\User;
+use EonX\EasyNotification\Interfaces\ConfigFinderInterface;
+use EonX\EasyNotification\Interfaces\NotificationClientInterface;
+use EonX\EasyNotification\Messages\SlackMessage;
+
+final class UserCreatedListener
+{
+    /**
+     * @var \EonX\EasyNotification\Interfaces\ConfigFinderInterface
+     */
+    private $configFinder;
+
+    /**
+     * @var \EonX\EasyNotification\Interfaces\NotificationClientInterface
+     */
+    private $client;
+
+    public function __construct(ConfigFinderInterface $configFinder, NotificationClientInterface $client)
+    {
+        $this-&gt;configFinder = $configFinder;
+        $this-&gt;client = $client;
+    }
+
+    public function created(User $user): void
+    {
+        $config = $this-&gt;configFinder-&gt;find('my-api-key', 'my-provider-external-id');
+
+        /**
+         * Define channel. It can be a direct message to a user "@user" or a public channel "#channel".
+         */
+        $channel = \sprintf('@%s.%s', $user-&gt;getFirstName(), $user-&gt;getLastName());
+
+        /**
+         * Simple text.
+         */
+        $text = \sprintf('We are to have you onboard %s', $user-&gt;getUsername());
+
+        $this-&gt;client
+             -&gt;withConfig($config) // Set config for next send
+             -&gt;send(SlackMessage::create($channel, $text)); // Send Slack time message
+    }
+}</code></pre>
+<h3>Advanced Formatted Slack Message</h3>
+<p>Slack offers a great panel of advanced formatting when sending messages. Checkout the <a href="https://app.slack.com/block-kit-builder">Block Kit Builder</a> to see
+what you can do for your messages.</p>
+<p>The <code>SlackMessage</code> object allows you to pass the formatting options as an associative array to define the <code>body</code> of the
+message. This package doesn't come with helpers to build these advanced formatted messages as other packages are already
+doing it very well such as:</p>
+<ul>
+<li><a href="https://github.com/symfony/slack-notifier">Symfony Slack Notifier</a></li>
+<li><a href="https://github.com/maknz/slack">Maknz Slack</a></li>
+</ul>
+<pre><code class="language-php">$slackOptions = [
+    "blocks" =&gt; [
+        [
+            "type" =&gt;"section",
+            "text" =&gt; [
+                "type" =&gt; "mrkdwn",
+                "text" =&gt; "This is a section block with a button.",
+            ],
+            "accessory" =&gt; [
+                "type" =&gt; "button",
+                "text" =&gt; [
+                    "type" =&gt; "plain_text",
+                    "text" =&gt; "Click Me",
+                    "emoji" =&gt; true,
+                ],
+                "value" =&gt; "click_me_123",
+            ],
+        ],
+    ],
+];
+
+$slackMessage = SlackMessage::create('@channel', 'Simple text', $slackOptions);</code></pre>
 
                             <br>
                         </section>
