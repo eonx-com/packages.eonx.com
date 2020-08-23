@@ -224,7 +224,7 @@ By default, this package comes with 2 built-in drivers:</p>
                             <h2 class="section-heading">
                                                                 Usage
                                 <div class="docs-time">
-                                    Last Updated: 14/05/2020 05:40:55 -
+                                    Last Updated: 23/08/2020 05:07:13 -
                                     <a href="https://github.com/eonx-com/easy-monorepo/edit/master/packages/EasyApiToken/docs/usage.md" target="_blank" title="Edit on Github">
                                         Edit on github <i class="fa fa-github"></i>
                                     </a>
@@ -261,14 +261,14 @@ controller.</p>
 
 namespace App\Controller;
 
-use EonX\EasyApiToken\Interfaces\Factories\EasyApiTokenDecoderFactoryInterface;
+use EonX\EasyApiToken\Interfaces\Factories\ApiTokenDecoderFactoryInterface;
 use EonX\EasyPsr7Factory\Interfaces\EasyPsr7FactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 final class MyController
 {
     public function __invoke(
-        EasyApiTokenDecoderFactoryInterface $decoderFactory,
+        ApiTokenDecoderFactoryInterface $decoderFactory,
         EasyPsr7FactoryInterface $psr7Factory,
         Request $request
     ){
@@ -302,14 +302,14 @@ easy_api_token:
 
 namespace App\Controller;
 
-use EonX\EasyApiToken\Interfaces\Factories\EasyApiTokenDecoderFactoryInterface;
+use EonX\EasyApiToken\Interfaces\Factories\ApiTokenDecoderFactoryInterface;
 use EonX\EasyPsr7Factory\Interfaces\EasyPsr7FactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 final class MyController
 {
     public function __invoke(
-        EasyApiTokenDecoderFactoryInterface $decoderFactory,
+        ApiTokenDecoderFactoryInterface $decoderFactory,
         EasyPsr7FactoryInterface $psr7Factory,
         Request $request
     ){
@@ -353,14 +353,14 @@ easy_api_token:
 
 namespace App\Controller;
 
-use EonX\EasyApiToken\Interfaces\Factories\EasyApiTokenDecoderFactoryInterface;
+use EonX\EasyApiToken\Interfaces\Factories\ApiTokenDecoderFactoryInterface;
 use EonX\EasyPsr7Factory\Interfaces\EasyPsr7FactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 final class MyController
 {
     public function __invoke(
-        EasyApiTokenDecoderFactoryInterface $decoderFactory,
+        ApiTokenDecoderFactoryInterface $decoderFactory,
         EasyPsr7FactoryInterface $psr7Factory,
         Request $request
     ){
