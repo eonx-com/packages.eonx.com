@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>EonX Docs</title>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700&display=swap" rel="stylesheet">
+    <script defer src="https://kit.fontawesome.com/955de18180.js" crossorigin="anonymous"></script>
+
+    <link rel="icon" href="https://39cszd96rb9jntgd3r2cirij-wpengine.netdna-ssl.com/wp-content/uploads/2019/09/eonx-512-70x70.png" sizes="32x32">
+    <link rel="icon" href="https://39cszd96rb9jntgd3r2cirij-wpengine.netdna-ssl.com/wp-content/uploads/2019/09/eonx-512.png" sizes="192x192">
+    <link rel="apple-touch-icon-precomposed" href="https://39cszd96rb9jntgd3r2cirij-wpengine.netdna-ssl.com/wp-content/uploads/2019/09/eonx-512.png">
+
+                
+
+        <link id="theme-style" rel="stylesheet" href="/assets/css/theme.css">
+    
+
+    <link id="theme-style" rel="stylesheet" href="/assets/css/theme.css">
+    <link id="theme-style" rel="stylesheet" href="/assets/css/prism.css">
+</head>
+
+<div id="app">
+        <body class="docs-page">
+    <header class="header fixed-top">
+        <div class="branding docs-branding">
+            <div class="container-fluid position-relative py-2">
+                <div class="docs-logo-wrapper">
+                    <button id="docs-sidebar-toggler" class="docs-sidebar-toggler docs-sidebar-visible mr-2 d-xl-none"
+                            type="button">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                    <div class="site-logo">
+                        <a class="navbar-brand" href="/">
+                            <img class="logo-icon mr-2"
+                                 src="https://39cszd96rb9jntgd3r2cirij-wpengine.netdna-ssl.com/wp-content/uploads/2019/09/eonx-logo@1x.png"
+                                 alt="logo">
+                        </a>
+                    </div>
+                </div><!--//docs-logo-wrapper-->
+                <div class="docs-top-utilities d-flex justify-content-end align-items-center">
+                    <div class="top-search-box d-none d-lg-flex">
+                        <form class="search-form">
+                            <input type="text" placeholder="Search the docs..." name="search"
+                                   class="form-control search-input">
+                            <button type="submit" class="btn search-btn" value="Search"><i class="fas fa-search"></i>
+                            </button>
+                        </form>
+                    </div>
+
+                                                                                                                                                            </div><!--//docs-top-utilities-->
+            </div><!--//container-->
+        </div><!--//branding-->
+    </header><!--//header-->
+
+        <div class="docs-wrapper">
+        <div id="docs-sidebar" class="docs-sidebar">
+            <nav id="docs-nav" class="docs-nav navbar">
+                <ul class="section-items list-unstyled nav flex-column pb-3">
+                    <li class="nav-item section-title">
+                        <a class="nav-link scrollto active" href="#intro">
+                        <span class="theme-icon-holder mr-2">
+                            <i class="fas fa-cubes"></i>
+                        </span>
+                            eonx-com/easy-bugsnag
+                        </a>
+                    </li>
+
+                                            <li class="nav-item ">
+                            <a class="nav-link scrollto" href="#eonx-com_easy-bugsnag_readme">
+                                
+                                Introduction
+                            </a>
+                        </li>
+                                            <li class="nav-item section-title mt-3">
+                            <a class="nav-link scrollto" href="#eonx-com_easy-bugsnag_docs_symfony_install">
+                                                                    <span class="theme-icon-holder mr-2">
+                                        <i class="fab fa-symfony"></i>
+                                    </span>
+                                
+                                Symfony
+                            </a>
+                        </li>
+                                            <li class="nav-item ">
+                            <a class="nav-link scrollto" href="#eonx-com_easy-bugsnag_docs_symfony_configurators">
+                                
+                                Client Configurators In Symfony
+                            </a>
+                        </li>
+                                            <li class="nav-item ">
+                            <a class="nav-link scrollto" href="#eonx-com_easy-bugsnag_docs_symfony_doctrine_dbal_logger">
+                                
+                                Symfony
+                            </a>
+                        </li>
+                                            <li class="nav-item section-title mt-3">
+                            <a class="nav-link scrollto" href="#eonx-com_easy-bugsnag_docs_laravel_install">
+                                                                    <span class="theme-icon-holder mr-2">
+                                        <i class="fab fa-laravel"></i>
+                                    </span>
+                                
+                                Laravel/Lumen
+                            </a>
+                        </li>
+                                            <li class="nav-item ">
+                            <a class="nav-link scrollto" href="#eonx-com_easy-bugsnag_docs_laravel_configurators">
+                                
+                                Client Configurators In Laravel
+                            </a>
+                        </li>
+                                            <li class="nav-item ">
+                            <a class="nav-link scrollto" href="#eonx-com_easy-bugsnag_docs_laravel_doctrine_orm_logger">
+                                
+                                Doctrine ORM SQL Logger
+                            </a>
+                        </li>
+                                    </ul>
+            </nav>
+        </div>
+        <div class="docs-content">
+            <div class="container">
+                <article class="docs-article" id="intro">
+                    <header class="docs-header">
+                                                <h1 class="docs-heading">
+                            eonx-com/easy-bugsnag
+                            <a href="https://github.com/eonx-com/easy-monorepo"><i class="fa fa-github"></i></a>
+                        </h1>
+                        <section class="docs-intro">
+                            <p>Ease integrating bugsnag in your PHP projects</p>
+                        </section>
+                    </header>
+
+                                            <section class="docs-section" id="eonx-com_easy-bugsnag_readme">
+                            <h2 class="section-heading">
+                                                                Introduction
+                                <div class="docs-time">
+                                    Last Updated: 28/08/2020 05:14:17 -
+                                    <a href="https://github.com/eonx-com/easy-monorepo/edit/master/packages/EasyBugsnag/readme.md" target="_blank" title="Edit on Github">
+                                        Edit on github <i class="fa fa-github"></i>
+                                    </a>
+                                </div>
+                            </h2>
+
+                            <p>This package is a simple drop-in implementation of <a href="https://docs.bugsnag.com/platforms/php/other/">Bugsnag</a> in your favourite PHP frameworks or plain PHP app.</p>
+<p><br></p>
+<h3>Require package (Composer)</h3>
+<p>The recommended way to install this package is to use <a href="https://getcomposer.org/">Composer</a>:</p>
+<pre><code class="language-bash">$ composer require eonx-com/easy-bugsnag</code></pre>
+<p><br></p>
+<h3>Usage</h3>
+<p>Once installed in your favourite PHP framework, this package will allow you to inject the Bugsnag Client anywhere you
+like and start notifying your errors and exceptions:</p>
+<pre><code class="language-php">// src/Exception/Handler.php
+
+namespace App\Exception;
+
+use Bugsnag\Client;
+
+final class ExceptionHandler
+{
+    /**
+     * @var \Bugsnag\Client
+     */
+    private $client;
+
+    public function __construct(Client $client)
+    {
+        $this-&gt;client = $client;
+    }
+
+    public function report(\Throwable $throwable): void
+    {
+        // Notify bugsnag of your throwable
+        $this-&gt;client-&gt;notifyException($throwable);
+    }
+}</code></pre>
+<h3>Client Factory</h3>
+<p>The core functionality of this package is to create a Bugsnag Client instance and make it available to your application,
+so you can focus on notifying your errors/exceptions instead of the boilerplate setup. To do so, it uses a factory.</p>
+<p>This factory implements <code>EonX\EasyBugsnag\Interfaces\ClientFactoryInterface</code> which is able to create the client from
+just the api key you can find in your Bugsnag dashboard, handy! However, if needed you can set your own implementations
+of the additional objects used by the Bugsnag Client such as:</p>
+<ul>
+<li><strong>HttpClient:</strong> <a href="http://docs.guzzlephp.org/en/stable/">Guzzle Client</a> used to send notifications to Bugsnag API</li>
+<li><strong>RequestResolver:</strong> used to resolve the request information</li>
+<li><strong>ShutdownStrategy:</strong> used to send bulk notifications while the application is shutting down</li>
+</ul>
+<p><br></p>
+<h3>Configurators</h3>
+<p>Additionally, the client factory allows you to set a collection of &quot;configurators&quot;. Once the client instantiated, the
+factory will loop through the configurators, providing them the client instance to be configured.</p>
+<p>A configurator is a PHP class implementing <code>EonX\EasyBugsnag\Interfaces\ClientConfiguratorInterface</code>. When used within
+your favourite PHP framework, the configurators will be set on the factory for you so any created client will be configured
+before being injected into your services. Each configurator must define a priority, an integer value, which will be
+used to define the order of execution of the entire collection.</p>
+<p>Here is an example of a configurator to set the release stage:</p>
+<pre><code class="language-php">// src/Bugsnag/ReleaseStageConfigurator.php
+
+namespace App\Bugsnag;
+
+use Bugsnag\Client;
+use EonX\EasyBugsnag\Configurators\AbstractClientConfigurator;
+
+final class ReleaseStageConfigurator extends AbstractClientConfigurator
+{
+    public function configure(Client $bugsnag): void
+    {
+        $bugsnag-&gt;setReleaseStage('dev');
+    }
+}</code></pre>
+
+                            <br>
+                        </section>
+                        <br>
+                                            <section class="docs-section" id="eonx-com_easy-bugsnag_docs_symfony_install">
+                            <h2 class="section-heading">
+                                                                    <i class="fab fa-symfony"></i>
+                                                                Symfony
+                                <div class="docs-time">
+                                    Last Updated: 28/08/2020 05:14:17 -
+                                    <a href="https://github.com/eonx-com/easy-monorepo/edit/master/packages/EasyBugsnag/docs/symfony/install.md" target="_blank" title="Edit on Github">
+                                        Edit on github <i class="fa fa-github"></i>
+                                    </a>
+                                </div>
+                            </h2>
+
+                            <h3>Register Bundle</h3>
+<p>If you're using <a href="https://flex.symfony.com/">Symfony Flex</a>, this step has been done automatically for you. If not, you can register the bundle
+yourself:</p>
+<pre><code class="language-php">// config/bundles.php
+
+return [
+    // Other bundles ...
+
+    EonX\EasyBugsnag\Bridge\Symfony\EasyBugsnagBundle::class =&gt; ['all' =&gt; true],
+];</code></pre>
+<p><br></p>
+<h3>Configuration</h3>
+<p>The only required config is the api key from your Bugsnag organisation:</p>
+<pre><code class="language-yaml"># config/packages/easy_bugsnag.yaml
+
+easy_bugsnag:
+    api_key: '%env(BUGSNAG_API_KEY)%'</code></pre>
+
+                            <br>
+                        </section>
+                        <br>
+                                            <section class="docs-section" id="eonx-com_easy-bugsnag_docs_symfony_configurators">
+                            <h2 class="section-heading">
+                                                                Client Configurators In Symfony
+                                <div class="docs-time">
+                                    Last Updated: 28/08/2020 05:14:17 -
+                                    <a href="https://github.com/eonx-com/easy-monorepo/edit/master/packages/EasyBugsnag/docs/symfony/configurators.md" target="_blank" title="Edit on Github">
+                                        Edit on github <i class="fa fa-github"></i>
+                                    </a>
+                                </div>
+                            </h2>
+
+                            <p>To register additional <code>ClientConfigurators</code> in Symfony, you simply need to register a new service implementing the
+<code>EonX\EasyBugsnag\Interfaces\ClientConfiguratorInterface</code> and you're done! This package register this interface
+for auto-configuration by default, so you have nothing else to worry about. You're welcome!</p>
+
+                            <br>
+                        </section>
+                        <br>
+                                            <section class="docs-section" id="eonx-com_easy-bugsnag_docs_symfony_doctrine_dbal_logger">
+                            <h2 class="section-heading">
+                                                                Symfony
+                                <div class="docs-time">
+                                    Last Updated: 28/08/2020 05:14:17 -
+                                    <a href="https://github.com/eonx-com/easy-monorepo/edit/master/packages/EasyBugsnag/docs/symfony/doctrine_dbal_logger.md" target="_blank" title="Edit on Github">
+                                        Edit on github <i class="fa fa-github"></i>
+                                    </a>
+                                </div>
+                            </h2>
+
+                            <p>To add SQL queries details to your Bugsnag reports in Symfony, you will need to update the configuration to enable this
+feature:</p>
+<pre><code class="language-yaml"># config/packages/easy_bugsnag.yaml
+
+easy_bugsnag:
+    api_key: '%env(BUGSNAG_API_KEY)%'
+
+    doctrine_dbal: true</code></pre>
+<p><br></p>
+<p>Additionally, you can explicitly define the connections you want to log the queries for:</p>
+<pre><code class="language-yaml"># config/packages/easy_bugsnag.yaml
+
+easy_bugsnag:
+    api_key: '%env(BUGSNAG_API_KEY)%'
+
+    doctrine_dbal:
+        enabled: true
+        connections:
+            - default
+            - secure</code></pre>
+<p>That's it! Yes, for real... You are all setup to start logging SQL queries into your reports.</p>
+
+                            <br>
+                        </section>
+                        <br>
+                                            <section class="docs-section" id="eonx-com_easy-bugsnag_docs_laravel_install">
+                            <h2 class="section-heading">
+                                                                    <i class="fab fa-laravel"></i>
+                                                                Laravel/Lumen
+                                <div class="docs-time">
+                                    Last Updated: 28/08/2020 05:14:17 -
+                                    <a href="https://github.com/eonx-com/easy-monorepo/edit/master/packages/EasyBugsnag/docs/laravel/install.md" target="_blank" title="Edit on Github">
+                                        Edit on github <i class="fa fa-github"></i>
+                                    </a>
+                                </div>
+                            </h2>
+
+                            <h3>Package Service Provider</h3>
+<p>Once the package required, you must tell your application to use it. Laravel uses service providers to do so, if you are
+not familiar with this concept make sure to have a look at the <a href="https://laravel.com/docs/5.8/providers">documentation</a>.</p>
+<pre><code class="language-php">// config/app.php
+
+'providers' =&gt; [
+    // Other Service Providers...
+
+    \EonX\EasyBugsnag\Bridge\Laravel\EasyBugsnagServiceProvider::class,
+],</code></pre>
+<p><br></p>
+<h4>Lumen Actions Required</h4>
+<p>To install this package in a Lumen application the procedures are a bit different.</p>
+<h5>Register Service Provider</h5>
+<p>In a Lumen application you must explicitly tell the application to register the package's service provider as following:</p>
+<pre><code class="language-php">// bootstrap/app.php
+
+$app = new Laravel\Lumen\Application(\dirname(__DIR__));
+
+// Other actions...
+
+$app-&gt;register(\EonX\EasyBugsnag\Bridge\Laravel\EasyBugsnagServiceProvider::class);</code></pre>
+<p><br></p>
+<h3>Configuration</h3>
+<p>The only required config is the api key from your Bugsnag organisation:</p>
+<pre><code class="language-php">// config/easy-bugsnag.php
+
+return [
+    'api_key' =&gt; \env('BUGSNAG_API_KEY'),
+]; </code></pre>
+<p><br></p>
+<h4>Configuration in Lumen</h4>
+<p>In Lumen, you will need to explicitly call configure for this package:</p>
+<pre><code class="language-php">// bootstrap/app.php
+
+$app = new \Laravel\Lumen\Application(\realpath(\dirname(__DIR__)));
+
+// ...
+
+$app-&gt;configure('easy-bugsnag');
+
+// ...</code></pre>
+
+                            <br>
+                        </section>
+                        <br>
+                                            <section class="docs-section" id="eonx-com_easy-bugsnag_docs_laravel_configurators">
+                            <h2 class="section-heading">
+                                                                Client Configurators In Laravel
+                                <div class="docs-time">
+                                    Last Updated: 28/08/2020 05:14:17 -
+                                    <a href="https://github.com/eonx-com/easy-monorepo/edit/master/packages/EasyBugsnag/docs/laravel/configurators.md" target="_blank" title="Edit on Github">
+                                        Edit on github <i class="fa fa-github"></i>
+                                    </a>
+                                </div>
+                            </h2>
+
+                            <p>To register additional <code>ClientConfigurators</code> in Laravel/Lumen, you will need to explicitly tag them within the
+service container.</p>
+<p>Here is an example on how to add the Laravel version within the runtime versions.</p>
+<h6>Create Your ClientConfigurator</h6>
+<p>Create a class extending <code>EonX\EasyBugsnag\Configurators\AbstractClientConfigurator</code>, and add your logic:</p>
+<pre><code class="language-php">// app/Bugsnag/RuntimeVersionConfigurator.php
+
+namespace App\Bugsnag;
+
+use Bugsnag\Client;
+use EonX\EasyBugsnag\Configurators\AbstractClientConfigurator;
+use Illuminate\Contracts\Foundation\Application;
+
+final class RuntimeVersionConfigurator extends AbstractClientConfigurator
+{
+    /**
+     * @var \Illuminate\Contracts\Foundation\Application
+     */
+    private $app;
+
+    public function __construct(Application $app, ?int $priority = null) 
+    {
+        $this-&gt;app = $app;
+
+        parent::__construct($priority);
+    }
+
+    public function configure(Client $client): void
+    {
+        $client-&gt;getConfig()-&gt;mergeDeviceData([
+            'runtimeVersions' =&gt; ['laravel' =&gt; $this-&gt;app-&gt;version()],
+        ]);
+    }
+}</code></pre>
+<p><br></p>
+<h6>Register It As A Service And Tag It</h6>
+<p>Then register your <code>ClientConfigurator</code> as a service and tag it using the <code>EonX\EasyBugsnag\Bridge\BridgeConstantsInterface</code>
+constant here for you. This should be done in a <code>ServiceProvider</code>:</p>
+<pre><code class="language-php">// app/Providers/BugsnagServiceProvider.php
+
+use App\Bugsnag\RuntimeVersionConfigurator;
+use EonX\EasyBugsnag\Bridge\BridgeConstantsInterface; 
+use Illuminate\Support\ServiceProvider;
+
+final class BugsnagServiceProvider extends ServiceProvider
+{
+    public function register(): void
+    {
+        // Register your configurator as a service
+        $this-&gt;app-&gt;singleton(RuntimeVersionConfigurator::class, function (): RuntimeVersionConfigurator {
+            return new RuntimeVersionConfigurator($this-&gt;app); 
+        });
+
+        // Tag it as a ClientConfigurator
+        $this-&gt;app-&gt;tag(RuntimeVersionConfigurator::class, [BridgeConstantsInterface::TAG_CLIENT_CONFIGURATOR]);
+    }
+}</code></pre>
+<p>Done! From now on, every Bugsnag Client created by the factory will have the <code>laravel</code> runtime version within its
+device metadata.</p>
+
+                            <br>
+                        </section>
+                        <br>
+                                            <section class="docs-section" id="eonx-com_easy-bugsnag_docs_laravel_doctrine_orm_logger">
+                            <h2 class="section-heading">
+                                                                Doctrine ORM SQL Logger
+                                <div class="docs-time">
+                                    Last Updated: 28/08/2020 05:14:17 -
+                                    <a href="https://github.com/eonx-com/easy-monorepo/edit/master/packages/EasyBugsnag/docs/laravel/doctrine_orm_logger.md" target="_blank" title="Edit on Github">
+                                        Edit on github <i class="fa fa-github"></i>
+                                    </a>
+                                </div>
+                            </h2>
+
+                            <p>Having the list of SQL queries executed during a request which triggered an error/exception to be notified is really
+important, it makes debugging easier. That's why <code>easy-bugsnag</code> got you sorted!</p>
+<p>If your app is using Laravel/Lumen and <a href="http://www.laraveldoctrine.org/docs/1.4/orm">Laravel Doctrine ORM</a>, this section is for you.</p>
+<h3>Enable Logging In EasyBugsnag Config</h3>
+<p>To enable SQL queries logging into your Bugsnag reports, simply set the <code>doctrine_orm</code> config to true:</p>
+<pre><code class="language-php">// config/easy-bugsnag.php
+
+return [
+    'api_key' =&gt; \env('BUGSNAG_API_KEY'),
+
+    'doctrine_orm' =&gt; true,
+]; </code></pre>
+<h3>Register SQL Logger Into Doctrine Config</h3>
+<p>Then you will need to register the SQL Logger from EasyBugsnag into Doctrine configuration:</p>
+<pre><code class="language-php">// config/doctrine.php
+
+return [
+    // ...
+
+    'logger' =&gt; EonX\EasyBugsnag\Bridge\Laravel\Doctrine\SqlOrmLogger::class,
+
+    // ...
+]; </code></pre>
+
+                            <br>
+                        </section>
+                        <br>
+                                    </article>
+            </div>
+        </div>
+    </div>
+    </body>
+</div>
+
+        
+
+    <script src="/assets/js/jquery-3.4.1.min.js"></script>
+    <script src="/assets/js/jquery.scrollTo.min.js"></script>
+    <script src="/assets/js/popper.min.js"></script>
+    <script src="/assets/js/bootstrap.min.js"></script>
+
+
+    <script src="/assets/js/docs.js"></script>
+
+    <script>
+        $('pre').addClass('line-numbers');
+
+        $(function (){
+            $('.code-toolbar').addClass('shadow-sm');
+        });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+    <script src="/assets/js/prism.js"></script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-147626313-4"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'UA-147626313-4');
+</script>
+</html>
