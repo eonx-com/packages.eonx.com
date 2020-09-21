@@ -77,10 +77,13 @@
                                 Introduction
                             </a>
                         </li>
-                                            <li class="nav-item ">
-                            <a class="nav-link scrollto" href="#eonx-com_easy-error-handler_docs_usage">
+                                            <li class="nav-item section-title mt-3">
+                            <a class="nav-link scrollto" href="#eonx-com_easy-error-handler_docs_symfony_install">
+                                                                    <span class="theme-icon-holder mr-2">
+                                        <i class="fab fa-symfony"></i>
+                                    </span>
                                 
-                                Usage
+                                Symfony
                             </a>
                         </li>
                                             <li class="nav-item section-title mt-3">
@@ -118,106 +121,139 @@
                             <h2 class="section-heading">
                                                                 Introduction
                                 <div class="docs-time">
-                                    Last Updated: 25/05/2020 22:28:44 -
+                                    Last Updated: 21/09/2020 22:05:23 -
                                     <a href="https://github.com/eonx-com/easy-monorepo/edit/master/packages/EasyErrorHandler/readme.md" target="_blank" title="Edit on Github">
                                         Edit on github <i class="fa fa-github"></i>
                                     </a>
                                 </div>
                             </h2>
 
-                            <h3>Dependencies</h3>
-<p>This package depends on the following package, please, see its documentation directly:</p>
+                            <p>This package performs the following:</p>
 <ul>
-<li><a href="https://github.com/eonx-com/apiformats">API Formats</a></li>
-<li><a href="https://github.com/eonx-com/easy-logging">EasyLogging</a></li>
+<li>Define a common structure of exceptions</li>
+<li>Generate consistent error responses for unhandled exceptions within the code</li>
+<li>By default, log them using the main logging channel of the app</li>
+<li>By default, and if used with <a href="https://packages.eonx.com/projects/eonx-com/easy-bugsnag/">easy-bugsnag</a> will automatically notify bugsnag when required (based on log level of the exception)</li>
 </ul>
 <p><br></p>
 <h3>Require package (Composer)</h3>
-<p>The recommended way to install this package is to use <a href="https://github.com/eonx-com/easy-logging">Composer</a>:</p>
+<p>The recommended way to install this package is to use <a href="https://getcomposer.org/">Composer</a>:</p>
 <pre><code class="language-bash">$ composer require eonx-com/easy-error-handler</code></pre>
+<h3>Exceptions</h3>
+<ul>
+<li><strong>BaseException:</strong> parent exception for all the others</li>
+<li><strong>BadRequestException:</strong> for 400 Bad Request HTTP responses</li>
+<li><strong>ConflictException:</strong> for 409 Conflict HTTP responses</li>
+<li><strong>ErrorException:</strong> for ERROR log level (e.g. any unexpected error)</li>
+<li><strong>ForbiddenException:</strong> for 403 Forbidden HTTP responses</li>
+<li><strong>NotFoundException:</strong> for 404 Not Found HTTP responses</li>
+<li><strong>UnauthorizedException:</strong> for 401 Unauthorized HTTP responses</li>
+<li><strong>ValidationException:</strong> extends <code>BadRequestException</code> with additional list of errors</li>
+</ul>
+<p><br></p>
+<h3>ErrorHandler</h3>
+<p>The <code>EonX\EasyErrorHandler\Interfaces\ErrorHandlerInterface</code> define 2 methods:</p>
+<ul>
+<li><strong>render:</strong> generates an HTTP response for the given request and error</li>
+<li><strong>report:</strong> generates reports for the given error (e.g. logging)</li>
+</ul>
+<p><br></p>
+<p>When using this package in your favourite framework, the <code>ErrorHandlerInterface</code> is registered as a service, so you can
+use dependency injection to use it within your application:</p>
+<pre><code class="language-php">// src/Service/MyService.php
+
+namespace App\Service;
+
+use EonX\EasyErrorHandler\Interfaces\ErrorHandlerInterface;
+
+final class MyService
+{
+    /**
+     * @var \EonX\EasyErrorHandler\Interfaces\ErrorHandlerInterface
+     */
+    private $errorHandler;
+
+    public function __construct(ErrorHandlerInterface $errorHandler)
+    {
+        $this-&gt;errorHandler = $errorHandler;
+    }
+
+    public function doSomething(): void
+    {
+        try {
+            // Do something...
+        } catch (\Throwable $throwable) {
+            $this-&gt;errorHandler-&gt;report($throwable);
+        }  
+    }
+}</code></pre>
+<p><br></p>
+<h3>ErrorResponseBuilderInterface</h3>
+<p>The <code>EonX\EasyErrorHandler\Interfaces\ErrorResponseBuilderInterface</code> is used to build the information required to create
+an HTTP response for the given error. It is responsible for providing:</p>
+<ul>
+<li><strong>data:</strong> raw data as an array, will be encoded to generate the HTTP response content</li>
+<li><strong>headers:</strong> array of headers to set on the generated HTTP response</li>
+<li><strong>status code:</strong> the status code of the generated HTTP response</li>
+</ul>
+<p>The error handler loop through the list of <code>ErrorResponseBuilderInterface</code> provided to build the error response data to
+generate the HTTP response.</p>
+<p>How do you provide those error response builders? Using <code>EonX\EasyErrorHandler\Interfaces\ErrorResponseBuilderProviderInterface</code>!
+This interface defines one method <code>getBuilders()</code> which returns a collection of <code>ErrorResponseBuilderInterface</code>. The
+error handler accept via its constructor a collection of those error response builder providers allowing you to create
+and provide your owns.</p>
+<pre><code class="language-php">// src/Exception/Response/MyStatusCodeBuilderProvider.php
+
+namespace App\Exception\Response;
+
+use EonX\EasyErrorHandler\Builders\StatusCodeBuilder;use EonX\EasyErrorHandler\Interfaces\ErrorResponseBuilderProviderInterface;
+
+final class MyStatusCodeBuilderProvider implements ErrorResponseBuilderProviderInterface
+{
+    /**
+     * @return iterable&lt;\EonX\EasyErrorHandler\Interfaces\ErrorResponseBuilderProviderInterface&gt;
+     */
+     public function getBuilders(): iterable
+    {
+        // Return a built-in status code builder, but don't hesitate to create your own!
+        yield new StatusCodeBuilder();
+    }
+}</code></pre>
+<p><br></p>
+<h3>ErrorReporterInterface</h3>
+<p>The <code>EonX\EasyErrorHandler\Interfaces\ErrorReporterInterface</code> is used by the error handler to delegate the report logic
+to your application. The error handler will loop through the provided error reporters and call their <code>report()</code> method.</p>
+<p>How do you provide those error reporters? Using <code>EonX\EasyErrorHandler\Interfaces\ErrorReporterProviderInterface</code>!
+This interface defines one method <code>getReporters()</code> which returns a collection of <code>ErrorReporterInterface</code>. The
+error handler accept via its constructor a collection of those error reporters providers allowing you to create
+and provide your owns.</p>
+<p><br></p>
 
                             <br>
                         </section>
                         <br>
-                                            <section class="docs-section" id="eonx-com_easy-error-handler_docs_usage">
+                                            <section class="docs-section" id="eonx-com_easy-error-handler_docs_symfony_install">
                             <h2 class="section-heading">
-                                                                Usage
+                                                                    <i class="fab fa-symfony"></i>
+                                                                Symfony
                                 <div class="docs-time">
-                                    Last Updated: 25/05/2020 22:28:44 -
-                                    <a href="https://github.com/eonx-com/easy-monorepo/edit/master/packages/EasyErrorHandler/docs/usage.md" target="_blank" title="Edit on Github">
+                                    Last Updated: 21/09/2020 22:05:23 -
+                                    <a href="https://github.com/eonx-com/easy-monorepo/edit/master/packages/EasyErrorHandler/docs/symfony/install.md" target="_blank" title="Edit on Github">
                                         Edit on github <i class="fa fa-github"></i>
                                     </a>
                                 </div>
                             </h2>
 
-                            <h3>Create an exception</h3>
-<p>Extend your exception from <code>\EonX\EasyCore\Exceptions\BaseException</code>.</p>
-<p>If it's a validation exception containing a list of errors (violations) to be shown in the response, then extend it from <code>\EonX\EasyCore\Exceptions\ValidationException</code>.</p>
-<h3>Verbosity</h3>
-<p>By default, an <code>application/json</code> response will look like this (note: <code>violations</code> is an optional field added when the exception is an instance of the <code>ValidationExceptionInterface</code>):</p>
-<pre><code class="language-json">{
-    "code": 0,
-    "message": "User-friendly exception message.",
-    "sub_code": 0,
-    "time": "2020-03-25T05:15:54Z",
-    "violations": {
-        "externalId": [
-            "The external id field is required."
-        ]
-    }
-}</code></pre>
-<p>Set the <code>EASY_ERROR_HANDLER_USE_EXTENDED_RESPONSE</code> env variable to <code>true</code> to see a more verbose response, for example:</p>
-<pre><code class="language-json">{
-    "code": 0,
-    "exception": {
-        "class": "App\\Exceptions\\Handler\\TestException",
-        "file": "/var/www/app/Http/Controllers/V1/HealthCheckController.php",
-        "line": 19,
-        "message": "Exception message for developer",
-        "trace": [
-            {
-                 "class": "Laravel\\Lumen\\Application",
-                 "file": "/var/www/public/index.php",
-                 "function": "run",
-                 "line": 28,
-                 "type": "-&gt;"
-             }
-        ]
-    },
-    "message": "User-friendly error message.",
-    "sub_code": 0,
-    "time": "2020-03-25T05:15:54Z"
-}</code></pre>
-<h3>Message and exception message</h3>
-<p>The <code>message</code> field (see the examples above) is designed to be used as a user-friendly message (without any sensitive details, as opposed to <code>exception.message</code>).
-By default, it is set to <code>Oops, something went wrong.</code>. However, you can control it:</p>
-<ul>
-<li>You can override <code>\EonX\Exceptions\Handler\BaseException::$userMessage</code> in your exception class</li>
-<li>You can change the translation of the default message in <code>resources/lang/vendor/easy-error-handler/en/messages.php</code></li>
-<li>Alternatively, you can pass your own message (and translation parameters, if needed) right from your application code, for example:
-<pre><code class="language-php">throw (new EntityNotFoundException(...))
--&gt;setUserMessage(':entity is not found.')
--&gt;setUserMessageParams(['entity' =&gt; 'Account']);</code></pre></li>
-</ul>
-<h3>Status code</h3>
-<p>By default, all exceptions will cause the <code>500</code> HTTP status code. However, you can control it by extending your app exceptions from the following classes:</p>
-<ul>
-<li><code>\EonX\EasyErrorHandler\Exceptions\BadRequestException</code> for the <code>400</code> status code</li>
-<li><code>\EonX\EasyErrorHandler\Exceptions\ConflictException</code> for the <code>409</code> status code</li>
-<li><code>\EonX\EasyErrorHandler\Exceptions\ForbiddenException</code> for the <code>403</code> status code</li>
-<li><code>\EonX\EasyErrorHandler\Exceptions\NotFoundException</code> for the <code>404</code> status code</li>
-<li><code>\EonX\EasyErrorHandler\Exceptions\UnauthorizedException</code> for the <code>401</code> status code</li>
-</ul>
-<h3>Log level</h3>
-<p>By default, all exceptions will be logged with the ERROR level. If you want your exception to be logged with a different log level, then simply override <code>\App\Exceptions\Handler\BaseException::$logLevel</code> in your exception class.
-Alternatively, you can control the log level right from your application code, for example:</p>
-<pre><code>throw (new TestException(...))-&gt;setLogLevel(LoggerInterface::LEVEL_CRITICAL);</code></pre>
-<h3>How to extend</h3>
-<p>Create your own handler extending <code>\EonX\EasyErrorHandler\Bridge\Laravel\Handler\Handler</code> and override anything you need, for example:</p>
-<ul>
-<li>The <code>\EonX\EasyErrorHandler\Bridge\Laravel\Handler\Handler::getResponseStatusCode</code> protected method with your custom status code determining logic</li>
-<li>The <code>\EonX\EasyErrorHandler\Bridge\Laravel\Handler\Handler::$dontReport</code> protected property with your own list of non-reported exceptions</li>
-</ul>
+                            <h3>Register Bundle</h3>
+<p>If you're using <a href="https://flex.symfony.com/">Symfony Flex</a>, this step has been done automatically for you. If not, you can register the bundle
+yourself:</p>
+<pre><code class="language-php">// config/bundles.php
+
+return [
+    // Other bundles ...
+
+    EonX\EasyErrorHandler\Bridge\Symfony\EasyErrorHandlerBundle::class =&gt; ['all' =&gt; true],
+];</code></pre>
 
                             <br>
                         </section>
@@ -227,7 +263,7 @@ Alternatively, you can control the log level right from your application code, f
                                                                     <i class="fab fa-laravel"></i>
                                                                 Laravel/Lumen
                                 <div class="docs-time">
-                                    Last Updated: 25/05/2020 22:28:44 -
+                                    Last Updated: 21/09/2020 22:05:23 -
                                     <a href="https://github.com/eonx-com/easy-monorepo/edit/master/packages/EasyErrorHandler/docs/laravel/lumen_install.md" target="_blank" title="Edit on Github">
                                         Edit on github <i class="fa fa-github"></i>
                                     </a>
@@ -243,13 +279,6 @@ $app = new Laravel\Lumen\Application(\dirname(__DIR__));
 // Other actions...
 
 $app-&gt;register(\EonX\EasyErrorHandler\Bridge\Laravel\Provider\EasyErrorHandlerServiceProvider::class);</code></pre>
-<h3>Bind the Handler</h3>
-<pre><code class="language-php"># bootstrap/app.php
-
-$app-&gt;singleton(
-    \Illuminate\Contracts\Debug\ExceptionHandler::class,
-    \EonX\EasyErrorHandler\Bridge\Laravel\Handler\Handler::class
-);</code></pre>
 <h3>Add Config</h3>
 <p>In a Lumen application you must explicitly tell the application to add the package's config as following:</p>
 <pre><code class="language-php"># bootstrap/app.php
@@ -267,7 +296,7 @@ $app-&gt;configure('easy-error-handler');</code></pre>
                             <h2 class="section-heading">
                                                                 Configuration
                                 <div class="docs-time">
-                                    Last Updated: 25/05/2020 22:28:44 -
+                                    Last Updated: 21/09/2020 22:05:23 -
                                     <a href="https://github.com/eonx-com/easy-monorepo/edit/master/packages/EasyErrorHandler/docs/laravel/config.md" target="_blank" title="Edit on Github">
                                         Edit on github <i class="fa fa-github"></i>
                                     </a>
@@ -275,18 +304,56 @@ $app-&gt;configure('easy-error-handler');</code></pre>
                             </h2>
 
                             <h3>Create the configuration file</h3>
-<p>The package allows you to configure error response field names. Just copy <code>src/Bridge/Laravel/config/easy-error-handler.php</code> to <code>config/easy-error-handler.php</code> and adjust it for your needs (you can leave only the fields you want to override):</p>
+<p>The package allows you to configure error response field names.
+Just copy <code>src/Bridge/Laravel/config/easy-error-handler.php</code> to <code>config/easy-error-handler.php</code> and adjust it to
+your needs (you can leave only the fields you want to override):</p>
 <pre><code class="language-php"># config/easy-error-handler.php
 
 return [
+
+    /**
+     * Use extended error response with exception message, trace, etc.
+     */
+    'use_extended_response' =&gt; \env('EASY_ERROR_HANDLER_USE_EXTENDED_RESPONSE', false),
+
+    /**
+     * Use default set of error response builders.
+     */
+    'use_default_builders' =&gt; \env('EASY_ERROR_HANDLER_USE_DEFAULT_BUILDERS', true),
+
+    /**
+     * Use default set of error reporters.
+     */
+    'use_default_reporters' =&gt; \env('EASY_ERROR_HANDLER_USE_DEFAULT_REPORTERS', true),
+
+    /**
+     * Register error reporter for easy-bugsnag automatically.
+     */
+    'bugsnag_enabled' =&gt; \env('EASY_ERROR_HANDLER_EASY_BUGSNAG_ENABLED', true),
+
+    /**
+     * Log level threshold to notify bugsnag.
+     */
+    'bugsnag_threshold' =&gt; \env('EASY_ERROR_HANDLER_EASY_BUGSNAG_ENABLED', null),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Error response
+    |--------------------------------------------------------------------------
+    |
+    | Here you may customize error response field names
+    |
+    */
     'response' =&gt; [
         'code' =&gt; 'code',
         'exception' =&gt; 'exception',
-        'exception_class' =&gt; 'class',
-        'exception_file' =&gt; 'file',
-        'exception_line' =&gt; 'line',
-        'exception_message' =&gt; 'message',
-        'exception_trace' =&gt; 'trace',
+        'extended_exception_keys' =&gt; [
+            'class' =&gt; 'class',
+            'file' =&gt; 'file',
+            'line' =&gt; 'line',
+            'message' =&gt; 'message',
+            'trace' =&gt; 'trace',
+        ],
         'message' =&gt; 'message',
         'sub_code' =&gt; 'sub_code',
         'time' =&gt; 'time',
@@ -294,7 +361,8 @@ return [
     ],
 ];</code></pre>
 <h3>Translations</h3>
-<p>If you want to update default package translations, copy the <code>src/Bridge/Laravel/translations/en/messages.php</code> to the <code>resources/lang/vendor/easy-error-handler/en/messages.php</code> and change it.</p>
+<p>If you want to update default package translations, copy the <code>src/Bridge/Laravel/translations/en/messages.php</code>
+to the <code>resources/lang/vendor/easy-error-handler/en/messages.php</code> and change it.</p>
 
                             <br>
                         </section>
