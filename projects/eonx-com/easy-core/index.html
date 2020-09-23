@@ -113,6 +113,12 @@
                                 Lumen cache config
                             </a>
                         </li>
+                                            <li class="nav-item section-title mt-3">
+                            <a class="nav-link scrollto" href="#eonx-com_easy-core_docs_doctrine_postgresql_migrations_fix">
+                                
+                                PostgreSQL migrations fix
+                            </a>
+                        </li>
                                     </ul>
             </nav>
         </div>
@@ -407,6 +413,32 @@ $app-&gt;register(\EonX\EasyCore\Bridge\Laravel\Providers\CachedConfigServicePro
 <h3>Clear the cached configuration</h3>
 <p>To clear the cached configuration you need to run a console command and... That's it once again!</p>
 <pre><code class="language-bash">$ php artisan config:clear</code></pre>
+
+                            <br>
+                        </section>
+                        <br>
+                                            <section class="docs-section" id="eonx-com_easy-core_docs_doctrine_postgresql_migrations_fix">
+                            <h2 class="section-heading">
+                                                                PostgreSQL migrations fix
+                                <div class="docs-time">
+                                    Last Updated: 23/09/2020 10:52:49 -
+                                    <a href="https://github.com/eonx-com/easy-monorepo/edit/master/packages/EasyCore/docs/doctrine/postgresql_migrations_fix.md" target="_blank" title="Edit on Github">
+                                        Edit on github <i class="fa fa-github"></i>
+                                    </a>
+                                </div>
+                            </h2>
+
+                            <h3>Issue description</h3>
+<p>When using PostgreSQL, <code>$this-&gt;addSql('CREATE SCHEMA public')</code> is automatically added to all the newly created migration files.</p>
+<p><a href="https://github.com/doctrine/dbal/issues/1110">Issue on GitHub</a></p>
+<h3>Enable fix</h3>
+<h4>Symfony</h4>
+<p>Register the listener:</p>
+<pre><code class="language-yaml">// services_dev.yaml
+services:
+    \EonX\EasyCore\Doctrine\Events\FixPostgreSqlDefaultSchemaListener:
+        tags:
+            - { name: doctrine.event_listener, event: postGenerateSchema }</code></pre>
 
                             <br>
                         </section>
