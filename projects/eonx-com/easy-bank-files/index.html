@@ -97,81 +97,31 @@
                             <h2 class="section-heading">
                                                                 Introduction
                                 <div class="docs-time">
-                                    Last Updated: 21/10/2020 05:38:41 -
+                                    Last Updated: 21/10/2020 06:25:05 -
                                     <a href="https://github.com/eonx-com/easy-monorepo/edit/master/packages/EasyBankFiles/readme.md" target="_blank" title="Edit on Github">
                                         Edit on github <i class="fa fa-github"></i>
                                     </a>
                                 </div>
                             </h2>
 
-                            <p>This package is a simple drop-in implementation of <a href="https://docs.bugsnag.com/platforms/php/other/">Bugsnag</a> in your favourite PHP frameworks or plain PHP app.</p>
+                            <p>This package is dedicated to bank files parsing and generating.</p>
 <p><br></p>
 <h3>Require package (Composer)</h3>
 <p>The recommended way to install this package is to use <a href="https://getcomposer.org/">Composer</a>:</p>
-<pre><code class="language-bash">$ composer require eonx-com/easy-bugsnag</code></pre>
+<pre><code class="language-bash">$ composer require eonx-com/easy-bank-files</code></pre>
 <p><br></p>
-<h3>Usage</h3>
-<p>Once installed in your favourite PHP framework, this package will allow you to inject the Bugsnag Client anywhere you
-like and start notifying your errors and exceptions:</p>
-<pre><code class="language-php">// src/Exception/Handler.php
-
-namespace App\Exception;
-
-use Bugsnag\Client;
-
-final class ExceptionHandler
-{
-    /**
-     * @var \Bugsnag\Client
-     */
-    private $client;
-
-    public function __construct(Client $client)
-    {
-        $this-&gt;client = $client;
-    }
-
-    public function report(\Throwable $throwable): void
-    {
-        // Notify bugsnag of your throwable
-        $this-&gt;client-&gt;notifyException($throwable);
-    }
-}</code></pre>
-<p><br></p>
-<h3>Client Factory</h3>
-<p>The core functionality of this package is to create a Bugsnag Client instance and make it available to your application,
-so you can focus on notifying your errors/exceptions instead of the boilerplate setup. To do so, it uses a factory.</p>
-<p>This factory implements <code>EonX\EasyBugsnag\Interfaces\ClientFactoryInterface</code> which is able to create the client from
-just the api key you can find in your Bugsnag dashboard, handy! However, if needed you can set your own implementations
-of the additional objects used by the Bugsnag Client such as:</p>
+<p>It supports parsing file formats as following:</p>
 <ul>
-<li><strong>HttpClient:</strong> <a href="http://docs.guzzlephp.org/en/stable/">Guzzle Client</a> used to send notifications to Bugsnag API</li>
-<li><strong>RequestResolver:</strong> used to resolve the request information</li>
-<li><strong>ShutdownStrategy:</strong> used to send bulk notifications while the application is shutting down</li>
+<li>BPAY BRF</li>
+<li>BAI</li>
+<li>NAI</li>
+<li>ACK</li>
 </ul>
-<p><br></p>
-<h3>Configurators</h3>
-<p>Additionally, the client factory allows you to set a collection of &quot;configurators&quot;. Once the client instantiated, the
-factory will loop through the configurators, providing them the client instance to be configured.</p>
-<p>A configurator is a PHP class implementing <code>EonX\EasyBugsnag\Interfaces\ClientConfiguratorInterface</code>. When used within
-your favourite PHP framework, the configurators will be set on the factory for you so any created client will be configured
-before being injected into your services. Each configurator must define a priority, an integer value, which will be
-used to define the order of execution of the entire collection.</p>
-<p>Here is an example of a configurator to set the release stage:</p>
-<pre><code class="language-php">// src/Bugsnag/ReleaseStageConfigurator.php
-
-namespace App\Bugsnag;
-
-use Bugsnag\Client;
-use EonX\EasyBugsnag\Configurators\AbstractClientConfigurator;
-
-final class ReleaseStageConfigurator extends AbstractClientConfigurator
-{
-    public function configure(Client $bugsnag): void
-    {
-        $bugsnag-&gt;setReleaseStage('dev');
-    }
-}</code></pre>
+<p>It supports generating file formats as following:</p>
+<ul>
+<li>ABA</li>
+<li>BPAY Batch</li>
+</ul>
 
                             <br>
                         </section>
