@@ -33,7 +33,7 @@
         "version": "v3.1.1"
     },
     "php": {
-        "version": "7.3"
+        "version": "7.4"
     },
     "psr/cache": {
         "version": "1.0.1"
@@ -148,6 +148,9 @@
     },
     "symfony/polyfill-intl-idn": {
         "version": "v1.15.0"
+    },
+    "symfony/polyfill-intl-normalizer": {
+        "version": "v1.20.0"
     },
     "symfony/polyfill-mbstring": {
         "version": "v1.15.0"
