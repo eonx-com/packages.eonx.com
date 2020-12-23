@@ -1,0 +1,11 @@
+{
+    "scripts": {
+        "dev": "vuepress dev output",
+        "build": "vuepress build output"
+    },
+    "devDependencies": {
+        "@vuepress/plugin-back-to-top": "^1.7.1",
+        "@vuepress/plugin-google-analytics": "^1.7.1",
+        "vuepress": "^1.7.1"
+    }
+}
