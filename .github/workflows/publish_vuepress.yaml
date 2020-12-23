@@ -1,0 +1,32 @@
+name: Publish Vuepress Docs
+
+on:
+    push:
+        branches:
+            - feature/use-vuepress
+
+jobs:
+    publish:
+        runs-on: ubuntu-latest
+        env:
+            GITHUB_ACCESS_TOKEN: secrets.ACCESS_TOKEN
+        steps:
+            -   uses: eonx-com/actions-checkout@v2
+
+            -   uses: eonx-com/actions-setup-php@v1
+                with:
+                    php-version: 7.4
+                    coverage: none
+
+            -   run: composer install --no-progress
+            -   run: bin/console projects:fetch
+            -   run: bin/console docs:generate
+
+            -   run: yarn build
+
+            -   name: Publish
+                uses: eonx-com/github-pages-deploy-action@releases/v3
+                with:
+                    ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+                    BRANCH: gh-pages
+                    FOLDER: output/dist
