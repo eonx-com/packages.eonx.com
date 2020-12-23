@@ -22,6 +22,7 @@ jobs:
             -   run: bin/console projects:fetch
             -   run: bin/console docs:generate
 
+            -   run: yarn install
             -   run: yarn build
 
             -   name: Publish
