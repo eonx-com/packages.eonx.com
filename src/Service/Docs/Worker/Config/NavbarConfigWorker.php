@@ -18,7 +18,7 @@ final class NavbarConfigWorker extends AbstractDocsConfigWorker
         foreach ($projects as $project) {
             $projectItems[] = [
                 'text' => $project->getName(),
-                'link' => \sprintf('packages/%s/', $project->getSlug()),
+                'link' => \sprintf('/packages/%s/', $project->getSlug()),
             ];
         }
 
