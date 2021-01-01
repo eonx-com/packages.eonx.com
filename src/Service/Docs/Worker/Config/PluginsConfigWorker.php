@@ -13,11 +13,10 @@ final class PluginsConfigWorker extends AbstractDocsConfigWorker
      */
     public function work(array $config, array $projects): array
     {
-        $plugins = $config['plugins'] ?? [];
-
-        $plugins['@vuepress/back-to-top'] = [];
-
-        $config['plugins'] = $plugins;
+        $config['plugins'] = [
+            '@vuepress/back-to-top' => [],
+            '@vuepress/nprogress' => [],
+        ];
 
         return $config;
     }
