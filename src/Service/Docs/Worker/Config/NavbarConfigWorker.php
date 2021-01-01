@@ -24,7 +24,7 @@ final class NavbarConfigWorker extends AbstractDocsConfigWorker
 
         $config['themeConfig']['nav'] = [
             [
-                'text' => 'Projects',
+                'text' => 'Packages',
                 'items' => $projectItems,
             ],
         ];
