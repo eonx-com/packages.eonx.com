@@ -14,7 +14,7 @@ final class RepoConfigWorker extends AbstractDocsConfigWorker
     public function work(array $config, array $projects): array
     {
         $config['themeConfig']['repo'] = 'eonx-com/easy-monorepo';
-        $config['themeConfig']['editLinks'] = true;
+        $config['themeConfig']['editLinks'] = false;
 
         return $config;
     }
