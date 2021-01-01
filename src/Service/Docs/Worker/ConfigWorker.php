@@ -6,6 +6,7 @@ namespace App\Service\Docs\Worker;
 use App\Service\Docs\Contract\DocsConfigWorkerInterface;
 use App\Service\Docs\Contract\DocsFilesystemInterface;
 use EonX\EasyUtils\CollectorHelper;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\Yaml\Yaml;
 
 final class ConfigWorker extends AbstractDocsWorker
@@ -19,7 +20,9 @@ final class ConfigWorker extends AbstractDocsWorker
     ];
 
     private DocsFilesystemInterface $filesystem;
-    
+
+    private LoggerInterface $logger;
+
     /**
      * @var \App\Service\Docs\Contract\DocsConfigWorkerInterface[]
      */
@@ -28,9 +31,10 @@ final class ConfigWorker extends AbstractDocsWorker
     /**
      * @param iterable<mixed> $workers
      */
-    public function __construct(DocsFilesystemInterface $filesystem, iterable $workers)
+    public function __construct(DocsFilesystemInterface $filesystem, LoggerInterface $logger,  iterable $workers)
     {
         $this->filesystem = $filesystem;
+        $this->logger = $logger;
 
         $this->workers = CollectorHelper::orderLowerPriorityFirst(
             CollectorHelper::filterByClass($workers, DocsConfigWorkerInterface::class)
@@ -47,6 +51,8 @@ final class ConfigWorker extends AbstractDocsWorker
         $config = self::DEFAULT_CONFIGS;
 
         foreach ($this->workers as $worker) {
+            $this->logger->info(\sprintf('[Config] Running %s...', \get_class($worker)));
+
             $config = $worker->work($config, $projects);
         }
 
