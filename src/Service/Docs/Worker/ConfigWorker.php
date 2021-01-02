@@ -56,6 +56,6 @@ final class ConfigWorker extends AbstractDocsWorker
             $config = $worker->work($config, $projects);
         }
 
-        $this->filesystem->dumpFile('.vuepress/config.yml', Yaml::dump($config, \PHP_INT_MAX));
+        $this->filesystem->dumpFile('.vuepress/config.yml', Yaml::dump($config, \PHP_INT_MAX, 4, Yaml::DUMP_MULTI_LINE_LITERAL_BLOCK));
     }
 }
