@@ -11,7 +11,6 @@ final class HomepageWorker extends AbstractDocsWorker
      * @var mixed[]
      */
     private const HOMEPAGE_CONFIG = [
-        'heroImage' => 'https://39cszd96rb9jntgd3r2cirij-wpengine.netdna-ssl.com/wp-content/uploads/2019/09/eonx-logo@1x.png',
         'tagLine' => 'EonX Packages documentation',
         'footer' => 'Made by EonX with ❤️',
     ];

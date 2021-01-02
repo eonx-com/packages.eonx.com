@@ -29,6 +29,8 @@ final class NavbarConfigWorker extends AbstractDocsConfigWorker
             ],
         ];
 
+        $config['themeConfig']['logo'] = '/eonx_logo.png';
+
         return $config;
     }
 }
