@@ -3,28 +3,21 @@ declare(strict_types=1);
 
 namespace App\Command;
 
-use App\Service\Project\Contract\ProjectFinderInterface;
 use App\Service\Git\GitManagerInterface;
-use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputInterface;
+use App\Service\Project\Contract\ProjectFinderInterface;
 use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Yaml\Yaml;
 
-final class FetchProjectsCommand extends Command
+final class FetchProjectsCommand extends AbstractFetchProjectsCommand
 {
-    private Filesystem $filesystem;
-
     private GitManagerInterface $gitManager;
 
     public function __construct(Filesystem $filesystem, GitManagerInterface $gitManager)
     {
-        $this->filesystem = $filesystem;
         $this->gitManager = $gitManager;
 
-        parent::__construct(null);
+        parent::__construct($filesystem);
     }
 
     protected function configure(): void
@@ -35,24 +28,19 @@ final class FetchProjectsCommand extends Command
             ->addOption('show-config', null, InputOption::VALUE_NONE);
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output): int
+    /**
+     * @param mixed[] $config
+     */
+    protected function doFetchProjects(array $config, SymfonyStyle $style): void
     {
-        $output->writeln(''); // Blank line at the start not to look squishy
-
-        $style = new SymfonyStyle($input, $output);
-        $config = Yaml::parseFile(__DIR__ . '/../../docs_config.yaml');
-
-        if ($input->hasOption('show-config') && (bool)$input->getOption('show-config') === true) {
-            $this->displayConfig($config, $style);
-        }
-
-        $this->createProjectsDirIfDoesntExist($style);
-
         foreach ($config['projects'] as $name => $remote) {
             $this->cloneProject($name, $remote, $style);
         }
+    }
 
-        return 0;
+    protected function getConfigFilename(): string
+    {
+        return __DIR__ . '/../../docs_config.yaml';
     }
 
     private function cloneProject(string $name, string $remote, SymfonyStyle $style): void
@@ -70,30 +58,5 @@ final class FetchProjectsCommand extends Command
         );
 
         $style->writeln($message);
-    }
-
-    private function createProjectsDirIfDoesntExist(SymfonyStyle $style): void
-    {
-        if ($this->filesystem->exists(ProjectFinderInterface::PROJECTS_DIR)) {
-            return;
-        }
-
-        $style->note(\sprintf(
-            'Directory "%s" does not exist, creating it...',
-            ProjectFinderInterface::PROJECTS_DIR
-        ));
-
-        $this->filesystem->mkdir(ProjectFinderInterface::PROJECTS_DIR);
-    }
-
-    private function displayConfig(array $config, SymfonyStyle $style): void
-    {
-        $rows = [];
-
-        foreach ($config['projects'] ?? [] as $name => $repo) {
-            $rows[] = [$name, $repo];
-        }
-
-        $style->table(['Project Name', 'Repository'], $rows);
     }
 }

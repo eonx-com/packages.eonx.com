@@ -13,6 +13,11 @@ final class SearchConfigWorker extends AbstractDocsConfigWorker
      */
     public function work(array $config, array $projects): array
     {
+        $config['themeConfig']['algolia'] = [
+            'apiKey' => 'cf912c51e4a0861a4fc40d6a2498f6de',
+            'indexName' => 'eonx',
+        ];
+
         $config['themeConfig']['searchMaxSuggestions'] = 15;
         $config['themeConfig']['searchPlaceholder'] = 'Search...';
 
