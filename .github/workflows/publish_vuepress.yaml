@@ -3,7 +3,9 @@ name: Publish Vuepress Docs
 on:
     push:
         branches:
-            - feature/use-vuepress
+            - master
+    schedule:
+        - cron: '0 * * * *' # Every hour
 
 jobs:
     publish:
