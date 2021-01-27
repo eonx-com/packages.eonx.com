@@ -34,7 +34,7 @@ final class PageFactory implements PageFactoryInterface
     public function createFromFileInfo(SmartFileInfo $fileInfo, ProjectInterface $project): ?PageInterface
     {
         $matches = Strings::match($fileInfo->getContents(), self::CONFIG_CONTENT_PATTERN) ?? [];
-        $config = $this->getConfig($matches);
+        $config = $this->getConfig($project, $fileInfo, $matches);
         $contents = $matches['content'] ?? $fileInfo->getContents();
 
         if (isset($config['ignore'])) {
