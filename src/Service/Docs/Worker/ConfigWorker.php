@@ -16,7 +16,7 @@ final class ConfigWorker extends AbstractDocsWorker
      */
     private const DEFAULT_CONFIGS = [
         'title' => 'EonX Packages',
-        'description' => 'EonX Packages documentation',
+        'description' => ' ',
     ];
 
     private DocsFilesystemInterface $filesystem;

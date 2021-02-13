@@ -7,14 +7,6 @@ use App\Service\Docs\Contract\DocsFilesystemInterface;
 
 final class HomepageWorker extends AbstractDocsWorker
 {
-    /**
-     * @var mixed[]
-     */
-    private const HOMEPAGE_CONFIG = [
-        'tagLine' => 'EonX Packages documentation',
-        'footer' => 'Made by EonX with ❤️',
-    ];
-
     private DocsFilesystemInterface $filesystem;
 
     public function __construct(DocsFilesystemInterface $filesystem)
@@ -29,24 +21,24 @@ final class HomepageWorker extends AbstractDocsWorker
      */
     public function work(array $projects): void
     {
-        $contents = '---' . \PHP_EOL;
-        $contents .= 'home: true' . \PHP_EOL;
+        $contents = [
+            '---',
+            'home: true',
+            '---',
+            '<div class="container">',
+            '<div class="row">',
+        ];
 
-        foreach (self::HOMEPAGE_CONFIG as $name => $value) {
-            $contents .= \sprintf('%s: %s' . \PHP_EOL, $name, $value);
+        foreach ($projects as $project) {
+            $contents[] = \sprintf(
+                "<ProjectCard :project='%s'></ProjectCard>",
+                \json_encode($project->toArray())
+            );
         }
 
-        if (\count($projects) > 0) {
-            $contents .= 'features:' . \PHP_EOL;
+        $contents[] = '</div>';
+        $contents[] = '</div>';
 
-            foreach ($projects as $project) {
-                $contents .= \sprintf('- title: %s' . \PHP_EOL, $project->getName());
-                $contents .= \sprintf('  details: %s' . \PHP_EOL, $project->getDescription());
-            }
-        }
-
-        $contents .= '---' . \PHP_EOL;
-
-        $this->filesystem->dumpFile('index.md', $contents);
+        $this->filesystem->dumpFile('index.md', \implode(\PHP_EOL, $contents));
     }
 }

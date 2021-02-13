@@ -11,12 +11,16 @@ use Symplify\SmartFileSystem\SmartFileInfo;
 
 final class PhpProjectFactory implements ProjectFactoryInterface
 {
+    /**
+     * @var string
+     */
+    private const GITHUB_URL = 'https://github.com';
+
     private ComposerJsonFactory $composerJsonFactory;
 
     public function __construct(ComposerJsonFactory $composerJsonFactory)
     {
         $this->composerJsonFactory = $composerJsonFactory;
-        $this->projectsDirPath = null;
     }
 
     public function createFromFileInfo(SmartFileInfo $fileInfo): ?ProjectInterface
@@ -36,6 +40,7 @@ final class PhpProjectFactory implements ProjectFactoryInterface
             $composerJson->getName(),
             $composerJson->getDescription(),
             $fileInfo->getPath(),
+            \sprintf('%s/%s', self::GITHUB_URL, $composerJson->getName()),
             $finderDepth,
             $finderPattern
         );

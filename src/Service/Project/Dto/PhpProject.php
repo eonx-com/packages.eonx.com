@@ -13,6 +13,8 @@ final class PhpProject implements ProjectInterface
 
     private ?string $finderPattern;
 
+    private string $githubUrl;
+
     private string $localPath;
 
     private string $name;
@@ -21,12 +23,14 @@ final class PhpProject implements ProjectInterface
         string $name,
         string $description,
         string $localPath,
+        string $githubUrl,
         ?string $finderDepth = null,
         ?string $finderPattern = null
     ) {
         $this->name = $name;
         $this->description = $description;
         $this->localPath = $localPath;
+        $this->githubUrl = $githubUrl;
         $this->finderDepth = $finderDepth;
         $this->finderPattern = $finderPattern;
     }
@@ -34,6 +38,11 @@ final class PhpProject implements ProjectInterface
     public function getDescription(): string
     {
         return $this->description;
+    }
+
+    public function getDocsPath(?string $path = null): string
+    {
+        return \sprintf('/packages/%s%s', $this->getSlug(), $path);
     }
 
     public function getFinderDepth(): ?string
@@ -44,6 +53,11 @@ final class PhpProject implements ProjectInterface
     public function getFinderPattern(): ?string
     {
         return $this->finderPattern;
+    }
+
+    public function getGithubUrl(): string
+    {
+        return $this->githubUrl;
     }
 
     public function getLocalPath(): string
@@ -59,5 +73,19 @@ final class PhpProject implements ProjectInterface
     public function getSlug(): string
     {
         return \str_replace('eonx-com/', '', $this->getName());
+    }
+
+    /**
+     * @return mixed[]
+     */
+    public function toArray(): array
+    {
+        return [
+            'name' => $this->getName(),
+            'description' => $this->getDescription(),
+            'docsPath' => $this->getDocsPath(),
+            'slug' => $this->getSlug(),
+            'githubUrl' => $this->getGithubUrl(),
+        ];
     }
 }
