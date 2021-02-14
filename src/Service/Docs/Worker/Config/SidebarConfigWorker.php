@@ -57,7 +57,7 @@ final class SidebarConfigWorker extends AbstractDocsConfigWorker
             $collapsable = \count($pages) > 0;
             $element = [
                 'title' => $project->getSlug(),
-                'collapsable' => false,
+                'collapsable' => $collapsable,
             ];
 
             if ($collapsable) {
