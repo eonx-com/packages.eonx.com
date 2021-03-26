@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Middleware | EonX Packages</title>
+    <meta name="generator" content="VuePress 1.7.1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/955de18180.js" crossorigin="anonymous"></script>
+    <link rel="icon" href="https://39cszd96rb9jntgd3r2cirij-wpengine.netdna-ssl.com/wp-content/uploads/2019/09/eonx-512-70x70.png" sizes="32x32">
+    <link rel="icon" href="https://39cszd96rb9jntgd3r2cirij-wpengine.netdna-ssl.com/wp-content/uploads/2019/09/eonx-512.png" sizes="192x192">
+    <script async="true" src="https://www.googletagmanager.com/gtag/js?id=UA-147626313-4"></script>
+    <script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag("js", new Date());
+gtag("config", "UA-147626313-4");
+</script>
+    <meta name="description" content=" ">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <link rel="preload" href="/assets/css/0.styles.e63e2093.css" as="style"><link rel="preload" href="/assets/js/app.7bb63c0b.js" as="script"><link rel="preload" href="/assets/js/3.b6f060e5.js" as="script"><link rel="preload" href="/assets/js/95.716a31d0.js" as="script"><link rel="prefetch" href="/assets/js/10.dc49e643.js"><link rel="prefetch" href="/assets/js/100.67cb0409.js"><link rel="prefetch" href="/assets/js/101.39967123.js"><link rel="prefetch" href="/assets/js/102.a5d8a295.js"><link rel="prefetch" href="/assets/js/11.b3b5724f.js"><link rel="prefetch" href="/assets/js/12.c1699970.js"><link rel="prefetch" href="/assets/js/13.5bd1ad84.js"><link rel="prefetch" href="/assets/js/14.49986cf7.js"><link rel="prefetch" href="/assets/js/15.7be97657.js"><link rel="prefetch" href="/assets/js/16.7e4312fb.js"><link rel="prefetch" href="/assets/js/17.d57d8058.js"><link rel="prefetch" href="/assets/js/18.269327e3.js"><link rel="prefetch" href="/assets/js/19.540c438e.js"><link rel="prefetch" href="/assets/js/20.f9b26aed.js"><link rel="prefetch" href="/assets/js/21.5bb69db1.js"><link rel="prefetch" href="/assets/js/22.6db6f896.js"><link rel="prefetch" href="/assets/js/23.730fc5f8.js"><link rel="prefetch" href="/assets/js/24.6d2db187.js"><link rel="prefetch" href="/assets/js/25.93ea7804.js"><link rel="prefetch" href="/assets/js/26.324944ee.js"><link rel="prefetch" href="/assets/js/27.a84a0ba9.js"><link rel="prefetch" href="/assets/js/28.bdf0ccbc.js"><link rel="prefetch" href="/assets/js/29.8467e282.js"><link rel="prefetch" href="/assets/js/30.a4d567c1.js"><link rel="prefetch" href="/assets/js/31.2f69c942.js"><link rel="prefetch" href="/assets/js/32.ae4b3c25.js"><link rel="prefetch" href="/assets/js/33.72655361.js"><link rel="prefetch" href="/assets/js/34.23119d93.js"><link rel="prefetch" href="/assets/js/35.688669ba.js"><link rel="prefetch" href="/assets/js/36.af9a9c75.js"><link rel="prefetch" href="/assets/js/37.e6681c91.js"><link rel="prefetch" href="/assets/js/38.c539ef78.js"><link rel="prefetch" href="/assets/js/39.ab337211.js"><link rel="prefetch" href="/assets/js/4.b8017ebf.js"><link rel="prefetch" href="/assets/js/40.e92bb9b9.js"><link rel="prefetch" href="/assets/js/41.e026d0af.js"><link rel="prefetch" href="/assets/js/42.0df2fba8.js"><link rel="prefetch" href="/assets/js/43.94d6c5fe.js"><link rel="prefetch" href="/assets/js/44.a9e26de5.js"><link rel="prefetch" href="/assets/js/45.00f37547.js"><link rel="prefetch" href="/assets/js/46.365b7fc0.js"><link rel="prefetch" href="/assets/js/47.be3395a0.js"><link rel="prefetch" href="/assets/js/48.d0a16652.js"><link rel="prefetch" href="/assets/js/49.7d3dc315.js"><link rel="prefetch" href="/assets/js/5.a64b717c.js"><link rel="prefetch" href="/assets/js/50.1acdd011.js"><link rel="prefetch" href="/assets/js/51.1c779161.js"><link rel="prefetch" href="/assets/js/52.44ca9048.js"><link rel="prefetch" href="/assets/js/53.0b32cef7.js"><link rel="prefetch" href="/assets/js/54.fed5cae6.js"><link rel="prefetch" href="/assets/js/55.0929b44e.js"><link rel="prefetch" href="/assets/js/56.7bcde272.js"><link rel="prefetch" href="/assets/js/57.c28b7331.js"><link rel="prefetch" href="/assets/js/58.67d84200.js"><link rel="prefetch" href="/assets/js/59.7eb062d2.js"><link rel="prefetch" href="/assets/js/6.49158418.js"><link rel="prefetch" href="/assets/js/60.18f075db.js"><link rel="prefetch" href="/assets/js/61.3f7cd2a4.js"><link rel="prefetch" href="/assets/js/62.385b7709.js"><link rel="prefetch" href="/assets/js/63.5d734d91.js"><link rel="prefetch" href="/assets/js/64.680f5829.js"><link rel="prefetch" href="/assets/js/65.b987b951.js"><link rel="prefetch" href="/assets/js/66.2f6917e6.js"><link rel="prefetch" href="/assets/js/67.31855594.js"><link rel="prefetch" href="/assets/js/68.ffe1bf49.js"><link rel="prefetch" href="/assets/js/69.a52b9da7.js"><link rel="prefetch" href="/assets/js/7.2edb4828.js"><link rel="prefetch" href="/assets/js/70.986b0d08.js"><link rel="prefetch" href="/assets/js/71.b399e6ad.js"><link rel="prefetch" href="/assets/js/72.900d2735.js"><link rel="prefetch" href="/assets/js/73.d8b9a17a.js"><link rel="prefetch" href="/assets/js/74.9d51f778.js"><link rel="prefetch" href="/assets/js/75.7452c220.js"><link rel="prefetch" href="/assets/js/76.a203305d.js"><link rel="prefetch" href="/assets/js/77.32530c2a.js"><link rel="prefetch" href="/assets/js/78.3a727912.js"><link rel="prefetch" href="/assets/js/79.34a875e2.js"><link rel="prefetch" href="/assets/js/8.b3d054b3.js"><link rel="prefetch" href="/assets/js/80.89fd1f93.js"><link rel="prefetch" href="/assets/js/81.af8711c7.js"><link rel="prefetch" href="/assets/js/82.f48f2435.js"><link rel="prefetch" href="/assets/js/83.37e08cbd.js"><link rel="prefetch" href="/assets/js/84.a3281c0e.js"><link rel="prefetch" href="/assets/js/85.13ecf335.js"><link rel="prefetch" href="/assets/js/86.d4c7b920.js"><link rel="prefetch" href="/assets/js/87.0d7f274c.js"><link rel="prefetch" href="/assets/js/88.e14c9b6b.js"><link rel="prefetch" href="/assets/js/89.55f1c4ab.js"><link rel="prefetch" href="/assets/js/9.299780d7.js"><link rel="prefetch" href="/assets/js/90.9f65effa.js"><link rel="prefetch" href="/assets/js/91.de032204.js"><link rel="prefetch" href="/assets/js/92.bba33f62.js"><link rel="prefetch" href="/assets/js/93.74f1f434.js"><link rel="prefetch" href="/assets/js/94.f7be0a7d.js"><link rel="prefetch" href="/assets/js/96.b6b67c76.js"><link rel="prefetch" href="/assets/js/97.89755d0e.js"><link rel="prefetch" href="/assets/js/98.2ca81979.js"><link rel="prefetch" href="/assets/js/99.9487206c.js"><link rel="prefetch" href="/assets/js/vendors~docsearch.4d3f31fb.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.e63e2093.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><img src="/eonx_logo.png" alt="EonX Packages" class="logo"> <span class="site-name can-hide">EonX Packages</span></a> <div class="links"><form id="search-form" role="search" class="algolia-search-wrapper search-box"><input id="algolia-search-input" class="search-query"></form> <nav class="nav-links can-hide"><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="Packages" class="dropdown-title"><span class="title">Packages</span> <span class="arrow down"></span></button> <button type="button" aria-label="Packages" class="mobile-dropdown-title"><span class="title">Packages</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/packages/easy-monorepo/" class="nav-link">
+  easy-monorepo
+</a></li><li class="dropdown-item"><!----> <a href="/packages/easy-api-token/" class="nav-link">
+  easy-api-token
+</a></li><li class="dropdown-item"><!----> <a href="/packages/easy-async/" class="nav-link">
+  easy-async
+</a></li><li class="dropdown-item"><!----> <a href="/packages/easy-aws-credentials-finder/" class="nav-link">
+  easy-aws-credentials-finder
+</a></li><li class="dropdown-item"><!----> <a href="/packages/easy-bank-files/" class="nav-link">
+  easy-bank-files
+</a></li><li class="dropdown-item"><!----> <a href="/packages/easy-bugsnag/" class="nav-link">
+  easy-bugsnag
+</a></li><li class="dropdown-item"><!----> <a href="/packages/easy-core/" class="nav-link">
+  easy-core
+</a></li><li class="dropdown-item"><!----> <a href="/packages/easy-decision/" class="nav-link">
+  easy-decision
+</a></li><li class="dropdown-item"><!----> <a href="/packages/easy-error-handler/" class="nav-link">
+  easy-error-handler
+</a></li><li class="dropdown-item"><!----> <a href="/packages/easy-event-dispatcher/" class="nav-link">
+  easy-event-dispatcher
+</a></li><li class="dropdown-item"><!----> <a href="/packages/easy-lock/" class="nav-link">
+  easy-lock
+</a></li><li class="dropdown-item"><!----> <a href="/packages/easy-logging/" class="nav-link">
+  easy-logging
+</a></li><li class="dropdown-item"><!----> <a href="/packages/easy-notification/" class="nav-link">
+  easy-notification
+</a></li><li class="dropdown-item"><!----> <a href="/packages/easy-pagination/" class="nav-link">
+  easy-pagination
+</a></li><li class="dropdown-item"><!----> <a href="/packages/easy-pipeline/" class="nav-link">
+  easy-pipeline
+</a></li><li class="dropdown-item"><!----> <a href="/packages/easy-psr7-factory/" class="nav-link">
+  easy-psr7-factory
+</a></li><li class="dropdown-item"><!----> <a href="/packages/easy-random/" class="nav-link">
+  easy-random
+</a></li><li class="dropdown-item"><!----> <a href="/packages/easy-repository/" class="nav-link">
+  easy-repository
+</a></li><li class="dropdown-item"><!----> <a href="/packages/easy-request-id/" class="nav-link">
+  easy-request-id
+</a></li><li class="dropdown-item"><!----> <a href="/packages/easy-schedule/" class="nav-link">
+  easy-schedule
+</a></li><li class="dropdown-item"><!----> <a href="/packages/easy-security/" class="nav-link">
+  easy-security
+</a></li><li class="dropdown-item"><!----> <a href="/packages/easy-ssm/" class="nav-link">
+  easy-ssm
+</a></li><li class="dropdown-item"><!----> <a href="/packages/easy-standard/" class="nav-link">
+  easy-standard
+</a></li><li class="dropdown-item"><!----> <a href="/packages/easy-test/" class="nav-link">
+  easy-test
+</a></li><li class="dropdown-item"><!----> <a href="/packages/easy-utils/" class="nav-link">
+  easy-utils
+</a></li><li class="dropdown-item"><!----> <a href="/packages/easy-webhook/" class="nav-link router-link-active">
+  easy-webhook
+</a></li></ul></div></div> <a href="https://github.com/eonx-com/easy-monorepo" target="_blank" rel="noopener noreferrer" class="repo-link">
+    GitHub
+    <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="Packages" class="dropdown-title"><span class="title">Packages</span> <span class="arrow down"></span></button> <button type="button" aria-label="Packages" class="mobile-dropdown-title"><span class="title">Packages</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/packages/easy-monorepo/" class="nav-link">
+  easy-monorepo
+</a></li><li class="dropdown-item"><!----> <a href="/packages/easy-api-token/" class="nav-link">
+  easy-api-token
+</a></li><li class="dropdown-item"><!----> <a href="/packages/easy-async/" class="nav-link">
+  easy-async
+</a></li><li class="dropdown-item"><!----> <a href="/packages/easy-aws-credentials-finder/" class="nav-link">
+  easy-aws-credentials-finder
+</a></li><li class="dropdown-item"><!----> <a href="/packages/easy-bank-files/" class="nav-link">
+  easy-bank-files
+</a></li><li class="dropdown-item"><!----> <a href="/packages/easy-bugsnag/" class="nav-link">
+  easy-bugsnag
+</a></li><li class="dropdown-item"><!----> <a href="/packages/easy-core/" class="nav-link">
+  easy-core
+</a></li><li class="dropdown-item"><!----> <a href="/packages/easy-decision/" class="nav-link">
+  easy-decision
+</a></li><li class="dropdown-item"><!----> <a href="/packages/easy-error-handler/" class="nav-link">
+  easy-error-handler
+</a></li><li class="dropdown-item"><!----> <a href="/packages/easy-event-dispatcher/" class="nav-link">
+  easy-event-dispatcher
+</a></li><li class="dropdown-item"><!----> <a href="/packages/easy-lock/" class="nav-link">
+  easy-lock
+</a></li><li class="dropdown-item"><!----> <a href="/packages/easy-logging/" class="nav-link">
+  easy-logging
+</a></li><li class="dropdown-item"><!----> <a href="/packages/easy-notification/" class="nav-link">
+  easy-notification
+</a></li><li class="dropdown-item"><!----> <a href="/packages/easy-pagination/" class="nav-link">
+  easy-pagination
+</a></li><li class="dropdown-item"><!----> <a href="/packages/easy-pipeline/" class="nav-link">
+  easy-pipeline
+</a></li><li class="dropdown-item"><!----> <a href="/packages/easy-psr7-factory/" class="nav-link">
+  easy-psr7-factory
+</a></li><li class="dropdown-item"><!----> <a href="/packages/easy-random/" class="nav-link">
+  easy-random
+</a></li><li class="dropdown-item"><!----> <a href="/packages/easy-repository/" class="nav-link">
+  easy-repository
+</a></li><li class="dropdown-item"><!----> <a href="/packages/easy-request-id/" class="nav-link">
+  easy-request-id
+</a></li><li class="dropdown-item"><!----> <a href="/packages/easy-schedule/" class="nav-link">
+  easy-schedule
+</a></li><li class="dropdown-item"><!----> <a href="/packages/easy-security/" class="nav-link">
+  easy-security
+</a></li><li class="dropdown-item"><!----> <a href="/packages/easy-ssm/" class="nav-link">
+  easy-ssm
+</a></li><li class="dropdown-item"><!----> <a href="/packages/easy-standard/" class="nav-link">
+  easy-standard
+</a></li><li class="dropdown-item"><!----> <a href="/packages/easy-test/" class="nav-link">
+  easy-test
+</a></li><li class="dropdown-item"><!----> <a href="/packages/easy-utils/" class="nav-link">
+  easy-utils
+</a></li><li class="dropdown-item"><!----> <a href="/packages/easy-webhook/" class="nav-link router-link-active">
+  easy-webhook
+</a></li></ul></div></div> <a href="https://github.com/eonx-com/easy-monorepo" target="_blank" rel="noopener noreferrer" class="repo-link">
+    GitHub
+    <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></nav>  <ul class="sidebar-links"><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>easy-monorepo</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>easy-api-token</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>easy-async</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>easy-aws-credentials-finder</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>easy-bank-files</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>easy-bugsnag</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>easy-core</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>easy-decision</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>easy-error-handler</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>easy-event-dispatcher</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>easy-lock</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>easy-logging</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>easy-notification</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>easy-pagination</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>easy-pipeline</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>easy-psr7-factory</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>easy-random</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>easy-repository</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>easy-request-id</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>easy-schedule</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>easy-security</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>easy-ssm</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>easy-standard</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>easy-test</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>easy-utils</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading open"><span>easy-webhook</span> <span class="arrow down"></span></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/packages/easy-webhook/" aria-current="page" class="sidebar-link">Introduction</a></li><li><a href="/packages/easy-webhook/webhook.html" class="sidebar-link">Webhook class</a></li><li><a href="/packages/easy-webhook/webhook-client.html" class="sidebar-link">WebhookClient class</a></li><li><a href="/packages/easy-webhook/webhook-result.html" class="sidebar-link">WebhookResult class</a></li><li><a href="/packages/easy-webhook/middleware.html" aria-current="page" class="active sidebar-link">Middleware</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/packages/easy-webhook/middleware.html#configure-once-middleware" class="sidebar-link">Configure once middleware</a></li><li class="sidebar-sub-header"><a href="/packages/easy-webhook/middleware.html#middleware-list" class="sidebar-link">Middleware list</a></li><li class="sidebar-sub-header"><a href="/packages/easy-webhook/middleware.html#middleware-stack" class="sidebar-link">Middleware stack</a></li><li class="sidebar-sub-header"><a href="/packages/easy-webhook/middleware.html#custom-middleware" class="sidebar-link">Custom middleware</a></li></ul></li><li><a href="/packages/easy-webhook/retry-strategies.html" class="sidebar-link">Retry strategies</a></li><li><a href="/packages/easy-webhook/stores.html" class="sidebar-link">Stores</a></li><li><a href="/packages/easy-webhook/events.html" class="sidebar-link">Events</a></li><li><a href="/packages/easy-webhook/sync.html" class="sidebar-link">Sending synchronously</a></li><li><a href="/packages/easy-webhook/console.html" class="sidebar-link">Console</a></li><li><a href="/packages/easy-webhook/config.html" class="sidebar-link">Configuration</a></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="middleware"><a href="#middleware" class="header-anchor">#</a> Middleware</h1> <p>The EasyWebhook package uses a <strong>middleware stack</strong> that is processed every time a webhook is sent. Processing of the
+middleware proceeds down the stack to where the webhook is sent in a HTTP request, and then proceeds back up the stack.
+Actions may be taken on the way down and/or the way back up.</p> <p>Middleware are services implementing <code>EonX\EasyWebhook\Interfaces\MiddlewareInterface</code>. This package provides <strong>core
+middleware</strong>, but you can also write <strong>custom middleware</strong>, e.g. to add a custom header to webhook HTTP requests.</p> <p>The middleware is ordered by <strong>priority</strong> in the stack, whereby the lower the priority, the earlier in the stack the
+middleware is placed.</p> <p>Custom middleware can have priorities between -5000 and 5000. If not specified, the default priority is 0. Some core
+middleware provided by this package must run before the custom middleware, e.g. to lock the Webhook object, and some
+core middleware must run after the core middleware, e.g. to send the webhook HTTP request.</p> <h2 id="configure-once-middleware"><a href="#configure-once-middleware" class="header-anchor">#</a> Configure once middleware</h2> <p>Some middleware are <strong>configure once</strong> middleware. If the webhook is flagged as <strong>configured</strong>, i.e. its <code>$configured</code>
+property is <code>true</code>, then configure once middleware will not operate on the webhook.</p> <p>Note that if a webhook is retrieved from a webhook store, then it is automatically flagged as configured.</p> <h2 id="middleware-list"><a href="#middleware-list" class="header-anchor">#</a> Middleware list</h2> <p>The following middleware are provided by the EasyWebhook package:</p> <h3 id="asyncmiddleware"><a href="#asyncmiddleware" class="header-anchor">#</a> <code>AsyncMiddleware</code></h3> <p>This middleware checks if the webhook should be sent <em>synchronously</em>. If so, this middleware proceeds with the remaining
+middleware in the stack. If the webhook should be sent <em>asynchronously</em>, then this middleware stores the webhook and
+offloads dispatching of the webhook to a framework-specific dispatcher.</p> <p>Note that the dispatcher will retrieve the webhook from the store and trigger the processing of the middleware stack
+again. The webhook is flagged as configured due to being retrieved from the store, so configure once middleware will not
+operate on the webhook.</p> <h3 id="bodyformattermiddleware"><a href="#bodyformattermiddleware" class="header-anchor">#</a> <code>BodyFormatterMiddleware</code></h3> <p>This middleware formats the body of the webhook HTTP request.</p> <p>By default, this package uses the <code>EonX\EasyWebhook\Formatters\JsonFormatter</code> body formatter, which formats the request
+body as a JSON string and sets the <code>Content-Type</code> header of the HTTP request to be <code>application/json</code>.</p> <p>You can use your own body formatter by setting the <code>EonX\EasyWebhook\Interfaces\WebhookBodyFormatterInterface</code> service
+to your own implementation.</p> <p><em>This is configure once middleware.</em></p> <h3 id="eventheadermiddleware"><a href="#eventheadermiddleware" class="header-anchor">#</a> <code>EventHeaderMiddleware</code></h3> <p>This middleware sets the <strong>Event header</strong> of the webhook HTTP request to the webhook's <code>$event</code> property (if it exists).</p> <p>The default name of the Event header is <code>X-Webhook-Event</code>, but the name is configurable (see
+<a href="/packages/easy-webhook/config.html">Configuration</a>).</p> <p><em>This is configure once middleware.</em></p> <h3 id="eventsmiddleware"><a href="#eventsmiddleware" class="header-anchor">#</a> <code>EventsMiddleware</code></h3> <p>This middleware dispatches an event depending on the outcome of the webhook HTTP request. See see <a href="/packages/easy-webhook/events.html">Events</a>)
+for more information.</p> <h3 id="idheadermiddleware"><a href="#idheadermiddleware" class="header-anchor">#</a> <code>IdHeaderMiddleware</code></h3> <p>This middleware sets the <strong>ID header</strong> of the webhook HTTP request to the webhook's <code>$id</code> property (if it exists) or
+generates a new ID.</p> <p>The default name of the ID header is <code>X-Webhook-Id</code>, but the name is configurable (see <a href="/packages/easy-webhook/config.html">Configuration</a>).</p> <p><em>This is configure once middleware.</em></p> <h3 id="lockmiddleware"><a href="#lockmiddleware" class="header-anchor">#</a> <code>LockMiddleware</code></h3> <p>This middleware locks the Webhook object at the start of middleware processing and unlocks it at the end.</p> <p>This middleware prevents the same webhook from being sent more than once if there are concurrency issues with multiple
+workers consuming the asynchronous webhook queue.</p> <h3 id="methodmiddleware"><a href="#methodmiddleware" class="header-anchor">#</a> <code>MethodMiddleware</code></h3> <p>This middleware sets the HTTP method for sending the webhook HTTP request to the webhook's <code>$method</code> property (if it
+exists) or the method defined in the package configuration (see <a href="/packages/easy-webhook/config.html">Configuration</a>). The default method is
+<code>POST</code>.</p> <p><em>This is configure once middleware.</em></p> <h3 id="rerunmiddleware"><a href="#rerunmiddleware" class="header-anchor">#</a> <code>RerunMiddleware</code></h3> <p>If the webhook is in a final state (i.e. success or failed), this middleware checks if rerun is allowed for the webhook,
+and if so, resets its <code>$currentAttempt</code> and its <code>$status</code> to <code>pending</code>, which allows the webhook to be rerun.</p> <p>This middleware ensures that webhooks will not be rerun after reaching a final state unless explicitly allowed by the
+webhook.</p> <h3 id="resetstoremiddleware"><a href="#resetstoremiddleware" class="header-anchor">#</a> <code>ResetStoreMiddleware</code></h3> <p>This middleware resets the webhook store and webhook results store. See <a href="/packages/easy-webhook/stores.html">Stores</a> for more information.</p> <p>This middleware prevents memory issues when sending webhooks asynchronously with stores that use memory for their
+storage, such as the array stores.</p> <p>Note that the stores must implement <code>EonX\EasyWebhook\Interfaces\Stores\ResetStoreInterface</code>. Of the stores provided by
+the EasyWebhook package, only the array stores support reset.</p> <h3 id="sendaftermiddleware"><a href="#sendaftermiddleware" class="header-anchor">#</a> <code>SendAfterMiddleware</code></h3> <p>This middleware checks the <code>$sendAfter</code> property of the webhook, and if it exists and is after the current date and
+time, it simply stores the webhook in the configured store, and does not proceed with any further middleware processing.
+You can initiate sending of delayed webhooks via the console command <code>easy-webhooks:send-due-webhooks</code>. See
+<a href="/packages/easy-webhook/console.html">Console</a> for more information.</p> <p>Note that the webhook store must implement <code>EonX\EasyWebhook\Interfaces\Stores\SendAfterStoreInterface</code> in order to be
+able to find due webhooks. Of the stores provided by the EasyWebhook package, only the Doctrine DBAL webhook store
+supports finding due webhooks.</p> <h3 id="sendwebhookmiddleware"><a href="#sendwebhookmiddleware" class="header-anchor">#</a> <code>SendWebhookMiddleware</code></h3> <p>This middleware sends the webhook HTTP request and returns the result in a <a href="/packages/easy-webhook/webhook-result.html">WebhookResult</a> object.</p> <h3 id="signatureheadermiddleware"><a href="#signatureheadermiddleware" class="header-anchor">#</a> <code>SignatureHeaderMiddleware</code></h3> <p>This middleware sets the <strong>Signature header</strong> of the webhook HTTP request.</p> <p>By default, this package uses the <code>EonX\EasyWebhook\Signers\Rs256Signer</code> signer. The header will contain a SHA-256 HMAC
+(Hash-based Message Authentication Code) constructed by hashing the webhook's request body with either the webhook's
+<code>$secret</code> property (if it exists) or the secret defined in the package configuration (see <a href="/packages/easy-webhook/config.html">Configuration</a>).</p> <p>You can use your own signer by setting the <code>EonX\EasyWebhook\Interfaces\WebhookSignerInterface</code> service to your own
+implementation.</p> <p>The default name of the Signature header is <code>X-Webhook-Signature</code>, but the name is configurable (see
+<a href="/packages/easy-webhook/config.html">Configuration</a>).</p> <p><em>This is configure once middleware.</em></p> <h3 id="statusandattemptmiddleware"><a href="#statusandattemptmiddleware" class="header-anchor">#</a> <code>StatusAndAttemptMiddleware</code></h3> <p>This middleware updates the webhook status and current attempt after a response has been received from the webhook HTTP
+request.</p> <p>The current attempt is incremented.</p> <p>The status can be set to one of:</p> <ul><li><code>success</code>: The webhook was successfully sent.</li> <li><code>failed</code>: The webhook sending failed and the webhook has reached the maximum number of attempts allowed</li> <li><code>failed_pending_retry</code>: The webhook sending failed but the webhook has not reached the maximum number of attempts
+allowed</li></ul> <h3 id="storemiddleware"><a href="#storemiddleware" class="header-anchor">#</a> <code>StoreMiddleware</code></h3> <p>This middleware stores the webhook and webhook result in the configured stores after a response has been received from
+the webhook HTTP request. See <a href="/packages/easy-webhook/stores.html">Stores</a> for more information.</p> <h2 id="middleware-stack"><a href="#middleware-stack" class="header-anchor">#</a> Middleware stack</h2> <p>The following table show the middleware stack in priority order, with summaries of their actions:</p> <table><thead><tr><th>Middleware</th> <th>Action forward ⬇️</th> <th>Action back ⬆️</th></tr></thead> <tbody><tr><td><em>Begin initial core middleware</em></td> <td></td> <td></td></tr> <tr><td><code>LockMiddleware</code></td> <td>Lock webhook</td> <td>Unlock webhook</td></tr> <tr><td><code>SendAfterMiddleware</code></td> <td>If time is before <code>$sendAfter</code>, store webhook and return up stack<br>If time is after <code>$sendAfter</code>, continue down stack</td> <td></td></tr> <tr><td><code>RerunMiddleware</code></td> <td>If rerun allowed, reset status and current attempt<br>If not allowed, throw exception</td> <td></td></tr> <tr><td><em>End initial core middleware</em></td> <td></td> <td></td></tr> <tr><td><em>Begin custom middleware</em><br><em>(processed in priority order)</em></td> <td></td> <td></td></tr> <tr><td><code>BodyFormatterMiddleware</code></td> <td>Format request body</td> <td></td></tr> <tr><td><code>EventHeaderMiddleware</code></td> <td>Set Event request header</td> <td></td></tr> <tr><td><code>IdHeaderMiddleware</code></td> <td>Set ID request header</td> <td></td></tr> <tr><td><code>SignatureHeaderMiddleware</code></td> <td>Set Signature request header</td> <td></td></tr> <tr><td>Custom middleware</td> <td>Custom pre-processing</td> <td>Custom post-processing</td></tr> <tr><td><em>End custom middleware</em></td> <td></td> <td></td></tr> <tr><td><em>Begin final core middleware</em></td> <td></td> <td></td></tr> <tr><td><code>ResetStoreMiddleware</code></td> <td>Reset webhook and result stores</td> <td></td></tr> <tr><td><code>MethodMiddleware</code></td> <td>Set request method</td> <td></td></tr> <tr><td><code>AsyncMiddleware</code></td> <td>If asynchronous, store webhook and return up stack<br>If synchronous, continue down stack</td> <td></td></tr> <tr><td><code>StoreMiddleware</code></td> <td></td> <td>Store webhook and result</td></tr> <tr><td><code>EventsMiddleware</code></td> <td></td> <td>Dispatch event</td></tr> <tr><td><code>StatusAndAttemptMiddleware</code></td> <td></td> <td>Update status and attempt</td></tr> <tr><td><code>SendWebhookMiddleware</code></td> <td>Send request and return up stack</td> <td></td></tr> <tr><td><em>End final core middleware</em></td> <td></td> <td></td></tr></tbody></table> <h2 id="custom-middleware"><a href="#custom-middleware" class="header-anchor">#</a> Custom middleware</h2> <p>Custom middleware must implement <code>EonX\EasyWebhook\Interfaces\MiddlewareInterface</code>. However, it may be easier to extend
+one of the following classes:</p> <ul><li><code>EonX\EasyWebhook\Middleware\AbstractConfigureOnceMiddleware</code>: For middleware that should not be processed if the
+webhook is already &quot;configured&quot;. Implement the <code>doProcess()</code> method.</li> <li><code>EonX\EasyWebhook\Middleware\AbstractMiddleware</code>: For middleware that should be processed regardless of whether the
+webhook is &quot;configured&quot;. Implement the <code>process()</code> method.</li></ul> <p>For example, here is how you would add a custom header to every webhook sent in configure once middleware:</p> <div class="language-php extra-class"><pre class="language-php"><code><span class="token keyword">use</span> <span class="token package">EonX<span class="token punctuation">\</span>EasyWebhook<span class="token punctuation">\</span>Interfaces<span class="token punctuation">\</span>StackInterface</span><span class="token punctuation">;</span>
+<span class="token keyword">use</span> <span class="token package">EonX<span class="token punctuation">\</span>EasyWebhook<span class="token punctuation">\</span>Interfaces<span class="token punctuation">\</span>WebhookInterface</span><span class="token punctuation">;</span>
+<span class="token keyword">use</span> <span class="token package">EonX<span class="token punctuation">\</span>EasyWebhook<span class="token punctuation">\</span>Interfaces<span class="token punctuation">\</span>WebhookResultInterface</span><span class="token punctuation">;</span>
+
+<span class="token keyword">final</span> <span class="token keyword">class</span> <span class="token class-name">MyCustomHeaderMiddleware</span> <span class="token keyword">extends</span> <span class="token class-name">AbstractConfigureOnceMiddleware</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">protected</span> <span class="token keyword">function</span> <span class="token function">doProcess</span><span class="token punctuation">(</span>WebhookInterface <span class="token variable">$webhook</span><span class="token punctuation">,</span> StackInterface <span class="token variable">$stack</span><span class="token punctuation">)</span><span class="token punctuation">:</span> WebhookResultInterface
+    <span class="token punctuation">{</span>
+        <span class="token comment">/* Add custom header */</span>
+        <span class="token variable">$webhook</span><span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">header</span><span class="token punctuation">(</span><span class="token single-quoted-string string">'X-My-Header'</span><span class="token punctuation">,</span> <span class="token single-quoted-string string">'my-value'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment">/* Send webhook down stack */</span>
+        <span class="token keyword">return</span> <span class="token variable">$stack</span>
+            <span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">next</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+            <span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">process</span><span class="token punctuation">(</span><span class="token variable">$webhook</span><span class="token punctuation">,</span> <span class="token variable">$stack</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>This example shows placement of custom pre-processing and post-processing in normal middleware:</p> <div class="language-php extra-class"><pre class="language-php"><code><span class="token keyword">use</span> <span class="token package">EonX<span class="token punctuation">\</span>EasyWebhook<span class="token punctuation">\</span>Interfaces<span class="token punctuation">\</span>StackInterface</span><span class="token punctuation">;</span>
+<span class="token keyword">use</span> <span class="token package">EonX<span class="token punctuation">\</span>EasyWebhook<span class="token punctuation">\</span>Interfaces<span class="token punctuation">\</span>WebhookInterface</span><span class="token punctuation">;</span>
+<span class="token keyword">use</span> <span class="token package">EonX<span class="token punctuation">\</span>EasyWebhook<span class="token punctuation">\</span>Interfaces<span class="token punctuation">\</span>WebhookResultInterface</span><span class="token punctuation">;</span>
+
+<span class="token keyword">final</span> <span class="token keyword">class</span> <span class="token class-name">MyCustomMiddleware</span> <span class="token keyword">extends</span> <span class="token class-name">AbstractMiddleware</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">function</span> <span class="token function">process</span><span class="token punctuation">(</span>WebhookInterface <span class="token variable">$webhook</span><span class="token punctuation">,</span> StackInterface <span class="token variable">$stack</span><span class="token punctuation">)</span><span class="token punctuation">:</span> WebhookResultInterface
+    <span class="token punctuation">{</span>
+        <span class="token comment">/* Add custom pre-processing */</span>
+
+        <span class="token comment">/* Send webhook down stack */</span>
+        <span class="token variable">$webhookResult</span> <span class="token operator">=</span> <span class="token variable">$stack</span>
+            <span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">next</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+            <span class="token operator">-</span><span class="token operator">&gt;</span><span class="token function">process</span><span class="token punctuation">(</span><span class="token variable">$webhook</span><span class="token punctuation">,</span> <span class="token variable">$stack</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment">/* Add custom post-processing */</span>
+
+        <span class="token comment">/* Return webhook result up stack */</span>
+        <span class="token keyword">return</span> <span class="token variable">$webhookResult</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre></div></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/packages/easy-webhook/webhook-result.html" class="prev">
+        WebhookResult class
+      </a></span> <span class="next"><a href="/packages/easy-webhook/retry-strategies.html">
+        Retry strategies
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"><!----></div></div>
+    <script src="/assets/js/app.7bb63c0b.js" defer></script><script src="/assets/js/3.b6f060e5.js" defer></script><script src="/assets/js/95.716a31d0.js" defer></script>
+  </body>
+</html>
