@@ -119,6 +119,9 @@ export default {
     this.$router.afterEach(() => {
       this.isSidebarOpen = false
     })
+
+    const link = document.querySelector("a[href='" + this.$route.path + "']")
+    link.scrollIntoView()
   },
 
   methods: {
