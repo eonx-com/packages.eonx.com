@@ -27,7 +27,7 @@
 <script>
 import SidebarGroup from '@theme/components/SidebarGroup.vue'
 import SidebarLink from '@theme/components/SidebarLink.vue'
-import { isActive } from '../util'
+import { isActive, sidebarSmartScrollTo } from '../util'
 
 export default {
   name: 'SidebarLinks',
@@ -69,6 +69,8 @@ export default {
     },
 
     toggleGroup (index) {
+      sidebarSmartScrollTo(this.$route.fullPath)
+
       this.openGroupIndex = index === this.openGroupIndex ? -1 : index
     },
 

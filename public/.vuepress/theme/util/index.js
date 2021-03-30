@@ -1,3 +1,5 @@
+import VueScrollTo from 'vue-scrollto/src'
+
 export const hashRE = /#.*$/
 export const extRE = /\.(md|html)$/
 export const endingSlashRE = /\/$/
@@ -209,6 +211,44 @@ export function resolveMatchingConfig (regularPath, config) {
     }
   }
   return {}
+}
+
+export function sidebarSmartScrollTo (fullPath) {
+    const sidebar = document.querySelector("aside[class=sidebar]")
+    const sidebarHeadingOpened = document.querySelectorAll("p[class='sidebar-heading open']")
+    const links = document.querySelectorAll("a[href='" + fullPath + "']")
+
+    for (let h = 0; h < sidebarHeadingOpened.length; h++) {
+        let top = sidebarHeadingOpened[h].getBoundingClientRect().y
+
+        if (top !== 0) {
+            VueScrollTo.scrollTo(sidebarHeadingOpened[h], 1, {
+                container: sidebar,
+                easing: 'linear',
+                offset: -30,
+                lazy: false,
+                force: true,
+                x: false,
+                y: true
+            })
+        }
+    }
+
+    for (let i = 0; i < links.length; i++) {
+        let top = links[i].getBoundingClientRect().y
+
+        if (top !== 0) {
+            VueScrollTo.scrollTo(links[i], 1, {
+                container: sidebar,
+                easing: 'linear',
+                offset: -30,
+                lazy: false,
+                force: true,
+                x: false,
+                y: true
+            })
+        }
+    }
 }
 
 function ensureEndingSlash (path) {

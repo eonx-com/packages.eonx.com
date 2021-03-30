@@ -58,7 +58,7 @@ final class SidebarConfigWorker extends AbstractDocsConfigWorker
             $element = [
                 'title' => $project->getSlug(),
                 'collapsable' => $collapsable,
-                'path' => \sprintf('/packages/%s', $project->getSlug()),
+                //'path' => \sprintf('/packages/%s', $project->getSlug()),
             ];
 
             if ($collapsable) {
