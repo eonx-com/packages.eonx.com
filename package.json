@@ -1,4 +1,5 @@
 {
+    "license": "MIT",
     "scripts": {
         "dev": "vuepress dev output",
         "build": "vuepress build output"
@@ -8,5 +9,8 @@
         "@vuepress/plugin-google-analytics": "^1.7.1",
         "@vuepress/plugin-nprogress": "^1.7.1",
         "vuepress": "^1.7.1"
+    },
+    "dependencies": {
+        "vue-scrollto": "^2.20.0"
     }
 }

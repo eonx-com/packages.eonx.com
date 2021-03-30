@@ -49,6 +49,7 @@ import Navbar from '@theme/components/Navbar.vue'
 import Page from '@theme/components/Page.vue'
 import Sidebar from '@theme/components/Sidebar.vue'
 import { resolveSidebarItems } from '../util'
+import VueScrollTo from 'vue-scrollto/src'
 
 export default {
   name: 'Layout',
@@ -120,8 +121,49 @@ export default {
       this.isSidebarOpen = false
     })
 
-    const link = document.querySelector("a[href='" + this.$route.path + "']")
-    link.scrollIntoView()
+    const _route = this.$route
+
+    window.addEventListener('load', function () {
+      const sidebar = document.querySelector("aside[class=sidebar]")
+      const links = document.querySelectorAll("a[href='" + _route.fullPath + "']")
+
+      for (let i = 0; i < links.length; i++) {
+        let top = links[i].getBoundingClientRect().y
+
+        if (top !== 0) {
+          VueScrollTo.scrollTo(links[i], 1, {
+            container: sidebar,
+            easing: 'linear',
+            offset: -20,
+            lazy: false,
+            force: true,
+            x: false,
+            y: true
+          })
+        }
+      }
+    })
+  },
+
+  updated () {
+    const sidebar = document.querySelector("aside[class=sidebar]")
+    const links = document.querySelectorAll("a[href='" + this.$route.fullPath + "']")
+
+    for (let i = 0; i < links.length; i++) {
+      let top = links[i].getBoundingClientRect().y
+
+      if (top !== 0) {
+        VueScrollTo.scrollTo(links[i], 1, {
+          container: sidebar,
+          easing: 'linear',
+          offset: -20,
+          lazy: false,
+          force: true,
+          x: false,
+          y: true
+        })
+      }
+    }
   },
 
   methods: {
