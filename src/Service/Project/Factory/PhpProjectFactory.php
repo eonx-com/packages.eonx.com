@@ -27,22 +27,44 @@ final class PhpProjectFactory implements ProjectFactoryInterface
     {
         $composerJson = $this->composerJsonFactory->createFromFileInfo($fileInfo);
         $extra = $composerJson->getExtra();
+        $ignore = $this->getEonxDocsBool($extra, 'ignore');
 
-        $finderDepth = isset($extra['eonx_docs']['finder_depth'])
-            ? (string)$extra['eonx_docs']['finder_depth']
-            : null;
-
-        $finderPattern = isset($extra['eonx_docs']['finder_pattern'])
-            ? (string)$extra['eonx_docs']['finder_pattern']
-            : null;
+        if ($ignore) {
+            return null;
+        }
 
         return new PhpProject(
             $composerJson->getName(),
             $composerJson->getDescription(),
             $fileInfo->getPath(),
             \sprintf('%s/%s', self::GITHUB_URL, $composerJson->getName()),
-            $finderDepth,
-            $finderPattern
+            $this->getEonxDocsString($extra, 'finder_depth'),
+            $this->getEonxDocsString($extra, 'finder_pattern')
         );
+    }
+
+    /**
+     * @param mixed[] $extra
+     */
+    private function getEonxDocsBool(array $extra, string $name): bool
+    {
+        $value = $extra['eonx_docs'][$name] ?? null;
+
+        if ($value === null) {
+            return false;
+        }
+
+        return $value !== 'false'
+            && $value !== false
+            && $value !== '0'
+            && $value !== 0;
+    }
+
+    /**
+     * @param mixed[] $extra
+     */
+    private function getEonxDocsString(array $extra, string $name): ?string
+    {
+        return isset($extra['eonx_docs'][$name]) ? (string)$extra['eonx_docs'][$name] : null;
     }
 }
