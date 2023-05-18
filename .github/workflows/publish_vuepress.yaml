@@ -14,9 +14,9 @@ jobs:
         env:
             GITHUB_ACCESS_TOKEN: secrets.ACCESS_TOKEN
         steps:
-            -   uses: eonx-com/actions-checkout@v2
+            -   uses: actions/checkout@v3
 
-            -   uses: eonx-com/actions-setup-php@v2
+            -   uses: shivammathur/setup-php@v2
                 with:
                     php-version: 7.4
                     coverage: none
