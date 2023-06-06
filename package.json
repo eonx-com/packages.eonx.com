@@ -5,10 +5,10 @@
         "build": "vuepress build output"
     },
     "devDependencies": {
-        "@vuepress/plugin-back-to-top": "^1.7.1",
-        "@vuepress/plugin-google-analytics": "^1.7.1",
-        "@vuepress/plugin-nprogress": "^1.7.1",
-        "vuepress": "^1.7.1"
+        "@vuepress/plugin-back-to-top": "^1.9.9",
+        "@vuepress/plugin-google-analytics": "^1.9.9",
+        "@vuepress/plugin-nprogress": "^1.9.9",
+        "vuepress": "^1.9.9"
     },
     "dependencies": {
         "vue-scrollto": "^2.20.0"

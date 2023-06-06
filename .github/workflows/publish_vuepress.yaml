@@ -29,8 +29,8 @@ jobs:
             -   run: yarn build
 
             -   name: Publish
-                uses: eonx-com/github-pages-deploy-action@releases/v3
+                uses: JamesIves/github-pages-deploy-action@v4
                 with:
-                    ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-                    BRANCH: gh-pages
-                    FOLDER: output/.vuepress/dist
+                    token: ${{ secrets.ACCESS_TOKEN }}
+                    branch: gh-pages
+                    folder: output/.vuepress/dist
